@@ -1,0 +1,567 @@
+{
+  "time_limit_sec": 60,
+  "levels": {
+    "1": [
+      {
+        "id": "L1-01",
+        "title": "입력 함수",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int n;",
+          "    __1__(\"%d\", &n);",
+          "    printf(\"%d\\n\", n);",
+          "    return 0;",
+          "}",
+          "// blank: input function"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "scanf" }]
+      },
+      {
+        "id": "L1-02",
+        "title": "출력 함수",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int a = 10;",
+          "    __1__(\"a = %d\\n\", a);",
+          "    return 0;",
+          "}",
+          "",
+          "// blank: output function"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "printf" }]
+      },
+      {
+        "id": "L1-03",
+        "title": "정수 선언",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    __1__ x = 3;",
+          "    printf(\"%d\\n\", x);",
+          "    return 0;",
+          "}",
+          "",
+          "// blank: type"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "int" }]
+      },
+      {
+        "id": "L1-04",
+        "title": "반환값",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    printf(\"OK\\n\");",
+          "    __1__ 0;",
+          "}",
+          "",
+          "",
+          "// blank: return keyword"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "return" }]
+      },
+      {
+        "id": "L1-05",
+        "title": "for 키워드",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    __1__ (int i = 0; i < 3; i++) printf(\"%d\\n\", i);",
+          "    return 0;",
+          "}",
+          "",
+          "",
+          "// blank: loop keyword"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "for" }]
+      },
+      {
+        "id": "L1-06",
+        "title": "if 키워드",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int n = 5;",
+          "    __1__ (n > 0) printf(\"POS\\n\");",
+          "    return 0;",
+          "}",
+          "",
+          "// blank: if keyword"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "if" }]
+      },
+      {
+        "id": "L1-07",
+        "title": "배열 선언",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int a[__1__] = {1, 2, 3};",
+          "    printf(\"%d\\n\", a[0]);",
+          "    return 0;",
+          "}",
+          "",
+          "// blank: array size"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "3" }]
+      },
+      {
+        "id": "L1-08",
+        "title": "문자 출력 형식",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    char c = 'A';",
+          "    printf(\"__1__\\n\", c);",
+          "    return 0;",
+          "}",
+          "",
+          "// blank: format"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "%c" }]
+      },
+      {
+        "id": "L1-09",
+        "title": "정수 출력 형식",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int n = 7;",
+          "    printf(\"__1__\\n\", n);",
+          "    return 0;",
+          "}",
+          "",
+          "// blank: format"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "%d" }]
+      },
+      {
+        "id": "L1-10",
+        "title": "문자 입력 getchar",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int ch = __1__();",
+          "    printf(\"%c\\n\", ch);",
+          "    return 0;",
+          "}",
+          "",
+          "// blank: function"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "getchar" }]
+      }
+    ],
+    "2": [
+      {
+        "id": "L2-01",
+        "title": "for 시작/끝",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    for (int i = __1__; i < __2__; i++) {",
+          "        printf(\"%d\\n\", i);",
+          "    }",
+          "    return 0;",
+          "}",
+          "// blanks: start/end"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "0" },
+          { "blank_no": 2, "answer": "5" }
+        ]
+      },
+      {
+        "id": "L2-02",
+        "title": "if 조건/출력",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int n = 10;",
+          "    if (__1__) __2__(\"OK\\n\");",
+          "    return 0;",
+          "}",
+          "",
+          "// blanks: condition/function"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "n >= 10" },
+          { "blank_no": 2, "answer": "printf" }
+        ]
+      },
+      {
+        "id": "L2-03",
+        "title": "배열 합",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int a[3] = {1, 2, 3};",
+          "    int sum = 0;",
+          "    for (int i = 0; i < 3; i++) sum += __1__;",
+          "    printf(\"%d\\n\", __2__);",
+          "    return 0;",
+          "}"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "a[i]" },
+          { "blank_no": 2, "answer": "sum" }
+        ]
+      },
+      {
+        "id": "L2-04",
+        "title": "scanf/포맷",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int x;",
+          "    __1__(\"__2__\", &x);",
+          "    printf(\"%d\\n\", x);",
+          "    return 0;",
+          "}",
+          "// blanks: function/format"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "scanf" },
+          { "blank_no": 2, "answer": "%d" }
+        ]
+      },
+      {
+        "id": "L2-05",
+        "title": "while 조건/증가",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int i = 0;",
+          "    while (i < __1__) {",
+          "        printf(\"%d\\n\", i);",
+          "        __2__;",
+          "    }",
+          "    return 0;",
+          "}"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "3" },
+          { "blank_no": 2, "answer": "i++" }
+        ]
+      },
+      {
+        "id": "L2-06",
+        "title": "문자열 길이/출력",
+        "lines": [
+          "#include <stdio.h>",
+          "#include <string.h>",
+          "",
+          "int main() {",
+          "    char s[] = \"hello\";",
+          "    size_t len = __1__(s);",
+          "    printf(\"__2__\\n\", len);",
+          "    return 0;",
+          "}",
+          "// blanks: function/format"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "strlen" },
+          { "blank_no": 2, "answer": "%lu" }
+        ]
+      },
+      {
+        "id": "L2-07",
+        "title": "break/조건",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    for (int i = 0; i < 10; i++) {",
+          "        if (i == __1__) __2__;",
+          "        printf(\"%d \", i);",
+          "    }",
+          "    return 0;",
+          "}"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "3" },
+          { "blank_no": 2, "answer": "break" }
+        ]
+      },
+      {
+        "id": "L2-08",
+        "title": "continue/조건",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    for (int i = 0; i < 5; i++) {",
+          "        if (i == __1__) __2__;",
+          "        printf(\"%d \", i);",
+          "    }",
+          "    return 0;",
+          "}"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "2" },
+          { "blank_no": 2, "answer": "continue" }
+        ]
+      },
+      {
+        "id": "L2-09",
+        "title": "삼항 연산",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int n = 7;",
+          "    int r = (n % 2 == 0) ? __1__ : __2__;",
+          "    printf(\"%d\\n\", r);",
+          "    return 0;",
+          "}",
+          "",
+          "// blanks: values"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "0" },
+          { "blank_no": 2, "answer": "1" }
+        ]
+      },
+      {
+        "id": "L2-10",
+        "title": "switch case",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int n = 1;",
+          "    switch (n) {",
+          "        case __1__: printf(\"ONE\\n\"); __2__;",
+          "    }",
+          "    return 0;",
+          "}"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "1" },
+          { "blank_no": 2, "answer": "break" }
+        ]
+      }
+    ],
+    "3": [
+      {
+        "id": "L3-01",
+        "title": "포인터 기본",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int n = 10;",
+          "    int* p = __1__ n;",
+          "    printf(\"__2__\\n\", __3__);",
+          "    return 0;",
+          "}",
+          "// blanks: & / %d / *p"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "&" },
+          { "blank_no": 2, "answer": "%d" },
+          { "blank_no": 3, "answer": "*p" }
+        ]
+      },
+      {
+        "id": "L3-02",
+        "title": "함수 선언/호출",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "__1__ add(int a, int b) {",
+          "    return a __2__ b;",
+          "}",
+          "int main() {",
+          "    printf(\"%d\\n\", add(3, __3__));",
+          "    return 0;",
+          "}"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "int" },
+          { "blank_no": 2, "answer": "+" },
+          { "blank_no": 3, "answer": "4" }
+        ]
+      },
+      {
+        "id": "L3-03",
+        "title": "배열/인덱스/합",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int a[4] = {1, 2, 3, 4};",
+          "    int sum = 0;",
+          "    for (int i = __1__; i < 4; i++) sum += __2__;",
+          "    printf(\"__3__\\n\", sum);",
+          "    return 0;",
+          "}"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "0" },
+          { "blank_no": 2, "answer": "a[i]" },
+          { "blank_no": 3, "answer": "%d" }
+        ]
+      },
+      {
+        "id": "L3-04",
+        "title": "문자열 복사",
+        "lines": [
+          "#include <stdio.h>",
+          "#include <string.h>",
+          "",
+          "int main() {",
+          "    char src[] = \"hi\";",
+          "    char dst[10];",
+          "    __1__(dst, src);",
+          "    printf(\"__2__\\n\", __3__);",
+          "    return 0;",
+          "}"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "strcpy" },
+          { "blank_no": 2, "answer": "%s" },
+          { "blank_no": 3, "answer": "dst" }
+        ]
+      },
+      {
+        "id": "L3-05",
+        "title": "구조체 기본",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "typedef struct {",
+          "    int x;",
+          "    int y;",
+          "} Point;",
+          "int main() {",
+          "    Point p = {__1__, __2__};",
+          "    printf(\"__3__\\n\", p.x + p.y);",
+          "    return 0;"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "1" },
+          { "blank_no": 2, "answer": "2" },
+          { "blank_no": 3, "answer": "%d" }
+        ]
+      },
+      {
+        "id": "L3-06",
+        "title": "조건/논리연산",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int a = 3;",
+          "    int b = 5;",
+          "    if (a __1__ b __2__ b < 10) __3__(\"YES\\n\");",
+          "    else printf(\"NO\\n\");",
+          "    return 0;",
+          "}"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "<" },
+          { "blank_no": 2, "answer": "&&" },
+          { "blank_no": 3, "answer": "printf" }
+        ]
+      },
+      {
+        "id": "L3-07",
+        "title": "중첩 for 출력",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    for (int i = 1; i <= 3; i++) {",
+          "        for (int j = 1; j <= i; j++) __1__(\"__2__\");",
+          "        __3__(\"\\n\");",
+          "    }",
+          "    return 0;",
+          "}"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "printf" },
+          { "blank_no": 2, "answer": "*" },
+          { "inblank_noex": 3, "answer": "printf" }
+        ]
+      },
+      {
+        "id": "L3-08",
+        "title": "scanf 2개 입력",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int a, b;",
+          "    __1__(\"__2__\", &a, &b);",
+          "    printf(\"%d\\n\", a __3__ b);",
+          "    return 0;",
+          "}",
+          "// blanks: scanf / %d %d / +"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "scanf" },
+          { "blank_no": 2, "answer": "%d %d" },
+          { "blank_no": 3, "answer": "+" }
+        ]
+      },
+      {
+        "id": "L3-09",
+        "title": "switch 다중 case",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int n = 2;",
+          "    switch (n) {",
+          "        case __1__: printf(\"ONE\\n\"); break;",
+          "        case __2__: printf(\"TWO\\n\"); __3__;",
+          "    }",
+          "    return 0;",
+          "}"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "1" },
+          { "blank_no": 2, "answer": "2" },
+          { "blank_no": 3, "answer": "break" }
+        ]
+      },
+      {
+        "id": "L3-10",
+        "title": "파일 포인터 흉내",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    FILE* fp = __1__(\"a.txt\", \"w\");",
+          "    if (fp == NULL) return 0;",
+          "    __2__(fp, \"hi\\n\");",
+          "    __3__(fp);",
+          "    return 0;",
+          "}"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "fopen" },
+          { "blank_no": 2, "answer": "fputs" },
+          { "blank_no": 3, "answer": "fclose" }
+        ]
+      }
+    ]
+  }
+}

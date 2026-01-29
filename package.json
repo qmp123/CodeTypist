@@ -1,0 +1,17 @@
+{
+  "name": "codetypist",
+  "version": "1.0.0",
+  "description": "코딩 타자 연습 웹사이트 백엔드 (JSON 기반)",
+  "main": "app.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node app.js"
+  },
+  "keywords": ["typing", "coding", "practice", "backend"],
+  "author": "codetypist-team",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
