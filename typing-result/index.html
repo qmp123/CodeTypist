@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>긴글 타자 연습</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>📄 긴글 타자 연습</h2>
+
+<!-- 원본 글 -->
+<p id="originText">
+  asdf
+</p>
+
+<!-- 입력창 -->
+<textarea id="typingArea" placeholder="여기에 타이핑하세요"></textarea>
+<br><br>
+
+<!-- 완료 버튼 -->
+<button id="finishBtn">연습 완료</button>
+
+<!-- 결과 모달 -->
+<div id="resultModal" class="modal">
+  <div class="modal-content">
+    <h3>📊 타자 연습 결과</h3>
+    <p>타자 속도: <span id="speed">0</span> WPM</p>
+    <p>정확도: <span id="accuracy">0</span> %</p>
+    <p>걸린 시간: <span id="time">0</span> 초</p>
+    <button id="closeModal">닫기</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
