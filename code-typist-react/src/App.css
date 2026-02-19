@@ -1,0 +1,9 @@
+.app-wrapper {
+  width: 100vw;
+  height: 100vh;
+  background-color: #121212;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* 스크롤 방지로 화면 흔들림 차단 */
+}

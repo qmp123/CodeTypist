@@ -1,0 +1,373 @@
+{
+  "c": {
+    "long": {
+      "1": {
+        "title": "C 긴글 1 - 반복문/조건문/배열 종합",
+        "pages": [
+          [
+            "#include <stdio.h>",
+            "",
+            "int main() {",
+            "    int sum = 0;",
+            "    for (int i = 1; i <= 10; i++) sum += i;"
+          ],
+          [
+            "    printf(\"sum = %d\\n\", sum);",
+            "    if (sum >= 55) {",
+            "        printf(\"PASS\\n\");",
+            "    } else {",
+            "        printf(\"FAIL\\n\");"
+          ],
+          [
+            "    }",
+            "    int a[5] = {1, 2, 3, 4, 5};",
+            "    int total = 0;",
+            "    for (int i = 0; i < 5; i++) total += a[i];",
+            "    printf(\"total = %d\\n\", total);"
+          ],
+          [
+            "    for (int i = 1; i <= 5; i++) {",
+            "        for (int j = 1; j <= i; j++) printf(\"*\");",
+            "        printf(\"\\n\");",
+            "    }",
+            ""
+          ],
+          [
+            "    return 0;",
+            "}",
+            "// 포인트: for / if-else / 배열 / 중첩 for",
+            "// 공백과 괄호까지 동일하게 입력해보세요.",
+            "// 실전 코딩 타이핑은 디테일 싸움입니다."
+          ]
+        ]
+      },
+      "2": {
+        "title": "C 긴글 2 - 함수/문자열/포인터 기초",
+        "pages": [
+          [
+            "#include <stdio.h>",
+            "#include <string.h>",
+            "int countChar(const char* s, char ch) {",
+            "    int cnt = 0;",
+            "    for (int i = 0; s[i] != '\\0'; i++) if (s[i] == ch) cnt++;"
+          ],
+          [
+            "    return cnt;",
+            "}",
+            "int main() {",
+            "    char str[100] = \"hello world\";",
+            "    char target = 'l';"
+          ],
+          [
+            "    int result = countChar(str, target);",
+            "    printf(\"str = %s\\n\", str);",
+            "    printf(\"target = %c\\n\", target);",
+            "    printf(\"count = %d\\n\", result);",
+            "    printf(\"length = %lu\\n\", strlen(str));"
+          ],
+          [
+            "    char copy[100];",
+            "    strcpy(copy, str);",
+            "    printf(\"copy = %s\\n\", copy);",
+            "    return 0;",
+            "}"
+          ],
+          [
+            "// 포인트: 문자열 종료 '\\0' / 포인터 매개변수 / strlen, strcpy",
+            "// 따옴표(' ')와 큰따옴표(\" \") 구분 필수",
+            "// 역슬래시(\\n) 정확히",
+            "// 공백까지 똑같이 입력해보자",
+            "// 끝!"
+          ]
+        ]
+      },
+      "3": {
+        "title": "C 긴글 3 - 구조체/정렬/배열 처리",
+        "pages": [
+          [
+            "#include <stdio.h>",
+            "typedef struct {",
+            "    char name[20];",
+            "    int score;",
+            "} Student;"
+          ],
+          [
+            "void swap(Student* a, Student* b) {",
+            "    Student t = *a;",
+            "    *a = *b;",
+            "    *b = t;",
+            "}"
+          ],
+          [
+            "void sortByScore(Student arr[], int n) {",
+            "    for (int i = 0; i < n - 1; i++) {",
+            "        for (int j = i + 1; j < n; j++) {",
+            "            if (arr[i].score < arr[j].score) swap(&arr[i], &arr[j]);",
+            "        }"
+          ],
+          [
+            "    }",
+            "}",
+            "int main() {",
+            "    Student s[3] = {{\"Kim\", 70}, {\"Lee\", 95}, {\"Park\", 85}};",
+            "    sortByScore(s, 3);"
+          ],
+          [
+            "    for (int i = 0; i < 3; i++) printf(\"%s %d\\n\", s[i].name, s[i].score);",
+            "    // 포인트: 구조체 배열 / 주소(&) / 포인터 함수 호출",
+            "    // 중괄호 { } 와 세미콜론 ; 을 정확히",
+            "    // 정렬 로직은 코딩 타이핑 국룰",
+            "    return 0;"
+          ]
+        ]
+      }
+    }
+  },
+  "python": {
+    "long": {
+      "1": {
+        "title": "Python 긴글 1 - 반복/조건/함수 종합",
+        "pages": [
+          [
+            "def add(a, b):",
+            "    return a + b",
+            "",
+            "total = 0",
+            "for i in range(1, 11):"
+          ],
+          [
+            "    total += i",
+            "print(\"sum =\", total)",
+            "",
+            "if total >= 55:",
+            "    print(\"PASS\")"
+          ],
+          [
+            "else:",
+            "    print(\"FAIL\")",
+            "",
+            "arr = [1, 2, 3, 4, 5]",
+            "arr_total = 0"
+          ],
+          [
+            "for x in arr:",
+            "    arr_total += x",
+            "print(\"total =\", arr_total)",
+            "",
+            "print(\"add(3, 4) =\", add(3, 4))"
+          ],
+          [
+            "for i in range(1, 6):",
+            "    print(\"*\" * i)",
+            "# 포인트: 들여쓰기(Indent)와 콜론(:)을 정확히!",
+            "# 줄바꿈 포함해서 그대로 입력하면 실력이 늘어요.",
+            "# 끝!"
+          ]
+        ]
+      },
+      "2": {
+        "title": "Python 긴글 2 - 리스트/딕셔너리/정렬 종합",
+        "pages": [
+          [
+            "students = [",
+            "    {\"name\": \"Kim\", \"score\": 70},",
+            "    {\"name\": \"Lee\", \"score\": 95},",
+            "    {\"name\": \"Park\", \"score\": 85},",
+            "]"
+          ],
+          [
+            "students.sort(key=lambda x: x[\"score\"], reverse=True)",
+            "for s in students:",
+            "    print(s[\"name\"], s[\"score\"])",
+            "",
+            "scores = [s[\"score\"] for s in students]"
+          ],
+          [
+            "avg = sum(scores) / len(scores)",
+            "print(\"avg =\", avg)",
+            "",
+            "passed_list = [s for s in students if s[\"score\"] >= 80]",
+            "print(\"passed =\", len(passed_list))"
+          ],
+          [
+            "best = students[0]",
+            "print(\"best =\", best[\"name\"])",
+            "",
+            "mapping = {s[\"name\"]: s[\"score\"] for s in students}",
+            "print(\"mapping =\", mapping)"
+          ],
+          [
+            "# 포인트: lambda / reverse / 리스트 컴프리헨션 / 딕셔너리 컴프리헨션",
+            "# 따옴표, 콜론(:), 대괄호([]) 디테일이 실력",
+            "# 들여쓰기(Indent) 틀리면 바로 오류",
+            "# 줄바꿈 포함해서 그대로 입력해보기",
+            "# 끝!"
+          ]
+        ]
+      },
+      "3": {
+        "title": "Python 긴글 3 - 함수/예외처리/문자열 처리",
+        "pages": [
+          [
+            "def safe_div(a, b):",
+            "    try:",
+            "        return a / b",
+            "    except ZeroDivisionError:",
+            "        return None"
+          ],
+          [
+            "nums = [10, 5, 0, 2]",
+            "for n in nums:",
+            "    result = safe_div(10, n)",
+            "    print(\"10 /\", n, \"=\", result)",
+            ""
+          ],
+          [
+            "text = \"alpha,beta,gamma\"",
+            "parts = text.split(\",\")",
+            "for p in parts:",
+            "    print(p.strip())",
+            ""
+          ],
+          [
+            "lines = [\"one\\n\", \"two\\n\", \"three\\n\"]",
+            "joined = \"\".join(lines)",
+            "print(joined)",
+            "count_o = sum(1 for ch in joined if ch == \"o\")",
+            "print(\"count(o) =\", count_o)"
+          ],
+          [
+            "# 포인트: try/except / split / join / 제너레이터 표현식",
+            "# None 처리 감각이 실전에서 갈림",
+            "# 문자열 함수는 코딩 타이핑 핵심 단골",
+            "# 띄어쓰기까지 정확히 치면 성장 체감 옴",
+            "# 끝!"
+          ]
+        ]
+      }
+    }
+  },
+  "java": {
+    "long": {
+      "1": {
+        "title": "Java 긴글 1 - 반복/조건/메서드 종합",
+        "pages": [
+          [
+            "public class Main {",
+            "    static int add(int a, int b) {",
+            "        return a + b;",
+            "    }",
+            "    public static void main(String[] args) {"
+          ],
+          [
+            "        int sum = 0;",
+            "        for (int i = 1; i <= 10; i++) {",
+            "            sum += i;",
+            "        }",
+            "        System.out.println(\"sum = \" + sum);"
+          ],
+          [
+            "        if (sum >= 55) {",
+            "            System.out.println(\"PASS\");",
+            "        } else {",
+            "            System.out.println(\"FAIL\");",
+            "        }"
+          ],
+          [
+            "        int[] arr = {1, 2, 3, 4, 5};",
+            "        int total = 0;",
+            "        for (int x : arr) total += x;",
+            "        System.out.println(\"total = \" + total);",
+            "        System.out.println(\"add(3, 4) = \" + add(3, 4));"
+          ],
+          [
+            "        for (int i = 1; i <= 5; i++) {",
+            "            System.out.println(\"*\".repeat(i));",
+            "        }",
+            "    }",
+            "}"
+          ]
+        ]
+      },
+      "2": {
+        "title": "Java 긴글 2 - 배열/메서드/문자열 처리",
+        "pages": [
+          [
+            "public class Main {",
+            "    static int sum(int[] arr) {",
+            "        int total = 0;",
+            "        for (int x : arr) total += x;",
+            "        return total;"
+          ],
+          [
+            "    }",
+            "    static int countChar(String s, char ch) {",
+            "        int cnt = 0;",
+            "        for (int i = 0; i < s.length(); i++) if (s.charAt(i) == ch) cnt++;",
+            "        return cnt;"
+          ],
+          [
+            "    }",
+            "    public static void main(String[] args) {",
+            "        int[] arr = {1, 2, 3, 4, 5};",
+            "        System.out.println(\"sum = \" + sum(arr));",
+            "        String str = \"hello world\";"
+          ],
+          [
+            "        char target = 'l';",
+            "        int c = countChar(str, target);",
+            "        System.out.println(\"str = \" + str);",
+            "        System.out.println(\"count = \" + c);",
+            "        System.out.println(\"upper = \" + str.toUpperCase());"
+          ],
+          [
+            "        // 포인트: 메서드 분리 / 향상된 for / charAt / length",
+            "        // 작은따옴표(' ')와 큰따옴표(\" \") 구분",
+            "        // 괄호 () 와 중괄호 { } 위치 정확히",
+            "    }",
+            "}"
+          ]
+        ]
+      },
+      "3": {
+        "title": "Java 긴글 3 - 클래스/정렬/컬렉션 기초",
+        "pages": [
+          [
+            "import java.util.*;",
+            "class Student {",
+            "    String name;",
+            "    int score;",
+            "    Student(String name, int score) { this.name = name; this.score = score; }"
+          ],
+          [
+            "}",
+            "public class Main {",
+            "    public static void main(String[] args) {",
+            "        List<Student> list = new ArrayList<>();",
+            "        list.add(new Student(\"Kim\", 70));"
+          ],
+          [
+            "        list.add(new Student(\"Lee\", 95));",
+            "        list.add(new Student(\"Park\", 85));",
+            "        list.sort((a, b) -> b.score - a.score);",
+            "        for (Student s : list) System.out.println(s.name + \" \" + s.score);"
+          ],
+          [
+            "        int total = 0;",
+            "        for (Student s : list) total += s.score;",
+            "        double avg = (double) total / list.size();",
+            "        System.out.println(\"avg = \" + avg);",
+            "        Student best = list.get(0);"
+          ],
+          [
+            "        System.out.println(\"best = \" + best.name);",
+            "        // 포인트: 클래스/생성자 / List / 람다 정렬",
+            "        // 형변환 (double) 은 자바 타이핑 단골",
+            "        // 컬렉션은 실무에서 매일 씀",
+            "    }"
+          ]
+        ]
+      }
+    }
+  }
+}
