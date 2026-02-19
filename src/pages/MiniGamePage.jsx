@@ -2,11 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import MiniGameResultModal from '../components/MiniGameResultModal';
 import '../styles/mini-game.css'; 
 
+// 🚀 데이터는 10개 이상만 있으면 되며, 로직에서 10개로 제한합니다.
 const miniGameData = {
   1: [
     { id: 1, text: "#include <stdio.h>\n\nint main() {\n  int n;\n  __(\"%d\", &n);\n  printf(\"%d\", n);\n  return 0;\n}", answers: ["scanf"] },
     { id: 2, text: "int main() {\n  for (int i = __; i < __; i++) {\n    printf(\"%d\", i);\n  }\n  return 0;\n}", answers: ["0", "5"] },
-  ]
+    // ... 최소 10개 이상의 데이터를 넣어주세요.
+  ],
+  2: [ /* ... */ ], 3: [ /* ... */ ], 4: [ /* ... */ ]
 };
 
 function MiniGamePage({ lang, onBack }) {
@@ -15,15 +18,19 @@ function MiniGamePage({ lang, onBack }) {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60); 
   const [userInputs, setUserInputs] = useState([]);
-  const [stats, setStats] = useState({ correct: 0, wrong: 0, missing: 0 });
+  const [stats, setStats] = useState({ correct: 0, wrong: 0 }); // 빈칸 항목 제거
   const timerRef = useRef(null);
+
+  const currentScore = stats.correct * 10;
 
   const startGame = (level) => {
     setDifficulty(level);
     setCurrentIdx(0);
-    setUserInputs(new Array(miniGameData[level][0].answers.length).fill(''));
+    const firstProblem = miniGameData[level][0];
+    setUserInputs(new Array(firstProblem.answers.length).fill(''));
     setGameState('PLAYING');
     setTimeLeft(60);
+    setStats({ correct: 0, wrong: 0 });
   };
 
   useEffect(() => {
@@ -35,28 +42,29 @@ function MiniGamePage({ lang, onBack }) {
 
   const checkAnswers = () => {
     const currentProblem = miniGameData[difficulty][currentIdx];
-    let localCorrect = 0, localWrong = 0, localMissing = 0;
+    let localCorrect = 0, localWrong = 0;
 
     userInputs.forEach((input, i) => {
       const trimmed = input.trim();
-      if (!trimmed) localMissing++;
-      else if (trimmed === currentProblem.answers[i]) localCorrect++;
-      else localWrong++;
+      // 🚀 정답이 아니면 무조건 오답 처리
+      if (!trimmed || trimmed !== currentProblem.answers[i]) {
+        localWrong++;
+      } else {
+        localCorrect++;
+      }
     });
 
     setStats(prev => ({
       correct: prev.correct + localCorrect,
-      wrong: prev.wrong + localWrong,
-      missing: prev.missing + localMissing
+      wrong: prev.wrong + localWrong
     }));
 
+    // 🚀 [고정] 현재 인덱스가 9(10번째 문제) 미만일 때만 다음으로 진행
     if (currentIdx < 9) {
       const nextIdx = currentIdx + 1;
       setCurrentIdx(nextIdx);
       const nextProblem = miniGameData[difficulty][nextIdx];
-      if (nextProblem) {
-        setUserInputs(new Array(nextProblem.answers.length).fill(''));
-      }
+      setUserInputs(new Array(nextProblem.answers.length).fill(''));
     } else {
       endGame();
     }
@@ -69,52 +77,48 @@ function MiniGamePage({ lang, onBack }) {
 
   if (gameState === 'READY') {
     return (
-      <div className="mini-game-ready" style={{ minHeight: '600px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-        <h2 style={{ color: '#fff', marginBottom: '30px', fontSize: '2rem' }}>난이도 선택</h2>
-        <div className="difficulty-grid">
-          {[1, 2, 3, 4].map(l => (
-            <button key={l} className="level-btn" onClick={() => startGame(l)}>Level {l}</button>
-          ))}
+      <div className="mini-game-full-container">
+        <header className="game-header-wide">
+          <button className="back-btn-ai-left" onClick={onBack}>← Back</button>
+          <h1 className="game-title-right">난이도 선택</h1>
+        </header>
+        <div className="difficulty-selection-box">
+          <div className="difficulty-grid-layout">
+            {[1, 2, 3, 4].map(l => (
+              <button key={l} className="level-selection-btn" onClick={() => startGame(l)}>Level {l}</button>
+            ))}
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="typing-container" style={{ minHeight: '750px', height: 'auto', paddingBottom: '40px' }}>
-      {/* 🚀 [변경] 상단 여백 증대: 타이틀 영역의 위아래 공간 확보 */}
-      <header className="game-header" style={{ display: 'flex', justifyContent: 'space-between', padding: '50px 0 40px 0' }}>
-        <button className="back-btn" onClick={onBack} style={{ background: '#333', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer', alignSelf: 'flex-start' }}>
-          ← Back to Menu
-        </button>
-        <div style={{ textAlign: 'right' }}>
-          <h2 style={{ margin: 0, color: '#fff', fontSize: '1.8rem', marginBottom: '10px' }}>미니 게임</h2>
-          <span className="language-tag-white">Language: {lang}</span>
+    <div className="mini-game-full-container">
+      <header className="game-header-wide">
+        <button className="back-btn-ai-left" onClick={() => setGameState('READY')}>← Back to Levels</button>
+        <div className="header-right-column">
+          <h1 className="game-title-right">오류찾기</h1>
+          <span className="info-tag-under-title">{lang} | Level {difficulty}</span>
         </div>
       </header>
 
-      <main className="typing-area">
-        {/* 📊 [변경] SCORE 항목 삭제 및 여백 조정 */}
-        <div className="status-bar" style={{ display: 'flex', justifyContent: 'space-around', background: '#222', padding: '20px', borderRadius: '12px', marginBottom: '30px' }}>
-          <div className="status-item">
-            <span style={{ color: '#888', display: 'block', fontSize: '0.8rem', marginBottom: '5px' }}>TIME</span>
-            <span className="status-value-mint" style={{ fontSize: '1.4rem' }}>{timeLeft}s</span>
-          </div>
-          <div className="status-item">
-            <span style={{ color: '#888', display: 'block', fontSize: '0.8rem', marginBottom: '5px' }}>PROGRESS</span>
-            <span className="status-value-mint" style={{ fontSize: '1.4rem' }}>{currentIdx + 1} / 10</span>
-          </div>
+      <main className="typing-area-mini">
+        <div className="status-bar-mini">
+          {/* 🚀 SCORE(좌), TIME(우) 배치 유지 */}
+          <div className="status-item-mini">SCORE <span className="mint-text">{currentScore}</span></div>
+          <div className="status-item-mini">TIME <span className="mint-text">{timeLeft}s</span></div>
+          <div className="status-item-mini">PROGRESS <span className="mint-text">{currentIdx + 1} / 10</span></div>
         </div>
 
-        {/* 💻 [변경] 메인 박스 크기 확대: minHeight 및 패딩 증가 */}
-        <div className="code-display-box" style={{ background: '#111', padding: '50px', borderRadius: '20px', minHeight: '450px', maxHeight: '600px', overflowY: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #333' }}>
-          <pre style={{ color: '#fff', fontSize: '1.3rem', lineHeight: '2.0', fontFamily: 'Consolas, monospace', width: '100%' }}>
+        <div className="code-display-box-mini">
+          <pre className="code-text-pre">
             {miniGameData[difficulty][currentIdx]?.text.split('__').map((part, i, arr) => (
               <span key={i}>
                 {part}
                 {i < arr.length - 1 && (
                   <input 
-                    className="blank-input"
+                    className="blank-input-field"
                     value={userInputs[i] || ''}
                     onChange={(e) => {
                       const n = [...userInputs];

@@ -1,0 +1,75 @@
+/* 모달 전체 배경 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* 모달창 몸통 */
+.modal-content {
+  background: #1e1e1e;
+  padding: 30px;
+  border-radius: 20px;
+  width: 450px;
+  border: 1px solid #444;
+  text-align: center;
+}
+
+.modal-title {
+  margin-bottom: 25px;
+  color: #fff;
+  font-size: 1.8rem;
+}
+
+/* 문장 리스트 영역 */
+.sentence-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+/* 개별 문장 버튼 (이미지에 있던 보라색 톤 적용) */
+.sentence-item-btn {
+  width: 100%;
+  padding: 18px;
+  background-color: #2a2a2a;
+  color: #c9b1ff;
+  border: 1px solid #3d3d3d;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sentence-item-btn:hover {
+  background-color: #383838;
+  transform: translateY(-2px);
+  border-color: #c9b1ff;
+}
+
+/* 취소 버튼 */
+.modal-close-btn {
+  background: transparent;
+  border: 1px solid #555;
+  color: #888;
+  padding: 10px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.modal-close-btn:hover {
+  color: #fff;
+  border-color: #fff;
+}
