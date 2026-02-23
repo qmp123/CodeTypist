@@ -1,0 +1,681 @@
+{
+  "time_limit_sec": 60,
+  "levels": {
+    "1": [
+      {
+        "id": "L1-01",
+        "title": "출력 println",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        __1__(\"Hello\");",
+          "    }",
+          "}",
+          "// blank: print method"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "System.out.println" }]
+      },
+      {
+        "id": "L1-02",
+        "title": "정수 선언",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        __1__ n = 10;",
+          "        System.out.println(n);",
+          "    }",
+          "}",
+          "// blank: type"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "int" }]
+      },
+      {
+        "id": "L1-03",
+        "title": "문자열 선언",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        __1__ s = \"java\";",
+          "        System.out.println(s);",
+          "    }",
+          "}",
+          "// blank: type"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "String" }]
+      },
+      {
+        "id": "L1-04",
+        "title": "char 리터럴",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        char c = __1__;",
+          "        System.out.println(c);",
+          "    }",
+          "}",
+          "// blank: char literal"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "'A'" }]
+      },
+      {
+        "id": "L1-05",
+        "title": "boolean",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        __1__ ok = true;",
+          "        System.out.println(ok);",
+          "    }",
+          "}",
+          "// blank: boolean type"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "boolean" }]
+      },
+      {
+        "id": "L1-06",
+        "title": "if 키워드",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        int n = 5;",
+          "        __1__ (n > 0) System.out.println(\"POS\");",
+          "    }",
+          "}",
+          "// blank: if keyword"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "if" }]
+      },
+      {
+        "id": "L1-07",
+        "title": "for 키워드",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        __1__ (int i = 0; i < 3; i++) System.out.println(i);",
+          "    }",
+          "}",
+          "// blank: for keyword"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "for" }]
+      },
+      {
+        "id": "L1-08",
+        "title": "배열 선언",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        int[] a = new int[__1__];",
+          "        System.out.println(a.length);",
+          "    }",
+          "}",
+          "// blank: array size"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "3" }]
+      },
+      {
+        "id": "L1-09",
+        "title": "길이 length",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        String s = \"hi\";",
+          "        System.out.println(s.__1__());",
+          "    }",
+          "}",
+          "// blank: length method"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "length" }]
+      },
+      {
+        "id": "L1-10",
+        "title": "클래스 시작",
+        "lines": [
+          "__1__ class Main {",
+          "    public static void main(String[] args) {",
+          "        System.out.println(\"OK\");",
+          "    }",
+          "}",
+          "// blank: access modifier"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "public" }]
+      }
+    ],
+    "2": [
+      {
+        "id": "L2-01",
+        "title": "for 범위",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        for (int i = __1__; i < __2__; i++) {",
+          "            System.out.println(i);",
+          "        }",
+          "    }",
+          "}",
+          "// blanks: start/end"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "0" },
+          { "blank_no": 2, "answer": "5" }
+        ]
+      },
+      {
+        "id": "L2-02",
+        "title": "if 조건",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        int n = 10;",
+          "        if (__1__) __2__(\"OK\");",
+          "    }",
+          "}",
+          "// blanks: condition/println"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "n >= 10" },
+          { "blank_no": 2, "answer": "System.out.println" }
+        ]
+      },
+      {
+        "id": "L2-03",
+        "title": "while 증가",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        int i = 0;",
+          "        while (i < __1__) {",
+          "            System.out.println(i);",
+          "            __2__;",
+          "        }",
+          "    }",
+          "}",
+          "// blanks: limit/increment"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "3" },
+          { "blank_no": 2, "answer": "i++" }
+        ]
+      },
+      {
+        "id": "L2-04",
+        "title": "배열 합",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        int[] a = {1, 2, 3};",
+          "        int sum = 0;",
+          "        for (int i = 0; i < a.length; i++) sum += __1__;",
+          "        System.out.println(__2__);",
+          "    }",
+          "}",
+          "// blanks: element/sum"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "a[i]" },
+          { "blank_no": 2, "answer": "sum" }
+        ]
+      },
+      {
+        "id": "L2-05",
+        "title": "삼항 연산",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        int n = 7;",
+          "        int r = (n % 2 == 0) ? __1__ : __2__;",
+          "        System.out.println(r);",
+          "    }",
+          "}",
+          "// blanks: values"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "0" },
+          { "blank_no": 2, "answer": "1" }
+        ]
+      },
+      {
+        "id": "L2-06",
+        "title": "switch case",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        int n = 1;",
+          "        switch (n) {",
+          "            case __1__: System.out.println(\"ONE\"); __2__;",
+          "        }",
+          "    }",
+          "}",
+          "// blanks: case/break"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "1" },
+          { "blank_no": 2, "answer": "break" }
+        ]
+      },
+      {
+        "id": "L2-07",
+        "title": "Scanner 생성",
+        "lines": [
+          "import java.util.*;",
+          "",
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        Scanner sc = new __1__(System.in);",
+          "        System.out.println(sc.nextInt());",
+          "    }",
+          "}",
+          "// blank: Scanner class"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "Scanner" }]
+      },
+      {
+        "id": "L2-08",
+        "title": "Scanner nextInt",
+        "lines": [
+          "import java.util.*;",
+          "",
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        Scanner sc = new Scanner(System.in);",
+          "        int x = sc.__1__();",
+          "        System.out.println(x);",
+          "    }",
+          "}",
+          "// blank: method"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "nextInt" }]
+      },
+      {
+        "id": "L2-09",
+        "title": "break/조건",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        for (int i = 0; i < 10; i++) {",
+          "            if (i == __1__) __2__;",
+          "            System.out.print(i + \" \");",
+          "        }",
+          "    }",
+          "}",
+          "// blanks: value/break"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "3" },
+          { "blank_no": 2, "answer": "break" }
+        ]
+      },
+      {
+        "id": "L2-10",
+        "title": "continue/조건",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        for (int i = 0; i < 5; i++) {",
+          "            if (i == __1__) __2__;",
+          "            System.out.print(i + \" \");",
+          "        }",
+          "    }",
+          "}",
+          "// blanks: value/continue"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "2" },
+          { "blank_no": 2, "answer": "continue" }
+        ]
+      }
+    ],
+    "3": [
+      {
+        "id": "L3-01",
+        "title": "메서드 선언/호출",
+        "lines": [
+          "public class Main {",
+          "    static __1__ add(int a, int b) {",
+          "        return a __2__ b;",
+          "    }",
+          "    public static void main(String[] args) {",
+          "        System.out.println(add(3, __3__));",
+          "    }",
+          "}",
+          "// blanks: return type/operator/value"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "int" },
+          { "blank_no": 2, "answer": "+" },
+          { "blank_no": 3, "answer": "4" }
+        ]
+      },
+      {
+        "id": "L3-02",
+        "title": "문자열 비교 equals",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        String a = \"hi\";",
+          "        String b = \"hi\";",
+          "        if (a.__1__(b)) System.out.println(\"SAME\");",
+          "    }",
+          "}",
+          "// blank: equals method"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "equals" }]
+      },
+      {
+        "id": "L3-03",
+        "title": "문자 추출 charAt",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        String s = \"java\";",
+          "        char c = s.__1__(0);",
+          "        System.out.println(c);",
+          "    }",
+          "}",
+          "// blank: charAt"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "charAt" }]
+      },
+      {
+        "id": "L3-04",
+        "title": "배열 길이/합",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        int[] a = {1, 2, 3, 4};",
+          "        int sum = 0;",
+          "        for (int i = __1__; i < a.__2__; i++) sum += a[i];",
+          "        System.out.println(sum);",
+          "    }",
+          "}",
+          "// blanks: start/length"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "0" },
+          { "blank_no": 2, "answer": "length" }
+        ]
+      },
+      {
+        "id": "L3-05",
+        "title": "클래스/객체",
+        "lines": [
+          "class Point {",
+          "    int x;",
+          "    int y;",
+          "}",
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        Point p = new __1__();",
+          "        p.x = 1; p.y = 2;",
+          "        System.out.println(p.x + p.y);",
+          "    }",
+          "}",
+          "// blank: constructor type"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "Point" }]
+      },
+      {
+        "id": "L3-06",
+        "title": "ArrayList 추가",
+        "lines": [
+          "import java.util.*;",
+          "",
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        ArrayList<Integer> list = new ArrayList<>();",
+          "        list.__1__(10);",
+          "        System.out.println(list.size());",
+          "    }",
+          "}",
+          "// blank: add method"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "add" }]
+      },
+      {
+        "id": "L3-07",
+        "title": "HashMap put/get",
+        "lines": [
+          "import java.util.*;",
+          "",
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        HashMap<String, Integer> m = new HashMap<>();",
+          "        m.__1__(\"a\", 1);",
+          "        System.out.println(m.__2__(\"a\"));",
+          "    }",
+          "}",
+          "// blanks: put/get"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "put" },
+          { "blank_no": 2, "answer": "get" }
+        ]
+      },
+      {
+        "id": "L3-08",
+        "title": "try/catch",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        try {",
+          "            int x = 10 / 0;",
+          "        } __1__ (ArithmeticException e) {",
+          "            System.out.println(\"ERR\");",
+          "        }",
+          "    }",
+          "}",
+          "// blank: catch keyword"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "catch" }]
+      },
+      {
+        "id": "L3-09",
+        "title": "반복문 향상 for",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        int[] a = {1, 2, 3};",
+          "        int sum = 0;",
+          "        for (int v __1__ a) sum += v;",
+          "        System.out.println(sum);",
+          "    }",
+          "}",
+          "// blank: colon"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": ":" }]
+      },
+      {
+        "id": "L3-10",
+        "title": "StringBuilder append",
+        "lines": [
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        StringBuilder sb = new StringBuilder();",
+          "        sb.__1__(\"hi\");",
+          "        System.out.println(sb.toString());",
+          "    }",
+          "}",
+          "// blank: append method"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "append" }]
+      }
+    ],
+    "4": [
+      {
+        "id": "L4-01",
+        "title": "static/final 상수",
+        "lines": [
+          "public class Main {",
+          "    static final int MAX = __1__;",
+          "    public static void main(String[] args) {",
+          "        System.out.println(MAX);",
+          "    }",
+          "}",
+          "// blank: constant value"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "100" }]
+      },
+      {
+        "id": "L4-02",
+        "title": "인터페이스 구현",
+        "lines": [
+          "interface Fly {",
+          "    void go();",
+          "}",
+          "class Bird __1__ Fly {",
+          "    public void go() { System.out.println(\"GO\"); }",
+          "}",
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        new Bird().go();",
+          "    }",
+          "}",
+          "// blank: implements keyword"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "implements" }]
+      },
+      {
+        "id": "L4-03",
+        "title": "상속 extends",
+        "lines": [
+          "class A {",
+          "    int x = 1;",
+          "}",
+          "class B __1__ A {",
+          "    int y = 2;",
+          "}",
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        B b = new B();",
+          "        System.out.println(b.x + b.y);",
+          "    }",
+          "}",
+          "// blank: extends keyword"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "extends" }]
+      },
+      {
+        "id": "L4-04",
+        "title": "오버라이딩 @Override",
+        "lines": [
+          "class A {",
+          "    void f() { System.out.println(\"A\"); }",
+          "}",
+          "class B extends A {",
+          "    __1__",
+          "    void f() { System.out.println(\"B\"); }",
+          "}",
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        new B().f();",
+          "    }",
+          "}",
+          "// blank: annotation"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "@Override" }]
+      },
+      {
+        "id": "L4-05",
+        "title": "제네릭 타입",
+        "lines": [
+          "import java.util.*;",
+          "",
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        ArrayList<__1__> list = new ArrayList<>();",
+          "        list.add(\"a\");",
+          "        System.out.println(list.get(0));",
+          "    }",
+          "}",
+          "// blank: generic type"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "String" }]
+      },
+      {
+        "id": "L4-06",
+        "title": "람다 기본",
+        "lines": [
+          "import java.util.*;",
+          "",
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        Runnable r = () __1__ System.out.println(\"RUN\");",
+          "        r.run();",
+          "    }",
+          "}",
+          "// blank: lambda arrow"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "->" }]
+      },
+      {
+        "id": "L4-07",
+        "title": "스트림 필터",
+        "lines": [
+          "import java.util.*;",
+          "import java.util.stream.*;",
+          "",
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        List<Integer> a = Arrays.asList(1, 2, 3, 4);",
+          "        long cnt = a.stream().filter(x -> x % 2 == 0).__1__();",
+          "        System.out.println(cnt);",
+          "    }",
+          "}",
+          "// blank: terminal op"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "count" }]
+      },
+      {
+        "id": "L4-08",
+        "title": "예외 throw",
+        "lines": [
+          "public class Main {",
+          "    static void f(int n) {",
+          "        if (n < 0) __1__ new IllegalArgumentException();",
+          "    }",
+          "    public static void main(String[] args) {",
+          "        f(-1);",
+          "    }",
+          "}",
+          "// blank: throw keyword"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "throw" }]
+      },
+      {
+        "id": "L4-09",
+        "title": "파일 읽기 Scanner",
+        "lines": [
+          "import java.io.*;",
+          "import java.util.*;",
+          "",
+          "public class Main {",
+          "    public static void main(String[] args) throws Exception {",
+          "        File f = new File(\"a.txt\");",
+          "        Scanner sc = new Scanner(f);",
+          "        while (sc.__1__()) System.out.println(sc.nextLine());",
+          "        sc.close();",
+          "    }",
+          "}",
+          "// blank: hasNextLine"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "hasNextLine" }]
+      },
+      {
+        "id": "L4-10",
+        "title": "정렬 Comparator",
+        "lines": [
+          "import java.util.*;",
+          "",
+          "public class Main {",
+          "    public static void main(String[] args) {",
+          "        List<Integer> a = Arrays.asList(3, 1, 2);",
+          "        a.sort(__1__.naturalOrder());",
+          "        System.out.println(a);",
+          "    }",
+          "}",
+          "// blank: Comparator"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "Comparator" }]
+      }
+    ]
+  }
+}
