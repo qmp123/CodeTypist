@@ -140,16 +140,16 @@ function TypingPage({ lang, mode, onBack, fontSize }) {
   return (
     <div className="typing-container" style={{ minHeight: '600px', height: 'auto' }}>
       {/* 🚀 헤더 정렬: display: flex와 justify-content: space-between 추가하여 버튼(좌) / 정보(우) 배치 */}
-      <header className="game-header" style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-        <button className="back-btn" onClick={onBack}>← Back to Menu</button>
-        <div className="game-info" style={{ textAlign: 'right' }}>
-          <h2 style={{ margin: 0, fontSize: '1.6rem' }}>{mode}</h2>
+      <header className="game-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 0 10px 0', marginBottom: '10px' }}>
+      <button className="back-btn" onClick={onBack}>← Back to Menu</button>
+         <div className="game-info" style={{ textAlign: 'right' }}>
+         <h2 style={{ margin: 0, fontSize: '1.6rem' }}>{mode}</h2>
           {mode !== '낱말 연습' && (
             <p style={{ margin: '5px 0 0 0' }}>Language: <strong>{lang}</strong></p>
-          )}
-        </div>
-      </header>
-
+            )}
+    </div>
+    
+    </header>
       <main className="typing-area" style={{ marginTop: '0' }}>
         <div className="status-bar" style={{ marginBottom: '15px', padding: '15px' }}>
           <div className="status-item">

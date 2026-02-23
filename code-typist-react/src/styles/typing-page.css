@@ -20,15 +20,21 @@
 }
 
 .game-header {
-  display: flex;          /* 가로로 나열 */
-  justify-content: space-between; /* 양 끝으로 밀기 */
-  align-items: center;    /* 세로 중앙 정렬 */
-  width: 100%;            /* 가로 꽉 채우기 */
-  border-bottom: 1px solid #333; /* 구분선 (선택사항) */
-  padding-bottom: 15px;
+  display: flex;
+  justify-content: space-between; /* 🚀 버튼은 왼쪽, 제목은 오른쪽으로 '밀어냄' */
+  align-items: flex-start;        /* 상단 정렬 */
+  width: 100%;                    /* 가로 꽉 채우기 */
+  border-bottom: 1px solid #333;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .back-btn {
+  /* 🚀 절대 위치(absolute)를 삭제하고 아래 속성을 넣으세요 */
+  position: relative !important; 
+  flex-shrink: 0;                /* 버튼이 찌그러지지 않게 방지 */
+  
+  /* 기존 스타일 유지 */
   background-color: #333;
   color: #ccc;
   border: 1px solid #444;
@@ -36,7 +42,11 @@
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
-  position: static !important;
+}
+
+.game-info {
+  text-align: right;             /* 글자들도 오른쪽 끝으로 정렬 */
+  flex-shrink: 0;
 }
 
 /***********************************************************

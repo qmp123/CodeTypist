@@ -12,9 +12,9 @@
   margin-bottom: 50px;
 }
 
-.back-btn {
-  position: absolute;
-  left: 0;
+.mini-back-btn {
+  position: absolute; /* 🚀 제목을 밀지 않고 독립적으로 배치 */
+  left: 0;            /* 🚀 컨테이너 왼쪽 끝에 고정 */
   background: transparent;
   color: #03dac6;
   border: 1px solid #03dac6;
