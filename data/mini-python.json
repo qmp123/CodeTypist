@@ -1,0 +1,504 @@
+{
+  "time_limit_sec": 60,
+  "levels": {
+    "1": [
+      {
+        "id": "L1-01",
+        "title": "출력 함수",
+        "lines": [
+          "__1__(\"Hello\")",
+          "",
+          "# blank: print"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "print" }]
+      },
+      {
+        "id": "L1-02",
+        "title": "정수 변수",
+        "lines": [
+          "x = __1__",
+          "print(x)",
+          "",
+          "# blank: integer literal"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "10" }]
+      },
+      {
+        "id": "L1-03",
+        "title": "문자열 변수",
+        "lines": [
+          "s = \"py\"",
+          "__1__(s)",
+          "",
+          "# blank: print"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "print" }]
+      },
+      {
+        "id": "L1-04",
+        "title": "입력 input",
+        "lines": [
+          "name = __1__()",
+          "print(name)",
+          "",
+          "# blank: input"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "input" }]
+      },
+      {
+        "id": "L1-05",
+        "title": "정수 변환",
+        "lines": [
+          "n = __1__(input())",
+          "print(n + 1)",
+          "",
+          "# blank: int()"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "int" }]
+      },
+      {
+        "id": "L1-06",
+        "title": "리스트 만들기",
+        "lines": [
+          "a = [1, 2, 3]",
+          "print(a[__1__])",
+          "",
+          "# blank: index"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "0" }]
+      },
+      {
+        "id": "L1-07",
+        "title": "길이 len",
+        "lines": [
+          "s = \"hello\"",
+          "print(__1__(s))",
+          "",
+          "# blank: len"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "len" }]
+      },
+      {
+        "id": "L1-08",
+        "title": "튜플",
+        "lines": [
+          "t = (1, 2)",
+          "print(t[__1__])",
+          "",
+          "# blank: index"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "1" }]
+      },
+      {
+        "id": "L1-09",
+        "title": "문자열 더하기",
+        "lines": [
+          "a = \"hi\"",
+          "b = \"!\"",
+          "print(a __1__ b)",
+          "",
+          "# blank: operator"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "+" }]
+      },
+      {
+        "id": "L1-10",
+        "title": "f-string 기본",
+        "lines": [
+          "n = 3",
+          "print(f\"n={__1__}\")",
+          "",
+          "# blank: variable"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "n" }]
+      }
+    ],
+    "2": [
+      {
+        "id": "L2-01",
+        "title": "if 조건",
+        "lines": [
+          "n = 10",
+          "__1__ n >= 10:",
+          "    print(\"OK\")",
+          "",
+          "# blank: if"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "if" }]
+      },
+      {
+        "id": "L2-02",
+        "title": "else 분기",
+        "lines": [
+          "n = 3",
+          "if n > 5:",
+          "    print(\"BIG\")",
+          "__1__:",
+          "    print(\"SMALL\")",
+          "",
+          "# blank: else"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "else" }]
+      },
+      {
+        "id": "L2-03",
+        "title": "for range",
+        "lines": [
+          "for i in __1__(0, 3):",
+          "    print(i)",
+          "",
+          "# blank: range"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "range" }]
+      },
+      {
+        "id": "L2-04",
+        "title": "while 증가",
+        "lines": [
+          "i = 0",
+          "while i < 3:",
+          "    print(i)",
+          "    __1__",
+          "",
+          "# blank: increment"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "i += 1" }]
+      },
+      {
+        "id": "L2-05",
+        "title": "리스트 합",
+        "lines": [
+          "a = [1, 2, 3]",
+          "s = 0",
+          "for v in a:",
+          "    s += __1__",
+          "print(s)",
+          "",
+          "# blank: variable"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "v" }]
+      },
+      {
+        "id": "L2-06",
+        "title": "break",
+        "lines": [
+          "for i in range(10):",
+          "    if i == 3:",
+          "        __1__",
+          "    print(i)",
+          "",
+          "# blank: break"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "break" }]
+      },
+      {
+        "id": "L2-07",
+        "title": "continue",
+        "lines": [
+          "for i in range(5):",
+          "    if i == 2:",
+          "        __1__",
+          "    print(i)",
+          "",
+          "# blank: continue"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "continue" }]
+      },
+      {
+        "id": "L2-08",
+        "title": "삼항 연산",
+        "lines": [
+          "n = 7",
+          "r = 0 __1__ n % 2 == 0 __2__ 1",
+          "print(r)",
+          "",
+          "# blanks: if/else in expression"
+        ],
+        "blanks": [
+          { "blank_no": 1, "answer": "if" },
+          { "blank_no": 2, "answer": "else" }
+        ]
+      },
+      {
+        "id": "L2-09",
+        "title": "문자열 split",
+        "lines": [
+          "s = \"a b c\"",
+          "parts = s.__1__()",
+          "print(parts[0])",
+          "",
+          "# blank: split"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "split" }]
+      },
+      {
+        "id": "L2-10",
+        "title": "join",
+        "lines": [
+          "a = [\"a\", \"b\", \"c\"]",
+          "print(\"-\".__1__(a))",
+          "",
+          "# blank: join"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "join" }]
+      }
+    ],
+    "3": [
+      {
+        "id": "L3-01",
+        "title": "함수 정의",
+        "lines": [
+          "__1__ add(a, b):",
+          "    return a + b",
+          "",
+          "print(add(3, 4))",
+          "",
+          "# blank: def"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "def" }]
+      },
+      {
+        "id": "L3-02",
+        "title": "리스트 컴프리헨션",
+        "lines": [
+          "a = [1, 2, 3, 4]",
+          "b = [x * 2 for x in a __1__ x % 2 == 0]",
+          "print(b)",
+          "",
+          "# blank: if"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "if" }]
+      },
+      {
+        "id": "L3-03",
+        "title": "딕셔너리 기본",
+        "lines": [
+          "m = {\"a\": 1, \"b\": 2}",
+          "print(m[__1__])",
+          "",
+          "# blank: key"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "\"a\"" }]
+      },
+      {
+        "id": "L3-04",
+        "title": "dict get",
+        "lines": [
+          "m = {\"a\": 1}",
+          "print(m.__1__(\"a\"))",
+          "",
+          "# blank: get"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "get" }]
+      },
+      {
+        "id": "L3-05",
+        "title": "set 중복 제거",
+        "lines": [
+          "a = [1, 1, 2, 2, 3]",
+          "s = __1__(a)",
+          "print(len(s))",
+          "",
+          "# blank: set"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "set" }]
+      },
+      {
+        "id": "L3-06",
+        "title": "enumerate",
+        "lines": [
+          "a = [\"x\", \"y\"]",
+          "for i, v in __1__(a):",
+          "    print(i, v)",
+          "",
+          "# blank: enumerate"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "enumerate" }]
+      },
+      {
+        "id": "L3-07",
+        "title": "zip",
+        "lines": [
+          "a = [1, 2]",
+          "b = [3, 4]",
+          "for x, y in __1__(a, b):",
+          "    print(x + y)",
+          "",
+          "# blank: zip"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "zip" }]
+      },
+      {
+        "id": "L3-08",
+        "title": "예외 처리 try",
+        "lines": [
+          "__1__:",
+          "    x = 10 / 0",
+          "except ZeroDivisionError:",
+          "    print(\"ERR\")",
+          "",
+          "# blank: try"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "try" }]
+      },
+      {
+        "id": "L3-09",
+        "title": "파일 쓰기",
+        "lines": [
+          "with open(\"a.txt\", \"w\") as f:",
+          "    f.__1__(\"hi\\n\")",
+          "",
+          "# blank: write"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "write" }]
+      },
+      {
+        "id": "L3-10",
+        "title": "문자열 포맷 format",
+        "lines": [
+          "n = 5",
+          "print(\"n={}\".__1__(n))",
+          "",
+          "# blank: format"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "format" }]
+      }
+    ],
+    "4": [
+      {
+        "id": "L4-01",
+        "title": "클래스/생성자",
+        "lines": [
+          "class Point:",
+          "    def __1__(self, x, y):",
+          "        self.x = x",
+          "        self.y = y",
+          "",
+          "p = Point(1, 2)",
+          "print(p.x + p.y)",
+          "",
+          "# blank: __init__"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "__init__" }]
+      },
+      {
+        "id": "L4-02",
+        "title": "상속",
+        "lines": [
+          "class A:",
+          "    def f(self):",
+          "        return 1",
+          "",
+          "class B(__1__):",
+          "    def g(self):",
+          "        return 2",
+          "",
+          "b = B()",
+          "print(b.f() + b.g())",
+          "",
+          "# blank: base class"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "A" }]
+      },
+      {
+        "id": "L4-03",
+        "title": "데코레이터",
+        "lines": [
+          "__1__",
+          "def hi():",
+          "    print(\"HI\")",
+          "",
+          "hi()",
+          "",
+          "# blank: decorator"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "@staticmethod" }]
+      },
+      {
+        "id": "L4-04",
+        "title": "람다/sorted",
+        "lines": [
+          "a = [3, 1, 2]",
+          "b = sorted(a, key=__1__ x: x)",
+          "print(b)",
+          "",
+          "# blank: lambda"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "lambda" }]
+      },
+      {
+        "id": "L4-05",
+        "title": "map",
+        "lines": [
+          "a = [1, 2, 3]",
+          "b = list(__1__(lambda x: x * 2, a))",
+          "print(b)",
+          "",
+          "# blank: map"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "map" }]
+      },
+      {
+        "id": "L4-06",
+        "title": "filter",
+        "lines": [
+          "a = [1, 2, 3, 4]",
+          "b = list(__1__(lambda x: x % 2 == 0, a))",
+          "print(b)",
+          "",
+          "# blank: filter"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "filter" }]
+      },
+      {
+        "id": "L4-07",
+        "title": "리스트 슬라이싱",
+        "lines": [
+          "a = [0, 1, 2, 3, 4]",
+          "print(a[__1__])",
+          "",
+          "# blank: slice 1..3"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "1:4" }]
+      },
+      {
+        "id": "L4-08",
+        "title": "제너레이터",
+        "lines": [
+          "def gen():",
+          "    for i in range(3):",
+          "        __1__ i",
+          "",
+          "print(list(gen()))",
+          "",
+          "# blank: yield"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "yield" }]
+      },
+      {
+        "id": "L4-09",
+        "title": "파일 읽기",
+        "lines": [
+          "with open(\"a.txt\", \"r\") as f:",
+          "    for line in f:",
+          "        print(line.__1__())",
+          "",
+          "# blank: strip"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "strip" }]
+      },
+      {
+        "id": "L4-10",
+        "title": "리스트 정렬 in-place",
+        "lines": [
+          "a = [3, 1, 2]",
+          "a.__1__()",
+          "print(a)",
+          "",
+          "# blank: sort"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "sort" }]
+      }
+    ]
+  }
+}
