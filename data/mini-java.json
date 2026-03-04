@@ -11,9 +11,15 @@
           "        __1__(\"Hello\");",
           "    }",
           "}",
+          "    // ...",
+          "    // ...",
+          "    // ...",
+          "    // ...",
           "// blank: print method"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "System.out.println" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "System.out.println" }
+        ]
       },
       {
         "id": "L1-02",
@@ -25,9 +31,14 @@
           "        System.out.println(n);",
           "    }",
           "}",
+          "    // ...",
+          "    // ...",
+          "    // ...",
           "// blank: type"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "int" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "int" }
+        ]
       },
       {
         "id": "L1-03",
@@ -39,9 +50,14 @@
           "        System.out.println(s);",
           "    }",
           "}",
+          "    // ...",
+          "    // ...",
+          "    // ...",
           "// blank: type"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "String" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "String" }
+        ]
       },
       {
         "id": "L1-04",
@@ -53,9 +69,14 @@
           "        System.out.println(c);",
           "    }",
           "}",
+          "    // ...",
+          "    // ...",
+          "    // ...",
           "// blank: char literal"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "'A'" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "'A'" }
+        ]
       },
       {
         "id": "L1-05",
@@ -67,9 +88,14 @@
           "        System.out.println(ok);",
           "    }",
           "}",
+          "    // ...",
+          "    // ...",
+          "    // ...",
           "// blank: boolean type"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "boolean" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "boolean" }
+        ]
       },
       {
         "id": "L1-06",
@@ -81,9 +107,14 @@
           "        __1__ (n > 0) System.out.println(\"POS\");",
           "    }",
           "}",
+          "    // ...",
+          "    // ...",
+          "    // ...",
           "// blank: if keyword"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "if" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "if" }
+        ]
       },
       {
         "id": "L1-07",
@@ -94,9 +125,15 @@
           "        __1__ (int i = 0; i < 3; i++) System.out.println(i);",
           "    }",
           "}",
+          "    // ...",
+          "    // ...",
+          "    // ...",
+          "    // ...",
           "// blank: for keyword"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "for" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "for" }
+        ]
       },
       {
         "id": "L1-08",
@@ -108,9 +145,14 @@
           "        System.out.println(a.length);",
           "    }",
           "}",
+          "    // ...",
+          "    // ...",
+          "    // ...",
           "// blank: array size"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "3" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "3" }
+        ]
       },
       {
         "id": "L1-09",
@@ -122,9 +164,14 @@
           "        System.out.println(s.__1__());",
           "    }",
           "}",
+          "    // ...",
+          "    // ...",
+          "    // ...",
           "// blank: length method"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "length" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "length" }
+        ]
       },
       {
         "id": "L1-10",
@@ -135,9 +182,15 @@
           "        System.out.println(\"OK\");",
           "    }",
           "}",
+          "    // ...",
+          "    // ...",
+          "    // ...",
+          "    // ...",
           "// blank: access modifier"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "public" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "public" }
+        ]
       }
     ],
     "2": [
@@ -152,6 +205,8 @@
           "        }",
           "    }",
           "}",
+          "    // ...",
+          "    // ...",
           "// blanks: start/end"
         ],
         "blanks": [
@@ -169,6 +224,9 @@
           "        if (__1__) __2__(\"OK\");",
           "    }",
           "}",
+          "    // ...",
+          "    // ...",
+          "    // ...",
           "// blanks: condition/println"
         ],
         "blanks": [
@@ -208,6 +266,7 @@
           "        System.out.println(__2__);",
           "    }",
           "}",
+          "    // ...",
           "// blanks: element/sum"
         ],
         "blanks": [
@@ -226,6 +285,8 @@
           "        System.out.println(r);",
           "    }",
           "}",
+          "    // ...",
+          "    // ...",
           "// blanks: values"
         ],
         "blanks": [
@@ -245,6 +306,7 @@
           "        }",
           "    }",
           "}",
+          "    // ...",
           "// blanks: case/break"
         ],
         "blanks": [
@@ -264,9 +326,12 @@
           "        System.out.println(sc.nextInt());",
           "    }",
           "}",
+          "    // ...",
           "// blank: Scanner class"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "Scanner" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "Scanner" }
+        ]
       },
       {
         "id": "L2-08",
@@ -283,7 +348,9 @@
           "}",
           "// blank: method"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "nextInt" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "nextInt" }
+        ]
       },
       {
         "id": "L2-09",
@@ -297,6 +364,7 @@
           "        }",
           "    }",
           "}",
+          "    // ...",
           "// blanks: value/break"
         ],
         "blanks": [
@@ -316,6 +384,7 @@
           "        }",
           "    }",
           "}",
+          "    // ...",
           "// blanks: value/continue"
         ],
         "blanks": [
@@ -337,6 +406,7 @@
           "        System.out.println(add(3, __3__));",
           "    }",
           "}",
+          "    // ...",
           "// blanks: return type/operator/value"
         ],
         "blanks": [
@@ -356,9 +426,13 @@
           "        if (a.__1__(b)) System.out.println(\"SAME\");",
           "    }",
           "}",
+          "    // ...",
+          "    // ...",
           "// blank: equals method"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "equals" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "equals" }
+        ]
       },
       {
         "id": "L3-03",
@@ -371,9 +445,13 @@
           "        System.out.println(c);",
           "    }",
           "}",
+          "    // ...",
+          "    // ...",
           "// blank: charAt"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "charAt" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "charAt" }
+        ]
       },
       {
         "id": "L3-04",
@@ -387,6 +465,7 @@
           "        System.out.println(sum);",
           "    }",
           "}",
+          "    // ...",
           "// blanks: start/length"
         ],
         "blanks": [
@@ -399,10 +478,8 @@
         "title": "클래스/객체",
         "lines": [
           "class Point {",
-          "    int x;",
-          "    int y;",
-          "}",
-          "public class Main {",
+          "    int x, y;",
+          "} public class Main {",
           "    public static void main(String[] args) {",
           "        Point p = new __1__();",
           "        p.x = 1; p.y = 2;",
@@ -411,7 +488,9 @@
           "}",
           "// blank: constructor type"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "Point" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "Point" }
+        ]
       },
       {
         "id": "L3-06",
@@ -428,7 +507,9 @@
           "}",
           "// blank: add method"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "add" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "add" }
+        ]
       },
       {
         "id": "L3-07",
@@ -465,7 +546,9 @@
           "}",
           "// blank: catch keyword"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "catch" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "catch" }
+        ]
       },
       {
         "id": "L3-09",
@@ -479,9 +562,12 @@
           "        System.out.println(sum);",
           "    }",
           "}",
+          "    // ...",
           "// blank: colon"
         ],
-        "blanks": [{ "blank_no": 1, "answer": ":" }]
+        "blanks": [
+          { "blank_no": 1, "answer": ":" }
+        ]
       },
       {
         "id": "L3-10",
@@ -494,9 +580,13 @@
           "        System.out.println(sb.toString());",
           "    }",
           "}",
+          "    // ...",
+          "    // ...",
           "// blank: append method"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "append" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "append" }
+        ]
       }
     ],
     "4": [
@@ -510,9 +600,14 @@
           "        System.out.println(MAX);",
           "    }",
           "}",
+          "    // ...",
+          "    // ...",
+          "    // ...",
           "// blank: constant value"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "100" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "100" }
+        ]
       },
       {
         "id": "L4-02",
@@ -531,7 +626,9 @@
           "}",
           "// blank: implements keyword"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "implements" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "implements" }
+        ]
       },
       {
         "id": "L4-03",
@@ -539,8 +636,7 @@
         "lines": [
           "class A {",
           "    int x = 1;",
-          "}",
-          "class B __1__ A {",
+          "} class B __1__ A {",
           "    int y = 2;",
           "}",
           "public class Main {",
@@ -551,7 +647,9 @@
           "}",
           "// blank: extends keyword"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "extends" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "extends" }
+        ]
       },
       {
         "id": "L4-04",
@@ -559,8 +657,7 @@
         "lines": [
           "class A {",
           "    void f() { System.out.println(\"A\"); }",
-          "}",
-          "class B extends A {",
+          "} class B extends A {",
           "    __1__",
           "    void f() { System.out.println(\"B\"); }",
           "}",
@@ -571,7 +668,9 @@
           "}",
           "// blank: annotation"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "@Override" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "@Override" }
+        ]
       },
       {
         "id": "L4-05",
@@ -588,7 +687,9 @@
           "}",
           "// blank: generic type"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "String" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "String" }
+        ]
       },
       {
         "id": "L4-06",
@@ -602,9 +703,12 @@
           "        r.run();",
           "    }",
           "}",
+          "    // ...",
           "// blank: lambda arrow"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "->" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "->" }
+        ]
       },
       {
         "id": "L4-07",
@@ -622,7 +726,9 @@
           "}",
           "// blank: terminal op"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "count" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "count" }
+        ]
       },
       {
         "id": "L4-08",
@@ -636,9 +742,12 @@
           "        f(-1);",
           "    }",
           "}",
+          "    // ...",
           "// blank: throw keyword"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "throw" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "throw" }
+        ]
       },
       {
         "id": "L4-09",
@@ -654,10 +763,11 @@
           "        while (sc.__1__()) System.out.println(sc.nextLine());",
           "        sc.close();",
           "    }",
-          "}",
-          "// blank: hasNextLine"
+          "}"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "hasNextLine" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "hasNextLine" }
+        ]
       },
       {
         "id": "L4-10",
@@ -672,9 +782,12 @@
           "        System.out.println(a);",
           "    }",
           "}",
+          "    // ...",
           "// blank: Comparator"
         ],
-        "blanks": [{ "blank_no": 1, "answer": "Comparator" }]
+        "blanks": [
+          { "blank_no": 1, "answer": "Comparator" }
+        ]
       }
     ]
   }
