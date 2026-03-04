@@ -8,6 +8,13 @@
         "lines": [
           "__1__(\"Hello\")",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: print"
         ],
         "blanks": [{ "blank_no": 1, "answer": "print" }]
@@ -19,6 +26,12 @@
           "x = __1__",
           "print(x)",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: integer literal"
         ],
         "blanks": [{ "blank_no": 1, "answer": "10" }]
@@ -30,6 +43,12 @@
           "s = \"py\"",
           "__1__(s)",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: print"
         ],
         "blanks": [{ "blank_no": 1, "answer": "print" }]
@@ -41,6 +60,12 @@
           "name = __1__()",
           "print(name)",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: input"
         ],
         "blanks": [{ "blank_no": 1, "answer": "input" }]
@@ -52,6 +77,12 @@
           "n = __1__(input())",
           "print(n + 1)",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: int()"
         ],
         "blanks": [{ "blank_no": 1, "answer": "int" }]
@@ -63,6 +94,12 @@
           "a = [1, 2, 3]",
           "print(a[__1__])",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: index"
         ],
         "blanks": [{ "blank_no": 1, "answer": "0" }]
@@ -74,6 +111,12 @@
           "s = \"hello\"",
           "print(__1__(s))",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: len"
         ],
         "blanks": [{ "blank_no": 1, "answer": "len" }]
@@ -85,6 +128,12 @@
           "t = (1, 2)",
           "print(t[__1__])",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: index"
         ],
         "blanks": [{ "blank_no": 1, "answer": "1" }]
@@ -97,6 +146,11 @@
           "b = \"!\"",
           "print(a __1__ b)",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: operator"
         ],
         "blanks": [{ "blank_no": 1, "answer": "+" }]
@@ -108,6 +162,12 @@
           "n = 3",
           "print(f\"n={__1__}\")",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: variable"
         ],
         "blanks": [{ "blank_no": 1, "answer": "n" }]
@@ -122,6 +182,11 @@
           "__1__ n >= 10:",
           "    print(\"OK\")",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: if"
         ],
         "blanks": [{ "blank_no": 1, "answer": "if" }]
@@ -136,6 +201,9 @@
           "__1__:",
           "    print(\"SMALL\")",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: else"
         ],
         "blanks": [{ "blank_no": 1, "answer": "else" }]
@@ -147,6 +215,12 @@
           "for i in __1__(0, 3):",
           "    print(i)",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: range"
         ],
         "blanks": [{ "blank_no": 1, "answer": "range" }]
@@ -160,6 +234,10 @@
           "    print(i)",
           "    __1__",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: increment"
         ],
         "blanks": [{ "blank_no": 1, "answer": "i += 1" }]
@@ -174,6 +252,9 @@
           "    s += __1__",
           "print(s)",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: variable"
         ],
         "blanks": [{ "blank_no": 1, "answer": "v" }]
@@ -187,6 +268,10 @@
           "        __1__",
           "    print(i)",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: break"
         ],
         "blanks": [{ "blank_no": 1, "answer": "break" }]
@@ -200,6 +285,10 @@
           "        __1__",
           "    print(i)",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: continue"
         ],
         "blanks": [{ "blank_no": 1, "answer": "continue" }]
@@ -212,6 +301,11 @@
           "r = 0 __1__ n % 2 == 0 __2__ 1",
           "print(r)",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blanks: if/else in expression"
         ],
         "blanks": [
@@ -227,6 +321,11 @@
           "parts = s.__1__()",
           "print(parts[0])",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: split"
         ],
         "blanks": [{ "blank_no": 1, "answer": "split" }]
@@ -238,6 +337,12 @@
           "a = [\"a\", \"b\", \"c\"]",
           "print(\"-\".__1__(a))",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: join"
         ],
         "blanks": [{ "blank_no": 1, "answer": "join" }]
@@ -253,6 +358,10 @@
           "",
           "print(add(3, 4))",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: def"
         ],
         "blanks": [{ "blank_no": 1, "answer": "def" }]
@@ -265,6 +374,11 @@
           "b = [x * 2 for x in a __1__ x % 2 == 0]",
           "print(b)",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: if"
         ],
         "blanks": [{ "blank_no": 1, "answer": "if" }]
@@ -276,6 +390,12 @@
           "m = {\"a\": 1, \"b\": 2}",
           "print(m[__1__])",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: key"
         ],
         "blanks": [{ "blank_no": 1, "answer": "\"a\"" }]
@@ -287,6 +407,12 @@
           "m = {\"a\": 1}",
           "print(m.__1__(\"a\"))",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: get"
         ],
         "blanks": [{ "blank_no": 1, "answer": "get" }]
@@ -299,6 +425,11 @@
           "s = __1__(a)",
           "print(len(s))",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: set"
         ],
         "blanks": [{ "blank_no": 1, "answer": "set" }]
@@ -311,6 +442,11 @@
           "for i, v in __1__(a):",
           "    print(i, v)",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: enumerate"
         ],
         "blanks": [{ "blank_no": 1, "answer": "enumerate" }]
@@ -324,6 +460,10 @@
           "for x, y in __1__(a, b):",
           "    print(x + y)",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: zip"
         ],
         "blanks": [{ "blank_no": 1, "answer": "zip" }]
@@ -337,6 +477,10 @@
           "except ZeroDivisionError:",
           "    print(\"ERR\")",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: try"
         ],
         "blanks": [{ "blank_no": 1, "answer": "try" }]
@@ -348,6 +492,12 @@
           "with open(\"a.txt\", \"w\") as f:",
           "    f.__1__(\"hi\\n\")",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: write"
         ],
         "blanks": [{ "blank_no": 1, "answer": "write" }]
@@ -359,6 +509,12 @@
           "n = 5",
           "print(\"n={}\".__1__(n))",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: format"
         ],
         "blanks": [{ "blank_no": 1, "answer": "format" }]
@@ -377,6 +533,7 @@
           "p = Point(1, 2)",
           "print(p.x + p.y)",
           "",
+          "# ...",
           "# blank: __init__"
         ],
         "blanks": [{ "blank_no": 1, "answer": "__init__" }]
@@ -388,14 +545,12 @@
           "class A:",
           "    def f(self):",
           "        return 1",
-          "",
           "class B(__1__):",
           "    def g(self):",
           "        return 2",
-          "",
           "b = B()",
           "print(b.f() + b.g())",
-          "",
+          "# ...",
           "# blank: base class"
         ],
         "blanks": [{ "blank_no": 1, "answer": "A" }]
@@ -410,6 +565,9 @@
           "",
           "hi()",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: decorator"
         ],
         "blanks": [{ "blank_no": 1, "answer": "@staticmethod" }]
@@ -422,6 +580,11 @@
           "b = sorted(a, key=__1__ x: x)",
           "print(b)",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: lambda"
         ],
         "blanks": [{ "blank_no": 1, "answer": "lambda" }]
@@ -434,6 +597,11 @@
           "b = list(__1__(lambda x: x * 2, a))",
           "print(b)",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: map"
         ],
         "blanks": [{ "blank_no": 1, "answer": "map" }]
@@ -446,6 +614,11 @@
           "b = list(__1__(lambda x: x % 2 == 0, a))",
           "print(b)",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: filter"
         ],
         "blanks": [{ "blank_no": 1, "answer": "filter" }]
@@ -457,6 +630,12 @@
           "a = [0, 1, 2, 3, 4]",
           "print(a[__1__])",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: slice 1..3"
         ],
         "blanks": [{ "blank_no": 1, "answer": "1:4" }]
@@ -471,6 +650,9 @@
           "",
           "print(list(gen()))",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: yield"
         ],
         "blanks": [{ "blank_no": 1, "answer": "yield" }]
@@ -483,6 +665,11 @@
           "    for line in f:",
           "        print(line.__1__())",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: strip"
         ],
         "blanks": [{ "blank_no": 1, "answer": "strip" }]
@@ -495,6 +682,11 @@
           "a.__1__()",
           "print(a)",
           "",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
+          "# ...",
           "# blank: sort"
         ],
         "blanks": [{ "blank_no": 1, "answer": "sort" }]
