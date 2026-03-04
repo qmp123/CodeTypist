@@ -1,54 +1,48 @@
-import express from "express";
-import cors from "cors";
+const express = require("express");
+const cors = require("cors"); // cors: CORS 미들웨어
+const app = express(); // app: express 애플리케이션 인스턴스
 
-import quizRouter from "./routes/quiz.js";
-import typingRouter from "./routes/typing.js";
+const { sendSuccessResponse, sendErrorResponse } = require("./utils/response-utils"); // responseUtils: 응답 유틸
+const practiceRouter = require("./routes/practice-route"); // practiceRouter: 연습 API 라우터
+const miniRouter = require("./routes/mini-route"); // miniRouter: 미니게임 API 라우터
 
-const app = express();
+const defaultPort = 3000; // defaultPort: 기본 포트
+const serverPort = Number.isFinite(Number(process.env.PORT)) ? Number(process.env.PORT) : defaultPort; // serverPort: 서버 포트
 
-// =====================
-// 공통 미들웨어
-// =====================
+// enableCors: 프론트 개발 서버에서의 API 호출 허용
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "http://localhost:3000"], // allowedOrigins: 허용 오리진 목록
+    methods: ["GET", "POST"], // allowedMethods: 허용 메서드 목록
+  })
+);
 
-// CORS 설정 (프론트엔드 연동 허용)
-app.use(cors());
+app.use(express.json({ limit: "256kb" })); // jsonBodyParser: JSON 요청 바디 파서(용량 제한)
 
-// JSON 요청 파싱
-app.use(express.json());
+// getHealth: 서버 상태 체크 엔드포인트
+app.get("/api/health", (req, res) => {
+  return sendSuccessResponse(res, { status: "ok", service: "codetypist" });
+});
 
-// =====================
-// API 라우터 연결
-// =====================
+// usePracticeRoutes: 연습 API 라우팅 연결
+app.use("/api/practice", practiceRouter);
 
-// 퀴즈 미니게임 API
-app.use("/api/quiz", quizRouter);
+// useMiniRoutes: 미니게임 API 라우팅 연결
+app.use("/api/mini", miniRouter);
 
-// 타자 미니게임 API
-// (내부에서 apiAuth로 접근 제어함)
-app.use("/api/typing", typingRouter);
-
-// =====================
-// 잘못된 API 요청 처리
-// =====================
+// handleNotFound: 404 처리(잘못된 API 주소 접근 시)
 app.use((req, res) => {
-  res.status(404).json({
-    message: "존재하지 않는 API입니다."
-  });
+  return sendErrorResponse(res, 404, "api not found");
 });
 
-// =====================
-// 서버 예외 상황 처리
-// =====================
+// handleGlobalError: 전역 에러 처리(서버 내부 에러)
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    message: "서버 오류 발생"
-  });
+  console.error(err); // serverErrorLog: 서버 에러 로그
+  if (res.headersSent) return next(err);
+  return sendErrorResponse(res, 500, "internal server error");
 });
 
-// =====================
-// 서버 실행
-// =====================
-app.listen(3000, () => {
-  console.log("서버 실행 중");
+// startServer: 서버 실행
+app.listen(serverPort, () => {
+  console.log(`✅ Server running: http://localhost:${serverPort}`); // serverStartLog: 서버 시작 로그
 });
