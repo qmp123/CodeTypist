@@ -14,6 +14,7 @@
           "    printf(\"%d\\n\", n);",
           "    return 0;",
           "}",
+          "",
           "// blank: input function"
         ],
         "blanks": [{ "blank_no": 1, "answer": "scanf" }]
@@ -29,6 +30,7 @@
           "    __1__(\"a = %d\\n\", a);",
           "    return 0;",
           "}",
+          "",
           "",
           "// blank: output function"
         ],
@@ -46,6 +48,7 @@
           "    return 0;",
           "}",
           "",
+          "",
           "// blank: type"
         ],
         "blanks": [{ "blank_no": 1, "answer": "int" }]
@@ -60,6 +63,7 @@
           "    printf(\"OK\\n\");",
           "    __1__ 0;",
           "}",
+          "",
           "",
           "",
           "// blank: return keyword"
@@ -78,6 +82,7 @@
           "}",
           "",
           "",
+          "",
           "// blank: loop keyword"
         ],
         "blanks": [{ "blank_no": 1, "answer": "for" }]
@@ -93,6 +98,7 @@
           "    __1__ (n > 0) printf(\"POS\\n\");",
           "    return 0;",
           "}",
+          "",
           "",
           "// blank: if keyword"
         ],
@@ -110,6 +116,7 @@
           "    return 0;",
           "}",
           "",
+          "",
           "// blank: array size"
         ],
         "blanks": [{ "blank_no": 1, "answer": "3" }]
@@ -125,6 +132,7 @@
           "    printf(\"__1__\\n\", c);",
           "    return 0;",
           "}",
+          "",
           "",
           "// blank: format"
         ],
@@ -142,6 +150,7 @@
           "    return 0;",
           "}",
           "",
+          "",
           "// blank: format"
         ],
         "blanks": [{ "blank_no": 1, "answer": "%d" }]
@@ -157,6 +166,7 @@
           "    printf(\"%c\\n\", ch);",
           "    return 0;",
           "}",
+          "",
           "",
           "// blank: function"
         ],
@@ -176,6 +186,7 @@
           "    }",
           "    return 0;",
           "}",
+          "",
           "// blanks: start/end"
         ],
         "blanks": [
@@ -194,6 +205,7 @@
           "    if (__1__) __2__(\"OK\\n\");",
           "    return 0;",
           "}",
+          "",
           "",
           "// blanks: condition/function"
         ],
@@ -214,7 +226,8 @@
           "    for (int i = 0; i < 3; i++) sum += __1__;",
           "    printf(\"%d\\n\", __2__);",
           "    return 0;",
-          "}"
+          "}",
+          ""
         ],
         "blanks": [
           { "blank_no": 1, "answer": "a[i]" },
@@ -233,6 +246,7 @@
           "    printf(\"%d\\n\", x);",
           "    return 0;",
           "}",
+          "",
           "// blanks: function/format"
         ],
         "blanks": [
@@ -292,7 +306,8 @@
           "        printf(\"%d \", i);",
           "    }",
           "    return 0;",
-          "}"
+          "}",
+          ""
         ],
         "blanks": [
           { "blank_no": 1, "answer": "3" },
@@ -311,7 +326,8 @@
           "        printf(\"%d \", i);",
           "    }",
           "    return 0;",
-          "}"
+          "}",
+          ""
         ],
         "blanks": [
           { "blank_no": 1, "answer": "2" },
@@ -350,7 +366,8 @@
           "        case __1__: printf(\"ONE\\n\"); __2__;",
           "    }",
           "    return 0;",
-          "}"
+          "}",
+          ""
         ],
         "blanks": [
           { "blank_no": 1, "answer": "1" },
@@ -371,6 +388,7 @@
           "    printf(\"__2__\\n\", __3__);",
           "    return 0;",
           "}",
+          "",
           "// blanks: & / %d / *p"
         ],
         "blanks": [
@@ -391,7 +409,8 @@
           "int main() {",
           "    printf(\"%d\\n\", add(3, __3__));",
           "    return 0;",
-          "}"
+          "}",
+          ""
         ],
         "blanks": [
           { "blank_no": 1, "answer": "int" },
@@ -411,7 +430,8 @@
           "    for (int i = __1__; i < 4; i++) sum += __2__;",
           "    printf(\"__3__\\n\", sum);",
           "    return 0;",
-          "}"
+          "}",
+          ""
         ],
         "blanks": [
           { "blank_no": 1, "answer": "0" },
@@ -453,7 +473,7 @@
           "int main() {",
           "    Point p = {__1__, __2__};",
           "    printf(\"__3__\\n\", p.x + p.y);",
-          "    return 0;"
+          "    return 0; }"
         ],
         "blanks": [
           { "blank_no": 1, "answer": "1" },
@@ -473,7 +493,8 @@
           "    if (a __1__ b __2__ b < 10) __3__(\"YES\\n\");",
           "    else printf(\"NO\\n\");",
           "    return 0;",
-          "}"
+          "}",
+          ""
         ],
         "blanks": [
           { "blank_no": 1, "answer": "<" },
@@ -493,12 +514,13 @@
           "        __3__(\"\\n\");",
           "    }",
           "    return 0;",
-          "}"
+          "}",
+          ""
         ],
         "blanks": [
           { "blank_no": 1, "answer": "printf" },
           { "blank_no": 2, "answer": "*" },
-          { "inblank_noex": 3, "answer": "printf" }
+          { "blank_no": 3, "answer": "printf" }
         ]
       },
       {
@@ -513,6 +535,7 @@
           "    printf(\"%d\\n\", a __3__ b);",
           "    return 0;",
           "}",
+          "",
           "// blanks: scanf / %d %d / +"
         ],
         "blanks": [
@@ -554,13 +577,191 @@
           "    __2__(fp, \"hi\\n\");",
           "    __3__(fp);",
           "    return 0;",
-          "}"
+          "}",
+          ""
         ],
         "blanks": [
           { "blank_no": 1, "answer": "fopen" },
           { "blank_no": 2, "answer": "fputs" },
           { "blank_no": 3, "answer": "fclose" }
         ]
+      }
+    ],
+    "4": [
+      {
+        "id": "L4-01",
+        "title": "포인터 역참조",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int n = 7;",
+          "    int* p = &n;",
+          "    printf(\"%d\\n\", __1__);",
+          "    return 0;",
+          "}",
+          "",
+          "// blank: dereference"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "*p" }]
+      },
+      {
+        "id": "L4-02",
+        "title": "malloc 동적할당",
+        "lines": [
+          "#include <stdio.h>",
+          "#include <stdlib.h>",
+          "",
+          "int main() {",
+          "    int* a = (int*)__1__(3 * sizeof(int));",
+          "    a[0] = 1; a[1] = 2; a[2] = 3;",
+          "    printf(\"%d\\n\", a[1]);",
+          "    free(a);",
+          "    return 0;",
+          "}"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "malloc" }]
+      },
+      {
+        "id": "L4-03",
+        "title": "sizeof 타입",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int x = 0;",
+          "    printf(\"%zu\\n\", __1__(x));",
+          "    return 0;",
+          "}",
+          "",
+          "",
+          "// blank: sizeof"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "sizeof" }]
+      },
+      {
+        "id": "L4-04",
+        "title": "문자열 비교 strcmp",
+        "lines": [
+          "#include <stdio.h>",
+          "#include <string.h>",
+          "",
+          "int main() {",
+          "    char a[] = \"hi\";",
+          "    char b[] = \"hi\";",
+          "    if (__1__(a, b) == 0) printf(\"SAME\\n\");",
+          "    return 0;",
+          "}",
+          "",
+          "// blank: strcmp"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "strcmp" }]
+      },
+      {
+        "id": "L4-05",
+        "title": "재귀 factorial",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int __1__(int n) {",
+          "    if (n <= 1) return 1;",
+          "    return n * __1__(n - 1);",
+          "}",
+          "int main() {",
+          "    printf(\"%d\\n\", __1__(5));",
+          "    return 0;",
+          "}"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "fact" }]
+      },
+      {
+        "id": "L4-06",
+        "title": "배열 포인터 이동",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    int a[3] = {10, 20, 30};",
+          "    int* p = a;",
+          "    printf(\"%d\\n\", __1__);",
+          "    return 0;",
+          "}",
+          "",
+          "// blank: *(p+1)"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "*(p + 1)" }]
+      },
+      {
+        "id": "L4-07",
+        "title": "구조체 포인터 ->",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "typedef struct { int x; int y; } Point;",
+          "int main() {",
+          "    Point p = {1, 2};",
+          "    Point* pp = &p;",
+          "    printf(\"%d\\n\", pp__1__x + pp->y);",
+          "    return 0;",
+          "}",
+          "",
+          "// blank: arrow"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "->" }]
+      },
+      {
+        "id": "L4-08",
+        "title": "파일 읽기 fgets",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "int main() {",
+          "    FILE* fp = fopen(\"a.txt\", \"r\");",
+          "    char buf[100];",
+          "    if (fp && __1__(buf, 100, fp)) printf(\"%s\", buf);",
+          "    if (fp) fclose(fp);",
+          "    return 0;",
+          "}",
+          "",
+          "// blank: fgets"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "fgets" }]
+      },
+      {
+        "id": "L4-09",
+        "title": "매크로 정의",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "#define __1__(a,b) ((a)>(b)?(a):(b))",
+          "int main() {",
+          "    int x = 3, y = 5;",
+          "    printf(\"%d\\n\", __1__(x, y));",
+          "    return 0;",
+          "}",
+          "",
+          "",
+          "// blank: macro name"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "MAX" }]
+      },
+      {
+        "id": "L4-10",
+        "title": "enum 기본",
+        "lines": [
+          "#include <stdio.h>",
+          "",
+          "enum Day { MON = 1, TUE = 2 };",
+          "int main() {",
+          "    enum Day d = __1__;",
+          "    printf(\"%d\\n\", d);",
+          "    return 0;",
+          "}",
+          "",
+          "",
+          "// blank: enum value"
+        ],
+        "blanks": [{ "blank_no": 1, "answer": "TUE" }]
       }
     ]
   }
