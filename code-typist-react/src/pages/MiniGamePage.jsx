@@ -7,9 +7,26 @@ const miniGameData = {
   1: [
     { id: 1, text: "#include <stdio.h>\n\nint main() {\n  int n;\n  __(\"%d\", &n);\n  printf(\"%d\", n);\n  return 0;\n}", answers: ["scanf"] },
     { id: 2, text: "int main() {\n  for (int i = __; i < __; i++) {\n    printf(\"%d\", i);\n  }\n  return 0;\n}", answers: ["0", "5"] },
-    // ... 최소 10개 이상의 데이터를 넣어주세요.
+    { id: 3, text: "int main() {\n  int a = 10;\n  __(\"Value: %d\", a);\n  return 0;\n}", answers: ["printf"] },
+    { id: 4, text: "int main() {\n  int n = 5;\n  __(n > 0) {\n    printf(\"Positive\");\n  } __ {\n    printf(\"Negative\");\n  }\n  return 0;\n}", answers: ["if", "else"] },
+    { id: 5, text: "int main() {\n  int count = 0;\n  __(count < 3) {\n    printf(\"Hello\\n\");\n    count++;\n  }\n  return 0;\n}", answers: ["while"] },
+    { id: 6, text: "int add(int a, int b) {\n  __ a + b;\n}\n\nint main() {\n  int sum = add(3, 4);\n  return 0;\n}", answers: ["return"] },
+    { id: 7, text: "__ <stdio.h>\n\nint main() {\n  printf(\"Hello World\");\n  return 0;\n}", answers: ["#include"] },
+    { id: 8, text: "int main() {\n  __ a = 10;\n  __ b = 3.14;\n  return 0;\n}", answers: ["int", "double"] },
+    { id: 9, text: "int main() {\n  int n = 1;\n  __(n) {\n    __ 1:\n      printf(\"One\");\n      break;\n  }\n  return 0;\n}", answers: ["switch", "case"] },
+    { id: 10, text: "int main() {\n  for(int i=0; i<10; i++) {\n    if(i == 5) __;\n    printf(\"%d\", i);\n  }\n  return 0;\n}", answers: ["break"] },
+    { id: 11, text: "int main() {\n  int arr[3] = {1, 2, 3};\n  printf(\"%d\", __[0]);\n  return 0;\n}", answers: ["arr"] },
+    { id: 12, text: "int main() {\n  int a = 5;\n  int *p = __;\n  printf(\"%d\", *p);\n  return 0;\n}", answers: ["&a"] }
   ],
-  2: [ /* ... */ ], 3: [ /* ... */ ], 4: [ /* ... */ ]
+  2: [
+    { id: 1, text: "int main() {\n  int arr[5] = {1, 2, 3, 4, 5};\n  int sum = 0;\n  for(int i=0; i<5; i++) {\n    sum += __[i];\n  }\n  return 0;\n}", answers: ["arr"] }
+  ],
+  3: [
+    { id: 1, text: "void printMessage() {\n  printf(\"Message\");\n}\n\nint main() {\n  __();\n  return 0;\n}", answers: ["printMessage"] }
+  ],
+  4: [
+    { id: 1, text: "struct Point {\n  int x;\n  int y;\n};\n\nint main() {\n  struct Point p1;\n  p1.__ = 10;\n  return 0;\n}", answers: ["x"] }
+  ]
 };
 
 function MiniGamePage({ lang, onBack }) {
@@ -18,8 +35,10 @@ function MiniGamePage({ lang, onBack }) {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60); 
   const [userInputs, setUserInputs] = useState([]);
-  const [stats, setStats] = useState({ correct: 0, wrong: 0 }); // 빈칸 항목 제거
+  const [stats, setStats] = useState({ correct: 0, wrong: 0 });
+  
   const timerRef = useRef(null);
+  const inputRefs = useRef([]); 
 
   const currentScore = stats.correct * 10;
 
@@ -28,6 +47,7 @@ function MiniGamePage({ lang, onBack }) {
     setCurrentIdx(0);
     const firstProblem = miniGameData[level][0];
     setUserInputs(new Array(firstProblem.answers.length).fill(''));
+    inputRefs.current = []; 
     setGameState('PLAYING');
     setTimeLeft(60);
     setStats({ correct: 0, wrong: 0 });
@@ -40,13 +60,20 @@ function MiniGamePage({ lang, onBack }) {
     return () => clearInterval(timerRef.current);
   }, [gameState, timeLeft]);
 
+  useEffect(() => {
+    if (gameState === 'PLAYING' && inputRefs.current[0]) {
+      setTimeout(() => {
+        inputRefs.current[0]?.focus();
+      }, 10);
+    }
+  }, [currentIdx, gameState]);
+
   const checkAnswers = () => {
     const currentProblem = miniGameData[difficulty][currentIdx];
     let localCorrect = 0, localWrong = 0;
 
     userInputs.forEach((input, i) => {
       const trimmed = input.trim();
-      // 🚀 정답이 아니면 무조건 오답 처리
       if (!trimmed || trimmed !== currentProblem.answers[i]) {
         localWrong++;
       } else {
@@ -59,12 +86,12 @@ function MiniGamePage({ lang, onBack }) {
       wrong: prev.wrong + localWrong
     }));
 
-    // 🚀 [고정] 현재 인덱스가 9(10번째 문제) 미만일 때만 다음으로 진행
     if (currentIdx < 9) {
       const nextIdx = currentIdx + 1;
       setCurrentIdx(nextIdx);
       const nextProblem = miniGameData[difficulty][nextIdx];
       setUserInputs(new Array(nextProblem.answers.length).fill(''));
+      inputRefs.current = []; 
     } else {
       endGame();
     }
@@ -105,7 +132,6 @@ function MiniGamePage({ lang, onBack }) {
 
       <main className="typing-area-mini">
         <div className="status-bar-mini">
-          {/* 🚀 SCORE(좌), TIME(우) 배치 유지 */}
           <div className="status-item-mini">SCORE <span className="mint-text">{currentScore}</span></div>
           <div className="status-item-mini">TIME <span className="mint-text">{timeLeft}s</span></div>
           <div className="status-item-mini">PROGRESS <span className="mint-text">{currentIdx + 1} / 10</span></div>
@@ -114,19 +140,30 @@ function MiniGamePage({ lang, onBack }) {
         <div className="code-display-box-mini">
           <pre className="code-text-pre">
             {miniGameData[difficulty][currentIdx]?.text.split('__').map((part, i, arr) => (
-              <span key={i}>
+              <span key={`${miniGameData[difficulty][currentIdx].id}-${i}`}>
                 {part}
                 {i < arr.length - 1 && (
                   <input 
                     className="blank-input-field"
+                    ref={(el) => (inputRefs.current[i] = el)} 
                     value={userInputs[i] || ''}
                     onChange={(e) => {
                       const n = [...userInputs];
                       n[i] = e.target.value;
                       setUserInputs(n);
                     }}
-                    onKeyDown={(e) => e.key === 'Enter' && checkAnswers()}
-                    autoFocus={i === 0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault(); 
+                        const currentProblem = miniGameData[difficulty][currentIdx];
+                        
+                        if (i < currentProblem.answers.length - 1) {
+                          inputRefs.current[i + 1]?.focus();
+                        } else {
+                          checkAnswers();
+                        }
+                      }
+                    }}
                   />
                 )}
               </span>
@@ -136,7 +173,16 @@ function MiniGamePage({ lang, onBack }) {
       </main>
 
       {gameState === 'RESULT' && (
-        <MiniGameResultModal stats={stats} time={60 - timeLeft} onHome={onBack} />
+        <MiniGameResultModal 
+          stats={stats} 
+          time={60 - timeLeft} 
+          // 🚀 진행률을 문제 개수 기준으로 정확히 넘겨줍니다.
+          progress={timeLeft > 0 ? 10 : currentIdx} 
+          onRetry={() => setGameState('READY')} 
+          onRestart={() => setGameState('READY')}
+          onHome={() => setGameState('READY')} 
+          onClose={() => setGameState('READY')} 
+        />
       )}
     </div>
   );

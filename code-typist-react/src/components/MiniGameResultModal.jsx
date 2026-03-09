@@ -1,7 +1,8 @@
 import React from 'react';
 import '../styles/mini-game.css';
 
-function MiniGameResultModal({ stats, time, onHome }) {
+// 🚀 progress 프롭스를 새로 받습니다.
+function MiniGameResultModal({ stats, time, progress, onRetry, onHome }) {
   const score = stats.correct * 10;
 
   return (
@@ -26,7 +27,8 @@ function MiniGameResultModal({ stats, time, onHome }) {
           </div>
           <div className="detail-item">
             <span className="detail-label">진행률</span>
-            <span className="detail-value">{stats.correct + stats.wrong} / 10</span>
+            {/* 🚀 빈칸 개수 합산이 아닌, 넘어온 문제 개수(progress)를 띄워줍니다. */}
+            <span className="detail-value">{progress} / 10</span>
           </div>
           <div className="detail-item">
             <span className="detail-label">소요 시간</span>
@@ -35,7 +37,7 @@ function MiniGameResultModal({ stats, time, onHome }) {
         </div>
 
         <div className="modal-action-buttons" style={{display: 'flex', gap: '20px', marginTop: '30px'}}>
-          <button className="modal-btn-result" onClick={() => window.location.reload()}>다시 도전하기</button>
+          <button className="modal-btn-result" onClick={onRetry}>다시 도전하기</button>
           <button className="modal-btn-result" onClick={onHome}>나가기</button>
         </div>
       </div>
