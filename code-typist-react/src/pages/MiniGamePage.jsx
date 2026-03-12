@@ -125,7 +125,7 @@ function MiniGamePage({ lang, onBack }) {
       <header className="game-header-wide">
         <button className="back-btn-ai-left" onClick={() => setGameState('READY')}>← Back to Levels</button>
         <div className="header-right-column">
-          <h1 className="game-title-right">오류찾기</h1>
+          <h1 className="game-title-right">빈칸채우기</h1>
           <span className="info-tag-under-title">{lang} | Level {difficulty}</span>
         </div>
       </header>

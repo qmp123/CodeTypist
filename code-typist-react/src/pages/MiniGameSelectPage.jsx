@@ -14,8 +14,8 @@ function MiniGameSelectPage({ onSelect, onBack }) {
       <div className="select-menu">
         <div className="select-card" onClick={() => onSelect('MINI')}>
           <div className="card-icon">⌨</div>
-          <h2 className="card-name">오류찾기</h2>
-          <p className="card-desc">코드 속 숨겨진 오류를 찾아 빠르게 수정하세요.</p>
+          <h2 className="card-name">빈칸채우기</h2>
+          <p className="card-desc">코드 속 빈칸을 채워보세요.</p>
         </div>
 
         <div className="select-card ai-card" onClick={() => onSelect('AI_MINI')}>
