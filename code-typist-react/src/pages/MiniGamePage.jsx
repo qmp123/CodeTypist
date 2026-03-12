@@ -176,12 +176,12 @@ function MiniGamePage({ lang, onBack }) {
         <MiniGameResultModal 
           stats={stats} 
           time={60 - timeLeft} 
-          // 🚀 진행률을 문제 개수 기준으로 정확히 넘겨줍니다.
           progress={timeLeft > 0 ? 10 : currentIdx} 
           onRetry={() => setGameState('READY')} 
           onRestart={() => setGameState('READY')}
-          onHome={() => setGameState('READY')} 
-          onClose={() => setGameState('READY')} 
+          // 🚀 사진의 "미니게임 선택" 창(부모 컴포넌트)으로 돌아가도록 onBack 연결
+          onHome={onBack} 
+          onClose={onBack} 
         />
       )}
     </div>
