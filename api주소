@@ -1,0 +1,22 @@
+백엔드 API 주소
+
+https://codetypist-api.onrender.com
+
+health check
+GET /api/health
+
+미니게임 시작
+POST /api/mini/start
+
+미니게임 제출
+POST /api/mini/submit
+
+미니게임 시작API
+POST
+https://codetypist-api.onrender.com/api/mini/start
+
+body
+{
+  "language": "java",
+  "level": 1
+}
