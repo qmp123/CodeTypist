@@ -1,14 +1,14 @@
+import React, { useState, useEffect } from 'react';
 import '../styles/modal.css';
 
 /* 랭킹 팝업 컴포넌트 */
 export function RankingModal({ onClose }) {
-  // 가짜 랭킹 데이터 (나중에 백엔드 생기면 교체)
   const rankings = [
     { rank: 1, name: 'Faker', score: 2500 },
     { rank: 2, name: 'Oner', score: 2350 },
     { rank: 3, name: 'Keria', score: 2100 },
     { rank: 4, name: 'Doran', score: 1950 },
-    { rank: 5, name: 'Guest', score: 1200 }, // 내 점수 예시
+    { rank: 5, name: 'Guest', score: 1200 },
   ];
 
   return (
@@ -33,6 +33,17 @@ export function RankingModal({ onClose }) {
 
 /* 설정 팝업 컴포넌트 */
 export function SettingsModal({ onClose }) {
+  // 글꼴 상태 관리
+  const [font, setFont] = useState(() => {
+    return localStorage.getItem('app-font-family') || "'Segoe UI', sans-serif";
+  });
+
+  // 글꼴 변경 시 적용 및 저장
+  useEffect(() => {
+    localStorage.setItem('app-font-family', font);
+    document.documentElement.style.setProperty('--global-font', font);
+  }, [font]);
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -40,7 +51,21 @@ export function SettingsModal({ onClose }) {
         <h2 className="modal-title">⚙️ Settings</h2>
 
         <div className="setting-box">
-          {/* 폰트 크기 설정 */}
+          {/* 1. 글꼴 설정 */}
+          <div className="setting-item">
+            <span>Global Font</span>
+            <select 
+              className="setting-select" 
+              value={font} 
+              onChange={(e) => setFont(e.target.value)}
+            >
+              <option value="'Segoe UI', sans-serif">Default</option>
+              <option value="'Noto Sans KR', sans-serif">Noto Sans KR</option>
+              <option value="'D2Coding', monospace">D2Coding</option>
+            </select>
+          </div>
+
+          {/* 2. 폰트 크기 설정 */}
           <div className="setting-item">
             <span>Font Size</span>
             <select className="setting-select">
@@ -49,24 +74,8 @@ export function SettingsModal({ onClose }) {
               <option>Large (24px)</option>
             </select>
           </div>
-
-          {/* 언어 설정 */}
-          <div className="setting-item">
-            <span>System Language</span>
-            <select className="setting-select">
-              <option>Korean</option>
-              <option>English</option>
-            </select>
-          </div>
-
-          {/* 소리 설정 */}
-          <div className="setting-item">
-            <span>Sound Effect</span>
-            <select className="setting-select">
-              <option>ON</option>
-              <option>OFF</option>
-            </select>
-          </div>
+          
+        
         </div>
         
         <p style={{ color: '#666', marginTop: '20px', fontSize: '14px' }}>

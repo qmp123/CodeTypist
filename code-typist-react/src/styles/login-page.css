@@ -1,6 +1,6 @@
 /* 전체 배경 (화면 중앙 정렬) */
 body {
-  background-color: #121212; /* 아주 어두운 배경 */
+  background-color: #121212;
   margin: 0;
   display: flex;
   justify-content: center;
@@ -8,22 +8,22 @@ body {
   min-height: 100vh;
 }
 
-/* 로그인 카드 컨테이너 (좌우 분할 레이아웃) */
+/* 로그인 카드 컨테이너 */
 .login-container {
   display: flex;
   width: 900px;
   height: 550px;
-  background-color: #1e1e1e; /* 카드 배경 */
+  background-color: #1e1e1e;
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  overflow: hidden; /* 자식 요소가 둥근 테두리 넘치지 않게 */
+  overflow: hidden;
   font-family: 'Segoe UI', sans-serif;
 }
 
-/* [왼쪽] 소개 패널 (보라색 배경) */
+/* [왼쪽] 소개 패널 */
 .intro-panel {
   flex: 1;
-  background: linear-gradient(135deg, #6200ea 0%, #3700b3 100%); /* 보라색 그라데이션 */
+  background: linear-gradient(135deg, #6200ea 0%, #3700b3 100%);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -47,7 +47,7 @@ body {
 /* [오른쪽] 로그인 폼 패널 */
 .form-panel {
   flex: 1.2;
-  padding: 50px;
+  padding: 40px 60px; /* 상하 여백 조정 */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -57,47 +57,45 @@ body {
 
 .form-title {
   font-size: 24px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   color: #eee;
+  text-align: center;
 }
 
 /* 입력 필드 스타일 */
 .input-group {
-  margin-bottom: 20px;
+  margin-bottom: 15px; /* 간격 최적화 */
 }
 
 .input-label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: #aaa;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .login-input {
   width: 100%;
-  padding: 15px;
+  padding: 12px 15px;
   background-color: #2c2c2c;
   border: 1px solid #333;
   border-radius: 8px;
   color: white;
-  font-size: 16px;
+  font-size: 15px;
   outline: none;
   transition: border-color 0.3s;
+  box-sizing: border-box; /* 패딩 포함 너비 계산 */
 }
 
 .login-input:focus {
-  border-color: #bb86fc; /* 포커스 시 연한 보라색 */
+  border-color: #bb86fc;
 }
 
-/* 버튼 컨테이너 */
+/* 버튼 스타일 */
 .button-group {
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  margin-top: 20px;
 }
 
-/* 로그인 버튼 (보라색 메인) */
 .login-btn {
   width: 100%;
   padding: 15px;
@@ -115,36 +113,10 @@ body {
   background-color: #7f39fb;
 }
 
-/* 하단 서브 버튼들 (가입, 혼자하기) */
-.sub-actions {
-  display: flex;
-  gap: 15px;
-}
-
-.sub-btn {
-  flex: 1;
-  padding: 12px;
-  background-color: #333;
-  color: #ccc;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.sub-btn:hover {
-  background-color: #444;
-  color: white;
-}
-
-/* 비회원 안내 문구 스타일 */
-.guest-notice {
+/* 안내 문구 (자동 회원가입 설명) */
+.info-text {
   margin-top: 15px;
-  font-size: 13px;
-  color: #888; /* 눈에 덜 띄는 회색 */
+  font-size: 12px;
+  color: #666;
   text-align: center;
-}
-
-.guest-notice strong {
-  color: #ff5555; /* 강조할 부분은 살짝 붉은색 */
 }

@@ -64,7 +64,7 @@ function MainPage({ onGameStart, userId, onLogout }) {
         ))}
       </nav>
 
-      {/* 3. 콘텐츠 바디 (크기 고정) */}
+      {/* 3. 콘텐츠 바디 */}
       <div className="content-body">
         <aside className="left-sidebar">
           {modeList.map((mode) => (
