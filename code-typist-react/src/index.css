@@ -1,3 +1,18 @@
+/* 모든 요소(*)에 대해 글꼴을 강제로 변수로 바꿉니다. */
+* {
+  font-family: var(--global-font) !important;
+}
+
+/* 버튼, 입력창 등 폼 요소들은 브라우저 고유 스타일이 세서 한 번 더 잡아줍니다. */
+button, 
+input, 
+select, 
+textarea, 
+span, 
+div {
+  font-family: inherit !important;
+}
+
 * {
   margin: 0;
   padding: 0;

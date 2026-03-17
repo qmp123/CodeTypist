@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Noto+Sans+KR&display=swap');
+
+:root {
+  --global-font: 'Segoe UI', sans-serif;
+}
+
 /* 결과 모달 배경 */
 .result-overlay {
   position: fixed;
@@ -23,7 +29,7 @@
   box-shadow: 0 0 30px rgba(187, 134, 252, 0.4);
   text-align: center;
   color: white;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: var(--global-font);
   animation: popIn 0.3s ease-out;
 }
 
@@ -110,7 +116,7 @@
   color: white;
   text-align: center;
   position: relative;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: var(--global-font);
 }
 
 /* 팝업 제목 */
