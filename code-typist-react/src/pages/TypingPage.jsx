@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import ResultModal from '../components/ResultModal'; 
+import ResultModal from '../components/ResultModal';
 import '../styles/typing-page.css';
 
 const pythonExamples = [
@@ -29,27 +29,28 @@ const pythonExamples = [
 ];
 
 function TypingPage({ lang, mode, onBack }) {
-  const [score, setScore] = useState(0); 
-  const [inputText, setInputText] = useState(''); 
-  const [timer, setTimer] = useState(mode === '코드 게임' ? 60 : 0); 
-  const [wpm, setWpm] = useState(0); 
-  const [mistakes, setMistakes] = useState(0); 
-  const [totalTyped, setTotalTyped] = useState(0); 
-  const [currentIndex, setCurrentIndex] = useState(0); 
-  const [currentQuestion, setCurrentQuestion] = useState(''); 
+  const [score, setScore] = useState(0);
+  const [inputText, setInputText] = useState('');
+  const [timer, setTimer] = useState(mode === '코드 게임' ? 60 : 0);
+  const [wpm, setWpm] = useState(0);
+  const [mistakes, setMistakes] = useState(0);
+  const [totalTyped, setTotalTyped] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState('');
   const [showResult, setShowResult] = useState(false);
-  const [sessionQuestions, setSessionQuestions] = useState([]); 
+  const [sessionQuestions, setSessionQuestions] = useState([]);
 
-  const startTimeRef = useRef(null); 
+  const startTimeRef = useRef(null);
   const isStartedRef = useRef(false);
   const [charList, setCharList] = useState([]);
   const codingChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{};:'\",.<>/?\\|`~ ";
 
   // 정확도 계산 로직 유지
+
   const accuracy = totalTyped > 0 ? Math.round(((totalTyped - mistakes) / totalTyped) * 100) : 100;
 
   const initWordBelt = useCallback(() => {
-    const chars = codingChars; 
+    const chars = codingChars;
     const newList = Array.from({ length: 20 }, () => chars[Math.floor(Math.random() * chars.length)]);
     setCharList(newList);
   }, [codingChars]);
@@ -57,7 +58,7 @@ function TypingPage({ lang, mode, onBack }) {
   const resetGame = useCallback(() => {
     let selected = mode === '짧은 글 연습' ? [...pythonExamples].sort(() => Math.random() - 0.5).slice(0, 5) : [];
     setSessionQuestions(selected);
-    
+
     if (mode === '낱말 연습') initWordBelt();
     else if (selected.length > 0) setCurrentQuestion(selected[0]);
 
@@ -89,17 +90,17 @@ function TypingPage({ lang, mode, onBack }) {
     const nextIndex = currentIndex + 1;
     setTotalTyped(prev => prev + (mode === '낱말 연습' ? 1 : currentQuestion.length));
     setScore(prev => prev + scoreChange);
-    
+
     if (mode === '낱말 연습') {
       if (nextIndex < 100) {
         setCharList(prev => [...prev.slice(1), codingChars[Math.floor(Math.random() * codingChars.length)]]);
-        setCurrentIndex(nextIndex); 
+        setCurrentIndex(nextIndex);
         setInputText('');
       } else setShowResult(true);
     } else {
       if (nextIndex < sessionQuestions.length) {
-        setCurrentQuestion(sessionQuestions[nextIndex]); 
-        setCurrentIndex(nextIndex); 
+        setCurrentQuestion(sessionQuestions[nextIndex]);
+        setCurrentIndex(nextIndex);
         setInputText('');
       } else {
         setShowResult(true);
@@ -110,19 +111,19 @@ function TypingPage({ lang, mode, onBack }) {
   const handleInput = (e) => {
     if (showResult) return;
     const val = e.target.value;
-    
+
     if (mode === '낱말 연습') {
       if (val.length === 0) return;
-      const char = val.slice(-1); 
-      
+      const char = val.slice(-1);
+  
       if (!isStartedRef.current) { isStartedRef.current = true; startTimeRef.current = Date.now(); }
 
       if (char !== charList[0]) {
         setMistakes(prev => prev + 1);
       }
-      
+    
       moveToNextQuestion(1);
-      return; 
+      return;
     }
 
     if (val.length === 0 && inputText.length === 0) return;
@@ -148,7 +149,7 @@ function TypingPage({ lang, mode, onBack }) {
             <p style={{ margin: '5px 0 0 0' }}>Language: <strong>{lang}</strong></p>
             )}
     </div>
-    
+
     </header>
       <main className="typing-area" style={{ marginTop: '0' }}>
         <div className="status-bar" style={{ marginBottom: '15px', padding: '15px' }}>
@@ -168,53 +169,53 @@ function TypingPage({ lang, mode, onBack }) {
               <span className="gauge-label">정확도 {accuracy}%</span>
               <div className="gauge-track"><div className="gauge-fill" style={{ width: `${accuracy}%` }}></div></div>
             </div>
-            
-            <div className="char-belt-container" style={{ 
-              height: '140px', 
-              width: '100%', 
-              position: 'relative', 
-              display: 'flex', 
-              alignItems: 'center', 
+         
+            <div className="char-belt-container" style={{
+              height: '140px',
+              width: '100%',
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
               overflow: 'hidden',
               backgroundColor: 'rgba(255, 255, 255, 0.02)',
               borderRadius: '15px'
             }}>
-              <div className="char-belt" style={{ 
-                display: 'flex', 
-                paddingLeft: 'calc(50% - 45px)', 
-                transition: 'transform 0.2s ease-out' 
+              <div className="char-belt" style={{
+                display: 'flex',
+                paddingLeft: 'calc(50% - 45px)',
+                transition: 'transform 0.2s ease-out'
               }}>
                 {charList.map((c, i) => (
-                  <div key={i} className={`belt-item ${i === 0 ? 'active' : ''}`} 
-                    style={{ 
-                      width: '90px', 
+                  <div key={i} className={`belt-item ${i === 0 ? 'active' : ''}`}
+                    style={{
+                      width: '90px',
                       minWidth: '90px',
-                      height: '110px', 
-                      display: 'flex', 
-                      justifyContent: 'center', 
-                      alignItems: 'center', 
+                      height: '110px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
                       fontSize: '3.2rem',
                       fontWeight: 'bold',
-                      color: i === 0 ? '#ffffff' : '#444', 
+                      color: i === 0 ? '#ffffff' : '#444',
                       textShadow: i === 0 ? '0 0 25px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.4)' : 'none',
                       transition: 'all 0.2s'
                     }}>
-                    {c === " " ? "␣" : c} 
+                    {c === " " ? "␣" : c}
                   </div>
                 ))}
               </div>
-              
-              <div className="active-frame" style={{ 
-                position: 'absolute', 
+            
+              <div className="active-frame" style={{
+                position: 'absolute',
                 left: '50%',
                 transform: 'translateX(-50%)',
-                height: '110px', 
-                width: '90px', 
-                border: '3px solid #ffffff', 
+                height: '110px',
+                width: '90px',
+                border: '3px solid #ffffff',
                 borderRadius: '15px',
                 pointerEvents: 'none',
                 boxShadow: '0 0 25px rgba(255, 255, 255, 0.25)',
-                backgroundColor: 'rgba(255, 255, 255, 0.05)' 
+                backgroundColor: 'rgba(255, 255, 255, 0.05)'
               }}></div>
             </div>
           </div>
@@ -230,16 +231,16 @@ function TypingPage({ lang, mode, onBack }) {
         <div className="input-centering-wrapper" style={{ marginTop: '40px' }}>
           <input type="text" className={mode === '낱말 연습' ? "belt-input-field" : "input-field"}
             value={inputText} onChange={handleInput} autoFocus spellCheck="false"
-            placeholder="코드를 입력하세요." 
-            style={{ 
-              padding: '18px', 
-              fontSize: '1.3rem', 
+            placeholder="코드를 입력하세요."
+            style={{
+              padding: '18px',
+              fontSize: '1.3rem',
               textAlign: 'center',            
               backgroundColor: '#252525',
               border: '1px solid #444',
               borderRadius: '10px',
               color: '#fff'
-            }} 
+            }}
           />
         </div>
       </main>
