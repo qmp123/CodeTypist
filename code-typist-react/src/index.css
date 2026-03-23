@@ -1,20 +1,41 @@
-/* 모든 요소(*)에 대해 글꼴을 강제로 변수로 바꿉니다. */
-* {
-  font-family: var(--global-font) !important;
+/* src/index.css */
+
+:root {
+  --global-font: 'Segoe UI', sans-serif;
+  --global-font-size: 20px;
 }
 
-/* 버튼, 입력창 등 폼 요소들은 브라우저 고유 스타일이 세서 한 번 더 잡아줍니다. */
-button, 
-input, 
-select, 
-textarea, 
-span, 
-div {
-  font-family: inherit !important;
-}
-
+/* 1. 모든 요소 글꼴 적용 */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: var(--global-font) !important;
+}
+
+/* 2. 일반 UI 요소 글자 크기 반영 */
+body, button, input, select, .game-info, .status-item {
+  font-size: var(--global-font-size);
+}
+
+/* 3. [박스 설정] 작아지지는 않고, 커지면 같이 커짐 */
+.typing-container {
+  /* 사진에 나온 현재 크기를 최소 높이로 고정 */
+  min-height: 600px !important; 
+  height: auto !important; 
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+/* 4. [연습창 예외] 낱말(belt-item)과 짧은글(code-display-box)은 크기 고정 */
+.belt-item, .code-display-box, .char {
+  /* 사용자가 설정을 바꿔도 이 부분은 연습을 위해 시원한 크기로 유지됩니다 */
+  font-size: 40px !important; 
+  font-weight: bold !important;
+}
+
+/* 5. 입력창 정렬 */
+.input-field, .belt-input-field {
+  font-size: 1.3rem !important;
 }

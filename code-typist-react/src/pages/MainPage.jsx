@@ -1,15 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { RankingModal, SettingsModal } from '../components/Modals'; 
 import LongTextSelectModal from '../components/LongTextSelectModal'; 
 import '../styles/main-layout.css';
 
-function MainPage({ onGameStart, userId, onLogout }) {
+function MainPage({ onGameStart, userId, onLogout, autoOpenModal, onModalOpened }) {
   const [selectedLang, setSelectedLang] = useState('Python');
   const [selectedMode, setSelectedMode] = useState('낱말 연습');
   
   const [showRanking, setShowRanking] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showTextSelect, setShowTextSelect] = useState(false);
+
+  // 🚀 [에러 수정] 모든 상태 업데이트를 브라우저의 다음 이벤트 루프로 미룹니다
+  useEffect(() => {
+    if (autoOpenModal) {
+      const timer = setTimeout(() => {
+        setShowTextSelect(true);
+        setSelectedMode('긴 글 연습');
+        if (onModalOpened) onModalOpened();
+      }, 0);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [autoOpenModal, onModalOpened]);
 
   const descriptions = {
     '낱말 연습': '프로그래밍 필수 용어를 익히는 기본 단계입니다.\n정확한 타자 실력을 길러보세요.',
@@ -30,7 +43,6 @@ function MainPage({ onGameStart, userId, onLogout }) {
 
   return (
     <div className="main-container">
-      {/* 1. 상단 헤더 */}
       <header className="top-header">
         <div className="user-info-box">
           <span className="user-icon">👤</span>
@@ -41,17 +53,13 @@ function MainPage({ onGameStart, userId, onLogout }) {
             </div>
           </div>
         </div>
-
         <div className="header-buttons">
           <button className="nav-btn" onClick={() => setShowRanking(true)}>🏆 랭킹</button>
           <button className="nav-btn" onClick={() => setShowSettings(true)}>⚙️ 설정</button>
-          <button className="nav-btn logout-highlight" onClick={onLogout}>
-            로그아웃
-          </button>
+          <button className="nav-btn logout-highlight" onClick={onLogout}>로그아웃</button>
         </div>
       </header>
 
-      {/* 2. 언어 선택 탭 */}
       <nav className="lang-tabs">
         {['C', 'Python', 'Java'].map((lang) => (
           <button
@@ -64,7 +72,6 @@ function MainPage({ onGameStart, userId, onLogout }) {
         ))}
       </nav>
 
-      {/* 3. 콘텐츠 바디 */}
       <div className="content-body">
         <aside className="left-sidebar">
           {modeList.map((mode) => (
@@ -77,27 +84,16 @@ function MainPage({ onGameStart, userId, onLogout }) {
             </button>
           ))}
         </aside>
-
         <main className="right-description-panel">
           <h2 className="description-title">{selectedMode}</h2>
-          <span className="language-tag">
-            Selected: {selectedLang}
-          </span>
-          
-          <p className="description-text">
-            {descriptions[selectedMode]}
-          </p>
-          
-          <button className="start-btn" onClick={handleStartClick}>
-            Start
-          </button>
+          <span className="language-tag">Selected: {selectedLang}</span>
+          <p className="description-text">{descriptions[selectedMode]}</p>
+          <button className="start-btn" onClick={handleStartClick}>Start</button>
         </main>
       </div>
 
-      {/* 모달들 */}
       {showRanking && <RankingModal onClose={() => setShowRanking(false)} />}
       {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
-      
       {showTextSelect && (
         <LongTextSelectModal 
           lang={selectedLang}

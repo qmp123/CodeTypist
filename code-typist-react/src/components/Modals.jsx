@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/modal.css';
 
-/* 랭킹 팝업 컴포넌트 */
+/* 랭킹 팝업 컴포넌트 (생략 없이 유지) */
 export function RankingModal({ onClose }) {
   const rankings = [
     { rank: 1, name: 'Faker', score: 2500 },
@@ -16,7 +16,6 @@ export function RankingModal({ onClose }) {
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="close-btn" onClick={onClose}>&times;</button>
         <h2 className="modal-title">🏆 Top Ranking</h2>
-        
         <ul className="ranking-list">
           {rankings.map((user) => (
             <li key={user.rank} className="ranking-item">
@@ -33,53 +32,62 @@ export function RankingModal({ onClose }) {
 
 /* 설정 팝업 컴포넌트 */
 export function SettingsModal({ onClose }) {
-  // 글꼴 상태 관리
   const [font, setFont] = useState(() => {
     return localStorage.getItem('app-font-family') || "'Segoe UI', sans-serif";
   });
 
-  // 글꼴 변경 시 적용 및 저장
+  const [fontSize, setFontSize] = useState(() => {
+    return localStorage.getItem('app-font-size') || "20px";
+  });
+
   useEffect(() => {
     localStorage.setItem('app-font-family', font);
     document.documentElement.style.setProperty('--global-font', font);
   }, [font]);
 
+  useEffect(() => {
+    localStorage.setItem('app-font-size', fontSize);
+    document.documentElement.style.setProperty('--global-font-size', fontSize);
+  }, [fontSize]);
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="close-btn" onClick={onClose}>&times;</button>
-        <h2 className="modal-title">⚙️ Settings</h2>
+        <h2 className="modal-title">⚙️ 설정</h2>
 
         <div className="setting-box">
-          {/* 1. 글꼴 설정 */}
+          {/* 1. 글꼴 설정 (한글 명칭 적용) */}
           <div className="setting-item">
-            <span>Global Font</span>
+            <span>기본 글꼴</span>
             <select 
               className="setting-select" 
               value={font} 
               onChange={(e) => setFont(e.target.value)}
             >
-              <option value="'Segoe UI', sans-serif">Default</option>
-              <option value="'Noto Sans KR', sans-serif">Noto Sans KR</option>
-              <option value="'D2Coding', monospace">D2Coding</option>
+              <option value="'Segoe UI', sans-serif">기본체 (Segoe UI)</option>
+              <option value="'Noto Sans KR', sans-serif">본고딕 (Noto Sans)</option>
+              <option value="'D2Coding', monospace">코딩체 (D2Coding)</option>
             </select>
           </div>
 
-          {/* 2. 폰트 크기 설정 */}
+          {/* 2. 글자 크기 설정 */}
           <div className="setting-item">
-            <span>Font Size</span>
-            <select className="setting-select">
-              <option>Small (16px)</option>
-              <option>Medium (20px)</option>
-              <option>Large (24px)</option>
+            <span>글자 크기</span>
+            <select 
+              className="setting-select"
+              value={fontSize}
+              onChange={(e) => setFontSize(e.target.value)}
+            >
+              <option value="16px">작게 (16px)</option>
+              <option value="20px">보통 (20px)</option>
+              <option value="24px">크게 (24px)</option>
             </select>
           </div>
-          
-        
         </div>
         
         <p style={{ color: '#666', marginTop: '20px', fontSize: '14px' }}>
-          * 설정은 자동으로 저장됩니다.
+          * 설정은 자동으로 저장됩니다. 연습 문구 크기는 고정입니다.
         </p>
       </div>
     </div>

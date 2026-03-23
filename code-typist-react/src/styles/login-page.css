@@ -47,7 +47,7 @@ body {
 /* [오른쪽] 로그인 폼 패널 */
 .form-panel {
   flex: 1.2;
-  padding: 40px 60px; /* 상하 여백 조정 */
+  padding: 40px 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -62,9 +62,8 @@ body {
   text-align: center;
 }
 
-/* 입력 필드 스타일 */
 .input-group {
-  margin-bottom: 15px; /* 간격 최적화 */
+  margin-bottom: 15px;
 }
 
 .input-label {
@@ -84,14 +83,13 @@ body {
   font-size: 15px;
   outline: none;
   transition: border-color 0.3s;
-  box-sizing: border-box; /* 패딩 포함 너비 계산 */
+  box-sizing: border-box;
 }
 
 .login-input:focus {
   border-color: #bb86fc;
 }
 
-/* 버튼 스타일 */
 .button-group {
   margin-top: 20px;
 }
@@ -113,7 +111,6 @@ body {
   background-color: #7f39fb;
 }
 
-/* 안내 문구 (자동 회원가입 설명) */
 .info-text {
   margin-top: 15px;
   font-size: 12px;

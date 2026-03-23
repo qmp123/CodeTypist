@@ -28,7 +28,7 @@ const pythonExamples = [
   'items = ["a", "b"] for item in items: print(item)'
 ];
 
-function TypingPage({ lang, mode, onBack, fontSize }) {
+function TypingPage({ lang, mode, onBack }) {
   const [score, setScore] = useState(0); 
   const [inputText, setInputText] = useState(''); 
   const [timer, setTimer] = useState(mode === '코드 게임' ? 60 : 0); 
@@ -214,12 +214,12 @@ function TypingPage({ lang, mode, onBack, fontSize }) {
                 borderRadius: '15px',
                 pointerEvents: 'none',
                 boxShadow: '0 0 25px rgba(255, 255, 255, 0.25)',
-                backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                backgroundColor: 'rgba(255, 255, 255, 0.05)' 
               }}></div>
             </div>
           </div>
         ) : (
-          <div className="code-display-box" style={{ fontSize: `${fontSize * 0.8}px`, minHeight: '350px', padding: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div className="code-display-box" style={{ minHeight: '350px', padding: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
             {currentQuestion.split('').map((char, index) => {
               let color = inputText[index] == null ? '' : (inputText[index] === char ? 'correct' : 'wrong');
               return <span key={index} className={`char ${color}`}>{char}</span>;

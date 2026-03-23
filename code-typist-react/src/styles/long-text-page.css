@@ -64,7 +64,7 @@
   padding-bottom: 10px;
 }
 
-.example-text, .typing-input-field {
+.example-text {
   margin: 0;
   padding: 0;
   font-size: 1.4rem !important;
@@ -72,18 +72,43 @@
   letter-spacing: 0.02rem;
   line-height: 1.2;
   white-space: pre;
+  color: #ffffff !important; /* 🚀 하얀색으로 진하게 수정 */
+  font-weight: 700 !important;
 }
 
-.example-text {
-  color: #ffffff;
+.input-container {
+  position: relative;
+  width: 100%;
+  height: 1.8rem;
+}
+
+.colored-display, .typing-input-field {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 1.4rem !important;
+  font-family: 'Consolas', 'Monaco', monospace !important;
+  letter-spacing: 0.02rem;
+  line-height: 1.2;
+  white-space: pre;
+  font-weight: 700 !important;
+}
+
+.colored-display {
+  z-index: 1;
+  pointer-events: none;
 }
 
 .typing-input-field {
   width: 100%;
   background: transparent;
   border: none;
-  color: #00e5ff;
   outline: none;
+  color: transparent !important; /* 입력 글자는 투명하게 처리 */
+  caret-color: #00e5ff;
+  z-index: 2;
 }
 
 .practice-footer {
@@ -101,39 +126,4 @@
   font-weight: bold;
   font-size: 1.1rem;
   cursor: pointer;
-}
-/* --- 기존 코드 끝 --- */
-
-
-/* --- 실시간 색상 표시를 위해 추가된 스타일 --- */
-
-/* 1. 입력창과 색상 레이어를 겹치게 만들기 위한 컨테이너 */
-.input-container {
-  position: relative;
-  width: 100%;
-  height: 1.8rem; /* 폰트 크기에 맞춘 높이 설정 */
-}
-
-/* 2. 색상이 입혀진 텍스트가 표시될 레이어 스타일 */
-.colored-display {
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-size: 1.4rem;
-  font-family: 'Consolas', 'Monaco', monospace !important;
-  letter-spacing: 0.02rem;
-  line-height: 1.2;
-  white-space: pre;
-  z-index: 1;
-  pointer-events: none; /* 클릭은 input이 받도록 설정 */
-}
-
-/* 3. 기존 인풋 스타일 수정: 색상 레이어가 보여야 하므로 글자를 투명하게 처리 */
-.typing-input-field {
-  position: absolute;
-  top: 0;
-  left: 0;
-  color: transparent !important; /* 입력 글자는 투명하게 */
-  caret-color: #00e5ff; /* 커서(깜빡이)는 민트색으로 유지 */
-  z-index: 2;
 }
