@@ -1,0 +1,84 @@
+/* src/styles/result-modal.css */
+
+.result-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.result-content {
+  width: 500px;
+  background-color: var(--bg-card);
+  padding: 50px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+  animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.result-title {
+  font-size: 2.2rem;
+  color: var(--text-main);
+  margin-bottom: 30px;
+}
+
+.score-box {
+  background-color: var(--bg-sub);
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 25px;
+  border: 1px solid var(--border-color);
+}
+.score-label { display: block; font-size: 0.9rem; color: var(--text-sub); }
+.score-number { font-size: 3rem; font-weight: 900; color: var(--point-color); }
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 35px;
+}
+
+.stat-item {
+  background-color: var(--bg-sub);
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+/* 🚀 낱말/짧은 글 연습에서 TIME 박스를 가로로 길게 늘리는 설정 */
+.stat-item.full-width {
+  grid-column: span 2;
+}
+
+.stat-item h4 { font-size: 0.75rem; color: var(--text-sub); margin-bottom: 5px; text-transform: uppercase; }
+.stat-item p { font-size: 1.4rem; font-weight: bold; color: var(--text-main); }
+
+.result-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.restart-btn {
+  flex: 1.5; padding: 18px; border-radius: 12px; border: none;
+  background-color: var(--point-color); color: #fff;
+  font-weight: bold; font-size: 1.1rem; cursor: pointer;
+}
+
+.home-btn {
+  flex: 1; padding: 18px; border-radius: 12px;
+  background-color: var(--bg-sub); color: var(--text-main);
+  border: 1px solid var(--border-color); font-weight: bold; cursor: pointer;
+}
+
+@keyframes modalPop {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}

@@ -117,3 +117,65 @@ body {
   color: #666;
   text-align: center;
 }
+
+/* login-page.css 맨 아래에 추가 */
+
+.theme-toggle-switch {
+  width: 64px;
+  height: 32px;
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  transition: background-color 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+/* 다크 모드일 때 배경 */
+.theme-toggle-switch.dark {
+  background-color: #1a1a1a;
+}
+
+/* 라이트 모드일 때 배경 */
+.theme-toggle-switch.light {
+  background-color: #ffffff;
+}
+
+/* 움직이는 원 (Thumb) */
+.toggle-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.3s ease;
+  z-index: 2;
+}
+
+/* 🌙 다크: 흰색 원이 왼쪽(0) */
+.theme-toggle-switch.dark .toggle-thumb {
+  transform: translateX(0);
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+
+/* ☀️ 라이트: 검은색 원이 오른쪽(32px) */
+.theme-toggle-switch.light .toggle-thumb {
+  transform: translateX(32px);
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.toggle-icons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px;
+  font-size: 12px;
+  opacity: 0.5;
+}

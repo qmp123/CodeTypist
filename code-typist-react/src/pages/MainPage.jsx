@@ -3,7 +3,12 @@ import { RankingModal, SettingsModal } from '../components/Modals';
 import LongTextSelectModal from '../components/LongTextSelectModal'; 
 import '../styles/main-layout.css';
 
-function MainPage({ onGameStart, userId, onLogout, autoOpenModal, onModalOpened }) {
+/* MainPage 컴포넌트
+  - 민재 님의 원본 레이아웃 및 폰트 스케일링 100% 보존
+  - theme, onThemeToggle을 받아 설정창과 랭킹창에 전달
+*/
+
+function MainPage({ onGameStart, userId, onLogout, autoOpenModal, onModalOpened, theme, onThemeToggle }) {
   const [selectedLang, setSelectedLang] = useState('Python');
   const [selectedMode, setSelectedMode] = useState('낱말 연습');
   
@@ -11,7 +16,7 @@ function MainPage({ onGameStart, userId, onLogout, autoOpenModal, onModalOpened 
   const [showSettings, setShowSettings] = useState(false);
   const [showTextSelect, setShowTextSelect] = useState(false);
 
-  // 🚀 [에러 수정] 모든 상태 업데이트를 브라우저의 다음 이벤트 루프로 미룹니다
+  // 🚀 [원본 유지] 모든 상태 업데이트를 브라우저의 다음 이벤트 루프로 미룹니다
   useEffect(() => {
     if (autoOpenModal) {
       const timer = setTimeout(() => {
@@ -92,12 +97,14 @@ function MainPage({ onGameStart, userId, onLogout, autoOpenModal, onModalOpened 
         </main>
       </div>
 
-      {showRanking && <RankingModal onClose={() => setShowRanking(false)} />}
-      {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
+      {/* 🚀 각 모달에 테마 정보를 전달하여 모달 속까지 세트로 변하게 합니다 */}
+      {showRanking && <RankingModal onClose={() => setShowRanking(false)} theme={theme} />}
+      {showSettings && <SettingsModal onClose={() => setShowSettings(false)} theme={theme} onThemeToggle={onThemeToggle} />}
       {showTextSelect && (
         <LongTextSelectModal 
           lang={selectedLang}
           onClose={() => setShowTextSelect(false)}
+          theme={theme}
           onSelect={(textId) => {
             setShowTextSelect(false);
             onGameStart(selectedLang, selectedMode, textId); 

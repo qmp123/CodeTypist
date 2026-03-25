@@ -1,5 +1,5 @@
 /***********************************************************
- * 1. 전체 레이아웃 (박스 안쪽 정렬 고정)
+ * 1. 전체 레이아웃 (색상 변수 연결)
  ***********************************************************/
 .typing-container {
   width: 90vw;
@@ -9,35 +9,34 @@
   margin-bottom: 3vh;
   margin-left: auto;
   margin-right: auto;
-  padding: 40px; /* 🚀 박스 안쪽 여백으로 헤더를 감쌉니다 */
-  background-color: #1e1e1e;
+  padding: 40px;
+  /* 🚀 배경과 글자를 변수로 연결 */
+  background-color: var(--bg-card) !important;
+  color: var(--text-main) !important;
   border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-  color: #ffffff;
+  box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .game-header {
   display: flex;
-  justify-content: space-between; /* 🚀 버튼은 왼쪽, 제목은 오른쪽으로 '밀어냄' */
-  align-items: flex-start;        /* 상단 정렬 */
-  width: 100%;                    /* 가로 꽉 채우기 */
-  border-bottom: 1px solid #333;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  border-bottom: 1px solid var(--border-color); /* 🚀 선 색상 변경 */
   padding-bottom: 20px;
   margin-bottom: 20px;
 }
 
 .back-btn {
-  /* 🚀 절대 위치(absolute)를 삭제하고 아래 속성을 넣으세요 */
   position: relative !important; 
-  flex-shrink: 0;                /* 버튼이 찌그러지지 않게 방지 */
-  
-  /* 기존 스타일 유지 */
-  background-color: #333;
-  color: #ccc;
-  border: 1px solid #444;
+  flex-shrink: 0;
+  background-color: var(--bg-sub); /* 🚀 버튼 배경 변경 */
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
   padding: 10px 25px;
   border-radius: 8px;
   font-weight: bold;
@@ -45,39 +44,39 @@
 }
 
 .game-info {
-  text-align: right;             /* 글자들도 오른쪽 끝으로 정렬 */
+  text-align: right;
   flex-shrink: 0;
 }
 
 /***********************************************************
- * 2. 상태 바 (원본 스타일 유지)
+ * 2. 상태 바 (깔끔하게 반전)
  ***********************************************************/
 .status-bar {
   display: flex;
   justify-content: space-around;
-  background-color: #252525;
+  background-color: var(--bg-sub); /* 🚀 배경 변경 */
   padding-top: 20px;
   padding-bottom: 20px;
   border-radius: 12px;
   margin-bottom: 25px;
-  border: 1px solid #333;
+  border: 1px solid var(--border-color);
 }
 .status-item {
   flex: 1;
   text-align: center;
   font-weight: 800;
   font-size: 1.1rem;
-  color: #999;
+  color: var(--text-sub); /* 🚀 부가 설명 텍스트 색상 */
 }
 .status-value {
-  color: #03dac6;
+  color: var(--point-color); /* 🚀 민재 님의 시그니처 보라색 적용 */
   font-size: 2.2rem;
   margin-left: 10px;
   font-family: 'Consolas', monospace;
 }
 
 /***********************************************************
- * 3. 낱말 연습 전용 스타일 유지
+ * 3. 낱말 연습 전용 스타일 (시커먼 배경 제거)
  ***********************************************************/
 .accuracy-gauge-container {
   display: flex;
@@ -88,26 +87,27 @@
 .gauge-track {
   flex: 1;
   height: 12px;
-  background-color: #000;
+  background-color: var(--border-color); /* 🚀 트랙 색상 변경 */
   border-radius: 6px;
   overflow: hidden;
 }
 .gauge-fill {
   height: 100%;
-  background-color: #ff9800;
+  background-color: var(--point-color);
   transition: width 0.3s ease;
 }
 
 .char-belt-container {
   width: 100%;
   height: 160px;
-  background: linear-gradient(to bottom, #222, #111);
+  /* 🚀 그라데이션 대신 단색 변수 사용으로 깔끔하게 처리 */
+  background: var(--bg-sub); 
   border-radius: 15px;
   position: relative;
   display: flex;
   align-items: center;
   overflow: hidden;
-  border: 4px solid #333;
+  border: 2px solid var(--border-color);
 }
 .char-belt {
   display: flex;
@@ -118,34 +118,34 @@
 .belt-item {
   font-size: 4.5rem;
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.2);
+  color: var(--text-sub); /* 🚀 투명도 대신 테마 글자색 사용 */
   font-family: 'Consolas', monospace;
   min-width: 70px;
   text-align: center;
 }
 .belt-item.active {
-  color: #ffffff;
-  text-shadow: 0 0 20px #fff;
+  color: var(--text-main);
+  text-shadow: 0 0 20px var(--point-color); /* 🚀 흰색 그림자 대신 포인트 컬러 효과 */
   transform: scale(1.15);
 }
 .active-frame {
   position: absolute;
-  left: 85px;
+  left: 80px; /* 정렬 보정 */
   width: 110px;
   height: 130px;
-  border: 4px solid #ffffff;
+  border: 4px solid var(--point-color); /* 🚀 보라색 프레임 */
   border-radius: 10px;
-  background-color: rgba(255,255,255,0.05);
+  background-color: transparent;
   pointer-events: none;
 }
 
 /***********************************************************
- * 4. 코드 박스 및 입력창 유지
+ * 4. 코드 박스 및 입력창 (깔끔한 UI)
  ***********************************************************/
 .code-display-box {
   width: 100%;
   height: 280px; 
-  background-color: #121212;
+  background-color: var(--bg-sub); /* 🚀 시커먼 배경 대신 변수 적용 */
   border-radius: 15px;
   font-size: 2.8rem;
   text-align: center;
@@ -156,7 +156,9 @@
   word-break: break-all;
   padding: 30px;
   box-sizing: border-box;
-  box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+  /* 🚀 라이트 모드에서 지저분해 보일 수 있는 내부 그림자 제거 */
+  box-shadow: none; 
+  border: 1px solid var(--border-color);
   line-height: 1.8;
 }
 
@@ -174,13 +176,13 @@
   padding-right: 40px;
   font-size: 2rem;
   text-align: center;
-  background-color: #1a1a1a;
-  border: 4px solid #03dac6;
-  color: #ffffff;
+  background-color: var(--bg-sub);
+  border: 4px solid var(--point-color); /* 🚀 입력창 포인트 강조 */
+  color: var(--text-main);
   border-radius: 40px;
   outline: none;
   box-sizing: border-box;
 }
 
-.char.correct { color: #00e676; }
+.char.correct { color: #00e676; } /* 🚀 초록색은 유지 (가독성 좋음) */
 .char.wrong { color: #ff5252; text-decoration: underline; }

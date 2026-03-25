@@ -1,47 +1,88 @@
 /* src/index.css */
 
 :root {
+  /* 🌙 다크 모드 */
+  --bg-main: #121212;         /* 전체 배경 */
+  --bg-card: #1e1e1e;         /* 메인 박스 배경 */
+  --bg-sub: #252525;          /* 사이드바, 탭, 입력창 배경 */
+  --text-main: #ffffff;       /* 주 글자색 */
+  --text-sub: #999999;        /* 부가 설명 글자색 */
+  --point-color: #7c4dff;     /* 민재 님의 시그니처 보라색 */
+  --border-color: #333333;    /* 경계선 */
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+  /* 원본 설정 유지 */
   --global-font: 'Segoe UI', sans-serif;
   --global-font-size: 20px;
 }
 
-/* 1. 모든 요소 글꼴 적용 */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: var(--global-font) !important;
+/* 🌞 라이트 모드 */
+[data-theme='light'] {
+  --bg-main: #f0f2f5;         /* 연한 회색 배경 */
+  --bg-card: #ffffff;         /* 순백색 메인 박스 */
+  --bg-sub: #f8f9fa;          /* 요소 구분용 내부 배경 */
+  --text-main: #1a1a1b;       /* 짙은 다크 그레이 (가독성 향상) */
+  --text-sub: #64748b;        /* 부드러운 설명 글씨 */
+  --point-color: #6200ee;     /* 라이트 모드 전용 보라색 */
+  --border-color: #e2e8f0;    /* 연한 경계선 */
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.05); /* 은은한 입체감 */
 }
 
-/* 2. 일반 UI 요소 글자 크기 반영 */
+/* 1. 기본 설정 (레이아웃 훼손 방지) */
+* {
+  margin: 0; padding: 0; box-sizing: border-box;
+  font-family: var(--global-font) !important;
+  /* 🚀 색상 전환 시에만 부드러운 효과를 줍니다. */
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
 
+html, body, #root {
+  /* 🚀 1. 배경색을 테마 변수로 연결 (양옆 검은 공간 해결) */
+  background-color: var(--bg-main) !important;
+  color: var(--text-main);
+  margin: 0;
+  padding: 0;
+  
+  /* 🚀 2. 화면 높이를 100% 채우기 */
+  min-height: 100vh;
+  width: 100%;
+  
+  /* 🚀 3. 정중앙 정렬 (가로 + 세로) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* 가로 중앙 */
+  justify-content: center;  /* 세로 중앙 (이게 빠져서 위에 떠있던 겁니다) */
+  
+  transition: background-color 0.2s ease;
+}
+
+/* 메인 페이지처럼 내용이 길어질 때를 위한 예외 처리 */
+body {
+  overflow-y: auto;
+}
+
+/* 2. 원본 글자 크기 유지 */
 body, button, input, select, .game-info, .status-item {
   font-size: var(--global-font-size);
 }
 
-/* 3. [박스 설정] 작아지지는 않고, 커지면 같이 커짐 */
-
-.typing-container {
-  min-height: 600px !important;
-  height: auto !important;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-}
-
-/* 4. [연습창 예외] 낱말(belt-item)과 짧은글(code-display-box)은 크기 고정 */
-
+/* 3. 연습창 40px 고정 로직 (원본 보존) */
 .belt-item, .code-display-box, .char {
-
-  /* 사용자가 설정을 바꿔도 이 부분은 연습을 위해 시원한 크기로 유지됩니다 */
-
   font-size: 40px !important;
   font-weight: bold !important;
 }
 
-/* 5. 입력창 정렬 */
-
-.input-field, .belt-input-field {
-  font-size: 1.3rem !important;
+/* 4. 🚀 해/달 토글 버튼 (새로 추가될 요소의 스타일 미리 정의) */
+.theme-toggle-switch {
+  position: relative; display: flex; width: 70px; height: 34px;
+  background: var(--bg-sub); border: 1px solid var(--border-color);
+  border-radius: 30px; padding: 4px; cursor: pointer; align-items: center;
 }
+.toggle-dot {
+  position: absolute; width: 26px; height: 26px;
+  background: var(--bg-card); border-radius: 50%;
+  transition: transform 0.3s ease; z-index: 1;
+}
+[data-theme='light'] .toggle-dot { transform: translateX(2px); }
+[data-theme='dark'] .toggle-dot { transform: translateX(38px); }
+.theme-icon { flex: 1; text-align: center; z-index: 2; font-size: 14px; }

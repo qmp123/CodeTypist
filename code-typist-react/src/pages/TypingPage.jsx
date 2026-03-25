@@ -3,32 +3,20 @@ import ResultModal from '../components/ResultModal';
 import '../styles/typing-page.css';
 
 const pythonExamples = [
-  'numbers = [1, 2, 3] numbers.append(4)',
-  'import sys print(sys.argv)',
-  'import pandas as pd df = pd.read_csv("data.csv")',
-  'for i in range(5): print(i)',
-  'def hello(): return "Hi"',
-  'x = [i for i in range(10)] print(x)',
-  'if x > 10: print("Large")',
-  'with open("test.txt", "r") as f: lines = f.readlines()',
-  'import matplotlib.pyplot as plt plt.show()',
-  'try: val = 10 / 0 except ZeroDivisionError: pass',
-  'a, b = 5, 10 a, b = b, a',
-  'import random num = random.randint(1, 100)',
-  'text = " Python " print(text.strip())',
-  'import datetime print(datetime.datetime.now())',
-  'df = pd.DataFrame({"A": [1, 2, 3]})',
-  'def add(a, b): return a + b',
-  'import json data = json.loads("{}")',
-  'while True: break',
-  'print(f"Total: {10 + 20}")',
-  's = "apple,banana" list = s.split(",")',
-  'arr = np.zeros((3, 3))',
-  'print(len([1, 2, 3]))',
+  'numbers = [1, 2, 3] numbers.append(4)', 'import sys print(sys.argv)', 'import pandas as pd df = pd.read_csv("data.csv")',
+  'for i in range(5): print(i)', 'def hello(): return "Hi"', 'x = [i for i in range(10)] print(x)',
+  'if x > 10: print("Large")', 'with open("test.txt", "r") as f: lines = f.readlines()',
+  'import matplotlib.pyplot as plt plt.show()', 'try: val = 10 / 0 except ZeroDivisionError: pass',
+  'a, b = 5, 10 a, b = b, a', 'import random num = random.randint(1, 100)',
+  'text = " Python " print(text.strip())', 'import datetime print(datetime.datetime.now())',
+  'df = pd.DataFrame({"A": [1, 2, 3]})', 'def add(a, b): return a + b',
+  'import json data = json.loads("{}")', 'while True: break', 'print(f"Total: {10 + 20}")',
+  's = "apple,banana" list = s.split(",")', 'arr = np.zeros((3, 3))', 'print(len([1, 2, 3]))',
   'items = ["a", "b"] for item in items: print(item)'
 ];
 
-function TypingPage({ lang, mode, onBack }) {
+/* 🚀 TypingPage 컴포넌트: theme prop 추가 */
+function TypingPage({ lang, mode, onBack, theme }) {
   const [score, setScore] = useState(0);
   const [inputText, setInputText] = useState('');
   const [timer, setTimer] = useState(mode === '코드 게임' ? 60 : 0);
@@ -45,8 +33,6 @@ function TypingPage({ lang, mode, onBack }) {
   const [charList, setCharList] = useState([]);
   const codingChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{};:'\",.<>/?\\|`~ ";
 
-  // 정확도 계산 로직 유지
-
   const accuracy = totalTyped > 0 ? Math.round(((totalTyped - mistakes) / totalTyped) * 100) : 100;
 
   const initWordBelt = useCallback(() => {
@@ -58,10 +44,8 @@ function TypingPage({ lang, mode, onBack }) {
   const resetGame = useCallback(() => {
     let selected = mode === '짧은 글 연습' ? [...pythonExamples].sort(() => Math.random() - 0.5).slice(0, 5) : [];
     setSessionQuestions(selected);
-
     if (mode === '낱말 연습') initWordBelt();
     else if (selected.length > 0) setCurrentQuestion(selected[0]);
-
     setCurrentIndex(0); setInputText(''); setScore(0); setWpm(0); setTotalTyped(0); setMistakes(0);
     setTimer(mode === '코드 게임' ? 60 : 0); setShowResult(false);
     startTimeRef.current = null; isStartedRef.current = false;
@@ -90,7 +74,6 @@ function TypingPage({ lang, mode, onBack }) {
     const nextIndex = currentIndex + 1;
     setTotalTyped(prev => prev + (mode === '낱말 연습' ? 1 : currentQuestion.length));
     setScore(prev => prev + scoreChange);
-
     if (mode === '낱말 연습') {
       if (nextIndex < 100) {
         setCharList(prev => [...prev.slice(1), codingChars[Math.floor(Math.random() * codingChars.length)]]);
@@ -102,33 +85,23 @@ function TypingPage({ lang, mode, onBack }) {
         setCurrentQuestion(sessionQuestions[nextIndex]);
         setCurrentIndex(nextIndex);
         setInputText('');
-      } else {
-        setShowResult(true);
-      }
+      } else setShowResult(true);
     }
   };
 
   const handleInput = (e) => {
     if (showResult) return;
     const val = e.target.value;
-
     if (mode === '낱말 연습') {
       if (val.length === 0) return;
       const char = val.slice(-1);
-  
       if (!isStartedRef.current) { isStartedRef.current = true; startTimeRef.current = Date.now(); }
-
-      if (char !== charList[0]) {
-        setMistakes(prev => prev + 1);
-      }
-    
+      if (char !== charList[0]) setMistakes(prev => prev + 1);
       moveToNextQuestion(1);
       return;
     }
-
     if (val.length === 0 && inputText.length === 0) return;
     if (!isStartedRef.current) { isStartedRef.current = true; startTimeRef.current = Date.now(); }
-
     setInputText(val);
     if (val.length === currentQuestion.length) {
       let errs = 0;
@@ -139,91 +112,76 @@ function TypingPage({ lang, mode, onBack }) {
   };
 
   return (
-    <div className="typing-container" style={{ minHeight: '600px', height: 'auto' }}>
-      {/* 🚀 헤더 정렬: display: flex와 justify-content: space-between 추가하여 버튼(좌) / 정보(우) 배치 */}
-      <header className="game-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 0 10px 0', marginBottom: '10px' }}>
-      <button className="back-btn" onClick={onBack}>← Back to Menu</button>
-         <div className="game-info" style={{ textAlign: 'right' }}>
-         <h2 style={{ margin: 0, fontSize: '1.6rem' }}>{mode}</h2>
+    <div className="typing-container" style={{ minHeight: '600px', height: 'auto', backgroundColor: 'var(--bg-card)', color: 'var(--text-main)', borderRadius: '20px', padding: '20px 40px', boxShadow: 'var(--shadow)' }}>
+      <header className="game-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 0 10px 0', borderBottom: '1px solid var(--border-color)', marginBottom: '20px' }}>
+        <button className="back-btn" onClick={onBack} style={{ backgroundColor: 'var(--bg-sub)', color: 'var(--text-main)', border: '1px solid var(--border-color)' }}>← Back to Menu</button>
+        <div className="game-info" style={{ textAlign: 'right' }}>
+          <h2 style={{ margin: 0, fontSize: '1.6rem', color: 'var(--point-color)' }}>{mode}</h2>
           {mode !== '낱말 연습' && (
-            <p style={{ margin: '5px 0 0 0' }}>Language: <strong>{lang}</strong></p>
-            )}
-    </div>
+            <p style={{ margin: '5px 0 0 0', color: 'var(--text-sub)' }}>Language: <strong>{lang}</strong></p>
+          )}
+        </div>
+      </header>
 
-    </header>
       <main className="typing-area" style={{ marginTop: '0' }}>
-        <div className="status-bar" style={{ marginBottom: '15px', padding: '15px' }}>
-          <div className="status-item">
+        <div className="status-bar" style={{ marginBottom: '15px', padding: '15px', backgroundColor: 'var(--bg-sub)', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+          <div className="status-item" style={{ color: 'var(--text-sub)' }}>
             {mode === '낱말 연습' ? 'PROGRESS' : (mode === '짧은 글 연습' ? 'ACCURACY' : 'SCORE')}
-            <span className="status-value">
+            <span className="status-value" style={{ color: 'var(--text-main)' }}>
               {mode === '낱말 연습' ? `${currentIndex}/100` : (mode === '짧은 글 연습' ? `${accuracy}%` : score)}
             </span>
           </div>
-          <div className="status-item">TIME <span className="status-value">{timer}s</span></div>
-          <div className="status-item">SPEED <span className="status-value">{wpm}</span></div>
+          <div className="status-item" style={{ color: 'var(--text-sub)' }}>TIME <span className="status-value" style={{ color: 'var(--text-main)' }}>{timer}s</span></div>
+          <div className="status-item" style={{ color: 'var(--text-sub)' }}>SPEED <span className="status-value" style={{ color: 'var(--point-color)' }}>{wpm}</span></div>
         </div>
 
         {mode === '낱말 연습' ? (
           <div className="word-practice-wrapper" style={{ minHeight: '320px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <div className="accuracy-gauge-container" style={{ marginBottom: '50px', width: '80%' }}>
-              <span className="gauge-label">정확도 {accuracy}%</span>
-              <div className="gauge-track"><div className="gauge-fill" style={{ width: `${accuracy}%` }}></div></div>
+              <span className="gauge-label" style={{ color: 'var(--text-main)' }}>정확도 {accuracy}%</span>
+              <div className="gauge-track" style={{ backgroundColor: 'var(--border-color)' }}>
+                <div className="gauge-fill" style={{ width: `${accuracy}%`, backgroundColor: 'var(--point-color)' }}></div>
+              </div>
             </div>
          
             <div className="char-belt-container" style={{
-              height: '140px',
-              width: '100%',
-              position: 'relative',
-              display: 'flex',
-              alignItems: 'center',
-              overflow: 'hidden',
-              backgroundColor: 'rgba(255, 255, 255, 0.02)',
-              borderRadius: '15px'
+              height: '140px', width: '100%', position: 'relative', display: 'flex', alignItems: 'center', overflow: 'hidden',
+              backgroundColor: 'var(--bg-sub)', /* 🚀 검은 배경 대신 변수 적용 */
+              borderRadius: '15px', border: '1px solid var(--border-color)'
             }}>
-              <div className="char-belt" style={{
-                display: 'flex',
-                paddingLeft: 'calc(50% - 45px)',
-                transition: 'transform 0.2s ease-out'
-              }}>
+              <div className="char-belt" style={{ display: 'flex', paddingLeft: 'calc(50% - 45px)', transition: 'transform 0.2s ease-out' }}>
                 {charList.map((c, i) => (
                   <div key={i} className={`belt-item ${i === 0 ? 'active' : ''}`}
                     style={{
-                      width: '90px',
-                      minWidth: '90px',
-                      height: '110px',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      fontSize: '3.2rem',
-                      fontWeight: 'bold',
-                      color: i === 0 ? '#ffffff' : '#444',
-                      textShadow: i === 0 ? '0 0 25px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.4)' : 'none',
+                      width: '90px', minWidth: '90px', height: '110px', display: 'flex', justifyContent: 'center', alignItems: 'center',
+                      fontSize: '3.2rem', fontWeight: 'bold',
+                      color: i === 0 ? 'var(--text-main)' : 'var(--text-sub)', /* 🚀 하얀색/회색 대신 변수 적용 */
+                      textShadow: i === 0 ? (theme === 'dark' ? '0 0 25px rgba(255, 255, 255, 0.7)' : 'none') : 'none',
                       transition: 'all 0.2s'
                     }}>
                     {c === " " ? "␣" : c}
                   </div>
                 ))}
               </div>
-            
               <div className="active-frame" style={{
-                position: 'absolute',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                height: '110px',
-                width: '90px',
-                border: '3px solid #ffffff',
-                borderRadius: '15px',
-                pointerEvents: 'none',
-                boxShadow: '0 0 25px rgba(255, 255, 255, 0.25)',
-                backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                position: 'absolute', left: '50%', transform: 'translateX(-50%)', height: '110px', width: '90px',
+                border: '3px solid var(--point-color)', /* 🚀 흰색 선 대신 포인트 컬러 적용 */
+                borderRadius: '15px', pointerEvents: 'none',
+                boxShadow: '0 0 25px rgba(124, 77, 255, 0.2)',
+                backgroundColor: 'transparent'
               }}></div>
             </div>
           </div>
         ) : (
-          <div className="code-display-box" style={{ minHeight: '350px', padding: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
+          /* 🚀 짧은 글 연습: 코드 박스 배경 반전 핵심 구역 */
+          <div className="code-display-box" style={{ 
+            minHeight: '350px', padding: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap',
+            backgroundColor: 'var(--bg-sub)', /* 🚀 #1e1e1e 대신 변수 적용 */
+            borderRadius: '15px', border: '1px solid var(--border-color)', color: 'var(--text-main)' 
+          }}>
             {currentQuestion.split('').map((char, index) => {
-              let color = inputText[index] == null ? '' : (inputText[index] === char ? 'correct' : 'wrong');
-              return <span key={index} className={`char ${color}`}>{char}</span>;
+              let colorClass = inputText[index] == null ? '' : (inputText[index] === char ? 'correct' : 'wrong');
+              return <span key={index} className={`char ${colorClass}`}>{char}</span>;
             })}
           </div>
         )}
@@ -233,18 +191,15 @@ function TypingPage({ lang, mode, onBack }) {
             value={inputText} onChange={handleInput} autoFocus spellCheck="false"
             placeholder="코드를 입력하세요."
             style={{
-              padding: '18px',
-              fontSize: '1.3rem',
-              textAlign: 'center',            
-              backgroundColor: '#252525',
-              border: '1px solid #444',
-              borderRadius: '10px',
-              color: '#fff'
+              padding: '18px', fontSize: '1.3rem', textAlign: 'center',            
+              backgroundColor: 'var(--bg-sub)', /* 🚀 #252525 대신 변수 적용 */
+              border: '2px solid var(--border-color)', 
+              borderRadius: '10px', color: 'var(--text-main)', width: '100%'
             }}
           />
         </div>
       </main>
-      {showResult && <ResultModal mode={mode} score={score} wpm={wpm} accuracy={accuracy} time={timer} onRestart={resetGame} onHome={onBack} />}
+      {showResult && <ResultModal mode={mode} score={score} wpm={wpm} accuracy={accuracy} time={timer} onRestart={resetGame} onHome={onBack} theme={theme} />}
     </div>
   );
 }

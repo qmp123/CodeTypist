@@ -1,9 +1,19 @@
 .app-wrapper {
   width: 100vw;
-  height: 100vh;
-  background-color: #121212;
+  /* 🚀 1. 고정 높이(100vh) 대신 min-height를 권장합니다. 
+     메인 페이지 내용이 길어질 때 아래쪽 배경이 잘리는 걸 방지해요. */
+  min-height: 100vh; 
+  
+  /* 🚀 2. #121212 대신 테마 변수를 사용합니다. (가장 중요한 부분!) */
+  background-color: var(--bg-main) !important;
+  
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* 스크롤 방지로 화면 흔들림 차단 */
+  
+  /* 🚀 3. 메인 페이지의 긴 설명을 보려면 스크롤이 필요하므로 auto로 변경을 권장합니다. */
+  overflow-y: auto; 
+  
+  /* 테마 바뀔 때 배경도 부드럽게 변하도록 추가 */
+  transition: background-color 0.2s ease;
 }

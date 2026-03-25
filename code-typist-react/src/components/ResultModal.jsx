@@ -2,7 +2,7 @@ import React from 'react';
 import "../styles/result-modal.css";
 
 export default function ResultModal({ mode, score, wpm, accuracy, time, onRestart, onHome }) {
-  const isBasicPractice = mode === '낱말 연습' || mode === '짧은 코드 연습';
+  const isBasicPractice = mode === '낱말 연습' || mode === '짧은 글 연습';
 
   const getRank = () => {
     if (score >= 100) return 'S';
@@ -32,21 +32,24 @@ export default function ResultModal({ mode, score, wpm, accuracy, time, onRestar
             <h4>ACCURACY</h4>
             <p>{accuracy}%</p>
           </div>
-          <div className="stat-item">
+          
+          {/* 🚀 isBasicPractice일 때 가로를 꽉 채우도록 클래스 추가 */}
+          <div className={`stat-item ${isBasicPractice ? 'full-width' : ''}`}>
             <h4>TIME</h4>
             <p>{time}s</p>
           </div>
+
           {!isBasicPractice && (
             <div className="stat-item">
               <h4>RANK</h4>
-              <p style={{ color: '#ffeb3b' }}>{getRank()}</p>
+              <p style={{ color: 'var(--point-color)', fontWeight: '900' }}>{getRank()}</p>
             </div>
           )}
         </div>
 
         <div className="result-buttons">
-          <button className="restart-btn" onClick={onRestart}>Try Again ↻</button>
-          <button className="home-btn" onClick={onHome}>Home 🏠</button>
+          <button className="restart-btn" onClick={onRestart}>Try Again</button>
+          <button className="home-btn" onClick={onHome}>Home</button>
         </div>
       </div>
     </div>
