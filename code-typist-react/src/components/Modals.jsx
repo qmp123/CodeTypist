@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-/* 🏆 랭킹 팝업 (원본 레이아웃 및 인라인 스타일 100% 유지) */
+/* 🏆 랭킹 팝업 (민재 님 원본 레이아웃 및 인라인 스타일 100% 보존) */
 export function RankingModal({ onClose }) {
   const rankings = [
     { rank: 1, name: 'Faker', score: 2500 },
@@ -30,7 +30,7 @@ export function RankingModal({ onClose }) {
   );
 }
 
-/* ⚙️ 설정 팝업 (기존 폰트/사이즈 로직 유지 + 슬라이딩 토글 적용) */
+/* ⚙️ 설정 팝업 (기존 폰트/사이즈 로직 유지 + 배경 아이콘 보강된 토글 적용) */
 export function SettingsModal({ onClose, theme, onThemeToggle }) {
   const [font, setFont] = useState(() => localStorage.getItem('app-font-family') || "'Segoe UI', sans-serif");
   const [fontSize, setFontSize] = useState(() => localStorage.getItem('app-font-size') || "20px");
@@ -42,7 +42,8 @@ export function SettingsModal({ onClose, theme, onThemeToggle }) {
 
   useEffect(() => {
     localStorage.setItem('app-font-size', fontSize);
-  });
+    document.documentElement.style.setProperty('--global-font-size', fontSize);
+  }, [fontSize]);
 
   return (
     <div className="modal-overlay" onClick={onClose} style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
@@ -52,16 +53,18 @@ export function SettingsModal({ onClose, theme, onThemeToggle }) {
         <h2 className="modal-title" style={{ color: 'var(--point-color)', marginBottom: '30px' }}>⚙️ 설정</h2>
 
         <div className="setting-box" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          {/* 🚀 테마 설정: 배경 아이콘 레이어를 추가하여 라이트 모드에서도 달이 보이게 함 */}
           <div className="setting-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-color)', paddingBottom: '15px' }}>
             <span>화면 테마</span>
-            {/* 🚀 슬라이딩 토글 구조로 변경 */}
-            <div className={`theme-toggle-switch ${theme}`} onClick={onThemeToggle} style={{ cursor: 'pointer' }}>
+            <div className={`theme-toggle-switch ${theme}`} onClick={() => onThemeToggle(theme === 'dark' ? 'light' : 'dark')} style={{ cursor: 'pointer' }}>
+              {/* 배경에 깔리는 아이콘 */}
+              <div className="toggle-bg-icons">
+                <span className="bg-moon">🌙</span>
+                <span className="bg-sun">☀️</span>
+              </div>
+              {/* 움직이는 원 */}
               <div className="toggle-dot">
                 {theme === 'dark' ? '🌙' : '☀️'}
-              </div>
-              <div className="toggle-bg-icons">
-                <span>🌙</span>
-                <span>☀️</span>
               </div>
             </div>
           </div>
@@ -69,7 +72,7 @@ export function SettingsModal({ onClose, theme, onThemeToggle }) {
           <div className="setting-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span>기본 글꼴</span>
             <select className="setting-select" value={font} onChange={(e) => setFont(e.target.value)}
-                    style={{ background: 'var(--bg-sub)', color: 'var(--text-main)', border: '1px solid var(--border-color)', padding: '5px' }}>
+                    style={{ background: 'var(--bg-sub)', color: 'var(--text-main)', border: '1px solid var(--border-color)', padding: '5px', borderRadius: '5px' }}>
               <option value="'Segoe UI', sans-serif">기본체 (Segoe UI)</option>
               <option value="'Noto Sans KR', sans-serif">본고딕 (Noto Sans)</option>
               <option value="'D2Coding', monospace">코딩체 (D2Coding)</option>
@@ -79,7 +82,7 @@ export function SettingsModal({ onClose, theme, onThemeToggle }) {
           <div className="setting-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span>글자 크기</span>
             <select className="setting-select" value={fontSize} onChange={(e) => setFontSize(e.target.value)}
-                    style={{ background: 'var(--bg-sub)', color: 'var(--text-main)', border: '1px solid var(--border-color)', padding: '5px' }}>
+                    style={{ background: 'var(--bg-sub)', color: 'var(--text-main)', border: '1px solid var(--border-color)', padding: '5px', borderRadius: '5px' }}>
               <option value="16px">작게 (16px)</option>
               <option value="20px">보통 (20px)</option>
               <option value="24px">크게 (24px)</option>

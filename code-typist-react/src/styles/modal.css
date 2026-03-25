@@ -109,7 +109,6 @@
   border-radius: 0 16px 16px 0;
 }
 
-/* --- 테마 토글 스위치 (추가만 하세요) --- */
 .theme-toggle-switch {
   width: 64px;
   height: 32px;
@@ -117,49 +116,62 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding: 4px;
-  transition: background-color 0.3s ease;
   border: 1px solid var(--border-color);
   background-color: var(--bg-sub);
+  transition: all 0.3s ease;
+  overflow: hidden; /* 아이콘이 밖으로 나가지 않게 */
 }
 
-/* 다크/라이트 배경색 강제 지정 (선택 사항) */
-.theme-toggle-switch.dark { background-color: #1a1a1a; }
-.theme-toggle-switch.light { background-color: #ffffff; }
+/* 배경 아이콘 레이어 */
+.toggle-bg-icons {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px;
+  font-size: 12px;
+  position: absolute;
+  top: 0; left: 0;
+}
 
+/* 배경 아이콘들은 은은하게 처리 */
+.bg-moon, .bg-sun {
+  opacity: 0.4;
+  filter: grayscale(0.5);
+}
+
+/* 움직이는 원 (Thumb) */
 .toggle-dot {
   width: 24px;
   height: 24px;
   border-radius: 50%;
   position: absolute;
+  left: 4px;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 14px;
-  z-index: 2;
-  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.3s ease;
+  z-index: 2; /* 배경 아이콘보다 위에 있게 */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), background-color 0.3s ease;
 }
 
-/* 🌙 다크: 흰색 원이 왼쪽 */
+/* 🌙 다크 모드 상태 (왼쪽) */
 .theme-toggle-switch.dark .toggle-dot {
   transform: translateX(0);
   background-color: #ffffff;
   color: #1a1a1a;
 }
 
-/* ☀️ 라이트: 검은색 원이 오른쪽 */
+/* ☀️ 라이트 모드 상태 (오른쪽) */
 .theme-toggle-switch.light .toggle-dot {
   transform: translateX(32px);
   background-color: #1a1a1a;
   color: #ffffff;
 }
 
-.toggle-bg-icons {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 4px;
-  font-size: 12px;
-  opacity: 0.4;
-  z-index: 1;
+/* 라이트 모드일 때 스위치 자체 배경색 밝게 */
+.theme-toggle-switch.light {
+  background-color: #f0f2f5;
 }
