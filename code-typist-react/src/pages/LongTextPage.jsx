@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ResultModal from '../components/ResultModal';
-import practiceData from '../data/long-practice.json'; //
+import practiceData from '../data/long-practice.json';
 import '../styles/long-text-page.css';
 
 function LongTextPage({ lang, textId, onBack, onTryAgain }) {
@@ -34,14 +34,19 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
     const elapsedMinutes = (Date.now() - startTimeRef.current) / 60000;
     let currentCorrect = 0;
     let currentTyped = 0;
+
     userInput.forEach((input, idx) => {
       const target = sentences[currentPage * 5 + idx] || "";
       currentTyped += input.length;
       const minLen = Math.min(input.length, target.length);
-      for (let i = 0; i < minLen; i++) if (input[i] === target[i]) currentCorrect++;
+      for (let i = 0; i < minLen; i++) {
+        if (input[i] === target[i]) currentCorrect++;
+      }
     });
+
     const totalCorrect = completedStats.correct + currentCorrect;
     const totalTyped = completedStats.typed + currentTyped;
+
     setStats({
       speed: Math.round(totalCorrect / elapsedMinutes) || 0,
       accuracy: totalTyped > 0 ? Math.round((totalCorrect / totalTyped) * 100) : 100,
@@ -64,6 +69,7 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
     const newInputs = [...userInput];
     newInputs[index] = value;
     setUserInput(newInputs);
+    
     if (value.length === targetLine.length && value.length > 0 && index < 4) {
       inputRefs.current[index + 1]?.focus();
     }
@@ -73,7 +79,7 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
     if (e.key === 'Enter') {
       e.preventDefault();
       if (index < 4) inputRefs.current[index + 1]?.focus();
-      else handleNextPage(); //
+      else handleNextPage(); 
     }
   };
 
@@ -87,8 +93,10 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
       for (let i = 0; i < minLen; i++) if (input[i] === target[i]) pageCorrect++;
     });
     setCompletedStats(prev => ({ correct: prev.correct + pageCorrect, typed: prev.typed + pageTyped }));
-    if ((currentPage + 1) * 5 >= sentences.length) setShowResult(true);
-    else {
+    
+    if ((currentPage + 1) * 5 >= sentences.length) {
+      setShowResult(true);
+    } else {
       setCurrentPage(prev => prev + 1);
       setUserInput(["", "", "", "", ""]);
     }
@@ -96,7 +104,7 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
 
   const RenderColoredText = (input, target) => {
     return input.split("").map((char, i) => (
-      <span key={i} style={{ color: char === target[i] ? "#00ff00" : "#ff0000" }}>{char}</span>
+      <span key={i} style={{ color: char === target[i] ? "#4caf50" : "#f44336" }}>{char}</span>
     ));
   };
 
@@ -109,11 +117,13 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
           <span className="page-indicator">Page: {currentPage + 1} / {Math.ceil(sentences.length / 5)}</span>
         </div>
       </header>
+
       <section className="dashboard-stats">
         <div className="stat-box">SPEED <span className="stat-val highlight-blue">{stats.speed}</span></div>
         <div className="stat-box">ACCURACY <span className="stat-val highlight-mint">{stats.accuracy}%</span></div>
         <div className="stat-box">TIME <span className="stat-val highlight-blue">{stats.time}s</span></div>
       </section>
+
       <main className="code-practice-area">
         {sentences.slice(currentPage * 5, (currentPage + 1) * 5).map((line, idx) => (
           <div key={idx} className="code-line-block">
@@ -133,19 +143,21 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
           </div>
         ))}
       </main>
+
       <footer className="practice-footer">
         <button className="nav-action-btn" onClick={handleNextPage}>
           {(currentPage + 1) * 5 >= sentences.length ? "RESULT VIEW" : "Next Page"}
         </button>
       </footer>
+
       {showResult && (
         <ResultModal 
-          mode="긴 코드 연습"
+          mode="긴 글 연습" // 🚀 낱말/짧은글과 구분되도록 설정
           score={Math.round((stats.speed * stats.accuracy) / 100)}
           wpm={stats.speed}
           accuracy={stats.accuracy}
           time={stats.time}
-          onRestart={onTryAgain} // 🚀
+          onRestart={onTryAgain}
           onHome={onBack}
         />
       )}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-/* 🏆 랭킹 팝업 (민재 님 원본 레이아웃 및 인라인 스타일 100% 보존) */
+/* 🏆 랭킹 팝업 (민재 님 원본 인라인 스타일 100% 보존) */
 export function RankingModal({ onClose }) {
   const rankings = [
     { rank: 1, name: 'Faker', score: 2500 },
@@ -30,7 +30,7 @@ export function RankingModal({ onClose }) {
   );
 }
 
-/* ⚙️ 설정 팝업 (기존 폰트/사이즈 로직 유지 + 배경 아이콘 보강된 토글 적용) */
+/* ⚙️ 설정 팝업 (로그인 화면의 토글 구조와 100% 동일하게 수정) */
 export function SettingsModal({ onClose, theme, onThemeToggle }) {
   const [font, setFont] = useState(() => localStorage.getItem('app-font-family') || "'Segoe UI', sans-serif");
   const [fontSize, setFontSize] = useState(() => localStorage.getItem('app-font-size') || "20px");
@@ -53,19 +53,14 @@ export function SettingsModal({ onClose, theme, onThemeToggle }) {
         <h2 className="modal-title" style={{ color: 'var(--point-color)', marginBottom: '30px' }}>⚙️ 설정</h2>
 
         <div className="setting-box" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          {/* 🚀 테마 설정: 배경 아이콘 레이어를 추가하여 라이트 모드에서도 달이 보이게 함 */}
+          
           <div className="setting-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-color)', paddingBottom: '15px' }}>
             <span>화면 테마</span>
-            <div className={`theme-toggle-switch ${theme}`} onClick={() => onThemeToggle(theme === 'dark' ? 'light' : 'dark')} style={{ cursor: 'pointer' }}>
-              {/* 배경에 깔리는 아이콘 */}
-              <div className="toggle-bg-icons">
-                <span className="bg-moon">🌙</span>
-                <span className="bg-sun">☀️</span>
-              </div>
-              {/* 움직이는 원 */}
-              <div className="toggle-dot">
-                {theme === 'dark' ? '🌙' : '☀️'}
-              </div>
+            {/* 🚀 로그인 화면과 똑같은 구조 (배경 아이콘 2개 + 움직이는 점 1개) */}
+            <div className="theme-toggle-switch" onClick={() => onThemeToggle(theme === 'dark' ? 'light' : 'dark')} style={{ cursor: 'pointer' }}>
+              <div className="toggle-dot"></div>
+              <div className="theme-icon" style={{ opacity: theme === 'light' ? 1 : 0.3 }}>☀️</div>
+              <div className="theme-icon" style={{ opacity: theme === 'dark' ? 1 : 0.3 }}>🌙</div>
             </div>
           </div>
 

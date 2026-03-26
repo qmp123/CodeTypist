@@ -5,6 +5,7 @@ import '../styles/main-layout.css';
 
 /* MainPage 컴포넌트
   - 민재 님의 원본 레이아웃 및 폰트 스케일링 100% 보존
+  - 사용자 정보 표시: '회원/비회원' 상태 메시지 제거, 이름만 표시로 수정
   - theme, onThemeToggle을 받아 설정창과 랭킹창에 전달
 */
 
@@ -52,10 +53,8 @@ function MainPage({ onGameStart, userId, onLogout, autoOpenModal, onModalOpened,
         <div className="user-info-box">
           <span className="user-icon">👤</span>
           <div className="user-details">
+            {/* 🚀 회원 전용 페이지이므로 상태 메시지는 삭제하고 이름만 깔끔하게 표시 */}
             <span className="user-name">{userId}</span> 님
-            <div className="user-status-text">
-              {userId === 'Guest' ? '비회원 (기록 저장 불가)' : 'Lv.1 Beginner'}
-            </div>
           </div>
         </div>
         <div className="header-buttons">
