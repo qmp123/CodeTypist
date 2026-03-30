@@ -114,7 +114,7 @@ function TypingPage({ lang, mode, onBack, theme }) {
   return (
     <div className="typing-container" style={{ minHeight: '600px', height: 'auto', backgroundColor: 'var(--bg-card)', color: 'var(--text-main)', borderRadius: '20px', padding: '20px 40px', boxShadow: 'var(--shadow)' }}>
       <header className="game-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 0 10px 0', borderBottom: '1px solid var(--border-color)', marginBottom: '20px' }}>
-        <button className="back-btn" onClick={onBack} style={{ backgroundColor: 'var(--bg-sub)', color: 'var(--text-main)', border: '1px solid var(--border-color)' }}>← Back to Menu</button>
+        <button className="back-btn" onClick={onBack} style={{ backgroundColor: 'var(--bg-sub)', color: 'var(--text-main)', border: '1px solid var(--border-color)' }}>← Back</button>
         <div className="game-info" style={{ textAlign: 'right' }}>
           <h2 style={{ margin: 0, fontSize: '1.6rem', color: 'var(--point-color)' }}>{mode}</h2>
           {mode !== '낱말 연습' && (
