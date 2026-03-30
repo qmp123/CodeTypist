@@ -132,9 +132,9 @@ function MiniGamePage({ lang, onBack }) {
 
       <main className="typing-area-mini">
         <div className="status-bar-mini">
-          <div className="status-item-mini">SCORE <span className="mint-text">{currentScore}</span></div>
-          <div className="status-item-mini">TIME <span className="mint-text">{timeLeft}s</span></div>
-          <div className="status-item-mini">PROGRESS <span className="mint-text">{currentIdx + 1} / 10</span></div>
+          <div className="status-item-mini">점수 <span className="mint-text">{currentScore}</span></div>
+          <div className="status-item-mini">소요 시간 <span className="mint-text">{timeLeft}s</span></div>
+          <div className="status-item-mini">정확도 <span className="mint-text">{currentIdx + 1} / 10</span></div>
         </div>
 
         <div className="code-display-box-mini">

@@ -12,8 +12,10 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
   const [stats, setStats] = useState({ speed: 0, accuracy: 100, time: 0 });
   const [showResult, setShowResult] = useState(false);
   
-  const startTimeRef = useRef(Date.now());
-  const timerRef = useRef(null);
+  // 🚀 [수정] 타이머 독립을 위한 Ref 설정
+  const startTimeRef = useRef(null); // 처음 타자 칠 때 시작 시간 기록
+  const isStartedRef = useRef(false); // 게임 시작 여부
+  const userInputRef = useRef(["", "", "", "", ""]); // 타이머가 실시간으로 훔쳐볼 입력값
   const inputRefs = useRef([]);
 
   useEffect(() => {
@@ -29,13 +31,16 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
     if (inputRefs.current[0]) inputRefs.current[0].focus();
   }, [currentPage, sentences]);
 
-  const calculateStats = useCallback(() => {
-    if (sentences.length === 0) return;
+  // 🚀 [수정] 통계 계산 로직: State 의존성을 줄이고 Ref를 활용
+  const updateRealTimeStats = useCallback(() => {
+    if (sentences.length === 0 || !startTimeRef.current) return;
+
     const elapsedMinutes = (Date.now() - startTimeRef.current) / 60000;
     let currentCorrect = 0;
     let currentTyped = 0;
 
-    userInput.forEach((input, idx) => {
+    // userInput(State) 대신 userInputRef(Ref)를 사용하여 타이머 리셋 방지
+    userInputRef.current.forEach((input, idx) => {
       const target = sentences[currentPage * 5 + idx] || "";
       currentTyped += input.length;
       const minLen = Math.min(input.length, target.length);
@@ -52,24 +57,40 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
       accuracy: totalTyped > 0 ? Math.round((totalCorrect / totalTyped) * 100) : 100,
       time: Math.floor(elapsedMinutes * 60)
     });
-  }, [userInput, completedStats, currentPage, sentences]);
+  }, [completedStats, currentPage, sentences]);
 
+  // 🚀 [핵심 수정] 실시간 타이머 useEffect: 의존성에서 userInput 제거
   useEffect(() => {
-    if (showResult) {
-      if (timerRef.current) clearInterval(timerRef.current);
-      return;
-    }
-    timerRef.current = setInterval(calculateStats, 1000);
-    return () => clearInterval(timerRef.current);
-  }, [calculateStats, showResult]);
+    if (showResult) return;
+
+    const timerInterval = setInterval(() => {
+      if (isStartedRef.current) {
+        updateRealTimeStats();
+      }
+    }, 1000);
+
+    return () => clearInterval(timerInterval);
+  }, [showResult, updateRealTimeStats]); // userInput이 빠져서 이제 타자를 쳐도 멈추지 않습니다.
 
   const handleInputChange = (index, value) => {
     const targetLine = sentences[currentPage * 5 + index] || "";
     if (value.length > targetLine.length) return;
+
+    // 1. 첫 타건 시 타이머 시작
+    if (!isStartedRef.current) {
+      isStartedRef.current = true;
+      startTimeRef.current = Date.now();
+    }
+
+    // 2. State 업데이트 (UI 표시용)
     const newInputs = [...userInput];
     newInputs[index] = value;
     setUserInput(newInputs);
+
+    // 3. Ref 업데이트 (타이머가 계산용으로 즉시 참조)
+    userInputRef.current = newInputs;
     
+    // 포커스 이동 로직
     if (value.length === targetLine.length && value.length > 0 && index < 4) {
       inputRefs.current[index + 1]?.focus();
     }
@@ -92,13 +113,16 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
       const minLen = Math.min(input.length, target.length);
       for (let i = 0; i < minLen; i++) if (input[i] === target[i]) pageCorrect++;
     });
+
     setCompletedStats(prev => ({ correct: prev.correct + pageCorrect, typed: prev.typed + pageTyped }));
     
     if ((currentPage + 1) * 5 >= sentences.length) {
       setShowResult(true);
     } else {
       setCurrentPage(prev => prev + 1);
-      setUserInput(["", "", "", "", ""]);
+      const resetInputs = ["", "", "", "", ""];
+      setUserInput(resetInputs);
+      userInputRef.current = resetInputs; // Ref도 같이 초기화
     }
   };
 
@@ -118,10 +142,10 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
         </div>
       </header>
 
-      <section className="dashboard-stats">
-        <div className="stat-box">SPEED <span className="stat-val highlight-blue">{stats.speed}</span></div>
-        <div className="stat-box">ACCURACY <span className="stat-val highlight-mint">{stats.accuracy}%</span></div>
-        <div className="stat-box">TIME <span className="stat-val highlight-blue">{stats.time}s</span></div>
+      <section className="dashboard-stats">      
+        <div className="stat-box">정확도 <span className="stat-val highlight-mint">{stats.accuracy}%</span></div>
+        <div className="stat-box">소요 시간 <span className="stat-val highlight-blue">{stats.time}s</span></div>
+        <div className="stat-box">속도 <span className="stat-val highlight-blue">{stats.speed}</span></div>
       </section>
 
       <main className="code-practice-area">
@@ -152,7 +176,7 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
 
       {showResult && (
         <ResultModal 
-          mode="긴 글 연습" // 🚀 낱말/짧은글과 구분되도록 설정
+          mode="긴 글 연습" 
           score={Math.round((stats.speed * stats.accuracy) / 100)}
           wpm={stats.speed}
           accuracy={stats.accuracy}
