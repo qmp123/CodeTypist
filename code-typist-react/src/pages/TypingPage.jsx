@@ -2,18 +2,41 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import ResultModal from '../components/ResultModal';
 import '../styles/typing-page.css';
 
-const pythonExamples = [
-  'numbers = [1, 2, 3] numbers.append(4)', 'import sys print(sys.argv)', 'import pandas as pd df = pd.read_csv("data.csv")',
-  'for i in range(5): print(i)', 'def hello(): return "Hi"', 'x = [i for i in range(10)] print(x)',
-  'if x > 10: print("Large")', 'with open("test.txt", "r") as f: lines = f.readlines()',
-  'import matplotlib.pyplot as plt plt.show()', 'try: val = 10 / 0 except ZeroDivisionError: pass',
-  'a, b = 5, 10 a, b = b, a', 'import random num = random.randint(1, 100)',
-  'text = " Python " print(text.strip())', 'import datetime print(datetime.datetime.now())',
-  'df = pd.DataFrame({"A": [1, 2, 3]})', 'def add(a, b): return a + b',
-  'import json data = json.loads("{}")', 'while True: break', 'print(f"Total: {10 + 20}")',
-  's = "apple,banana" list = s.split(",")', 'arr = np.zeros((3, 3))', 'print(len([1, 2, 3]))',
-  'items = ["a", "b"] for item in items: print(item)'
-];
+// 🚀 언어별 짧은 글 예제 데이터 (각 23개)
+const codeExamples = {
+  python: [
+    'numbers = [1, 2, 3] numbers.append(4)', 'import sys print(sys.argv)', 'import pandas as pd df = pd.read_csv("data.csv")',
+    'for i in range(5): print(i)', 'def hello(): return "Hi"', 'x = [i for i in range(10)] print(x)',
+    'if x > 10: print("Large")', 'with open("test.txt", "r") as f: lines = f.readlines()',
+    'import matplotlib.pyplot as plt plt.show()', 'try: val = 10 / 0 except ZeroDivisionError: pass',
+    'a, b = 5, 10 a, b = b, a', 'import random num = random.randint(1, 100)',
+    'text = " Python " print(text.strip())', 'import datetime print(datetime.datetime.now())',
+    'df = pd.DataFrame({"A": [1, 2, 3]})', 'def add(a, b): return a + b',
+    'import json data = json.loads("{}")', 'while True: break', 'print(f"Total: {10 + 20}")',
+    's = "apple,banana" list = s.split(",")', 'arr = np.zeros((3, 3))', 'print(len([1, 2, 3]))',
+    'items = ["a", "b"] for item in items: print(item)'
+  ],
+  c: [
+    '#include <stdio.h> int main() { return 0; }', 'printf("Hello, C World!\\n");', 'int arr[5] = {1, 2, 3, 4, 5};',
+    'for (int i = 0; i < 10; i++) { printf("%d", i); }', 'int *ptr = &val; *ptr = 10;', 'struct Node { int data; struct Node *next; };',
+    'if (x > 0 && y < 10) { flag = 1; }', 'char str[] = "Hello"; printf("%s", str);', 'void swap(int *a, int *b) { int t = *a; *a = *b; *b = t; }',
+    'while (count > 0) { count--; }', 'FILE *f = fopen("file.txt", "r"); fclose(f);', '#define MAX 100',
+    'scanf("%d", &num);', 'double result = pow(2, 10);', 'switch(grade) { case \'A\': break; }',
+    'int *p = (int*)malloc(sizeof(int) * 10);', 'int sum(int a, int b) { return a + b; }', 'strcat(dest, src);',
+    'size_t len = strlen(myString);', 'enum Days { MON, TUE, WED };', 'typedef unsigned long ulong;',
+    'static int counter = 0;', 'int max = (a > b) ? a : b;'
+  ],
+  java: [
+    'public class Main { public static void main(String[] args) {} }', 'System.out.println("Java Typing");', 'List<String> list = new ArrayList<>();',
+    'for (String s : list) { System.out.println(s); }', 'public int add(int a, int b) { return a + b; }', 'String text = "Java".toUpperCase();',
+    'if (obj instanceof String) { String s = (String) obj; }', 'try { Thread.sleep(1000); } catch (Exception e) {}', 'Map<Integer, String> map = new HashMap<>();',
+    'Scanner sc = new Scanner(System.in);', '@Override public String toString() { return "Object"; }', 'stream.filter(x -> x > 10).collect(Collectors.toList());',
+    'int[] arr = {1, 2, 3, 4, 5};', 'public static final double PI = 3.14159;', 'StringBuilder sb = new StringBuilder(); sb.append("Hi");',
+    'LocalDate today = LocalDate.now();', 'Optional<String> name = Optional.ofNullable(input);', 'interface Action { void execute(); }',
+    'boolean isFound = list.contains("target");', 'String[] parts = str.split(",");', 'Integer.parseInt("123");',
+    'throw new IllegalArgumentException("Invalid");', 'Collections.sort(myList);'
+  ]
+};
 
 function TypingPage({ lang, mode, onBack, theme }) {
   const [score, setScore] = useState(0);
@@ -27,7 +50,6 @@ function TypingPage({ lang, mode, onBack, theme }) {
   const [showResult, setShowResult] = useState(false);
   const [sessionQuestions, setSessionQuestions] = useState([]);
 
-  // 🚀 타이머 독립을 위한 Ref 군단 (State 변화에 타이머가 리셋되지 않게 함)
   const inputTextRef = useRef('');
   const totalTypedRef = useRef(0); 
   const startTimeRef = useRef(null);
@@ -44,8 +66,13 @@ function TypingPage({ lang, mode, onBack, theme }) {
     setCharList(newList);
   }, [codingChars]);
 
+  // 🚀 [수정] 언어(lang)에 따라 예제 목록을 다르게 가져옵니다.
   const resetGame = useCallback(() => {
-    let selected = mode === '짧은 글 연습' ? [...pythonExamples].sort(() => Math.random() - 0.5).slice(0, 5) : [];
+    const currentLang = lang?.toLowerCase() || 'python';
+    const currentExamples = codeExamples[currentLang] || codeExamples.python;
+
+    let selected = mode === '짧은 글 연습' ? [...currentExamples].sort(() => Math.random() - 0.5).slice(0, 5) : [];
+    
     setSessionQuestions(selected);
     if (mode === '낱말 연습') initWordBelt();
     else if (selected.length > 0) setCurrentQuestion(selected[0]);
@@ -57,46 +84,38 @@ function TypingPage({ lang, mode, onBack, theme }) {
     isStartedRef.current = false;
     inputTextRef.current = '';
     totalTypedRef.current = 0;
-  }, [mode, initWordBelt]);
+  }, [mode, lang, initWordBelt]);
 
   useEffect(() => { resetGame(); }, [resetGame]);
 
-  // 🚀 WPM 계산 로직 (Ref를 사용하여 리렌더링 없이 정확한 값 참조)
   const calculateWpmNow = useCallback((currentLen) => {
     if (!startTimeRef.current) return 0;
     const elapsed = Math.max((Date.now() - startTimeRef.current) / 60000, 0.00001);
     return Math.round(((totalTypedRef.current + currentLen) / 5) / elapsed);
   }, []);
 
-  // 🚀 [수정 완료] 실시간 타이머: 의존성 배열에서 inputText.length를 제거하여 타자 입력 중에도 멈추지 않음
   useEffect(() => {
     if (showResult) return;
-    
     const interval = setInterval(() => {
       if (isStartedRef.current && startTimeRef.current) {
-        // 1. 시간 업데이트 (Date.now 기반으로 렌더링 지연 없이 정확히 계산)
         if (mode === '코드 게임') {
           setTimer((prev) => (prev <= 0 ? 0 : prev - 1));
         } else {
           const elapsedSeconds = Math.floor((Date.now() - startTimeRef.current) / 1000);
           setTimer(elapsedSeconds);
         }
-
-        // 2. WPM 업데이트 (Ref를 통해 글자 수를 확인하므로 타이머 방해 없음)
         setWpm(calculateWpmNow(inputTextRef.current.length)); 
       }
     }, 1000);
-
     return () => clearInterval(interval);
-    // 💡 inputText.length가 의존성에 없으므로 타자를 쳐도 타이머가 리셋되지 않습니다.
   }, [mode, showResult, calculateWpmNow]); 
 
   const moveToNextQuestion = (scoreChange) => {
     const nextIndex = currentIndex + 1;
     const addedTyped = (mode === '낱말 연습' ? 1 : currentQuestion.length);
     
-    totalTypedRef.current += addedTyped; // Ref 업데이트
-    setTotalTyped(totalTypedRef.current); // State 업데이트
+    totalTypedRef.current += addedTyped;
+    setTotalTyped(totalTypedRef.current);
     setScore(prev => prev + scoreChange);
     
     if (mode === '낱말 연습') {
@@ -104,14 +123,14 @@ function TypingPage({ lang, mode, onBack, theme }) {
         setCharList(prev => [...prev.slice(1), codingChars[Math.floor(Math.random() * codingChars.length)]]);
         setCurrentIndex(nextIndex);
         setInputText('');
-        inputTextRef.current = ''; // Ref 초기화
+        inputTextRef.current = '';
       } else setShowResult(true);
     } else {
       if (nextIndex < sessionQuestions.length) {
         setCurrentQuestion(sessionQuestions[nextIndex]);
         setCurrentIndex(nextIndex);
         setInputText('');
-        inputTextRef.current = ''; // Ref 초기화
+        inputTextRef.current = '';
       } else setShowResult(true);
     }
   };
@@ -120,21 +139,19 @@ function TypingPage({ lang, mode, onBack, theme }) {
     if (showResult) return;
     const val = e.target.value;
 
-    // 첫 입력 시 타이머 시작 시점 고정
     if (!isStartedRef.current && val.length > 0) { 
       isStartedRef.current = true; 
       startTimeRef.current = Date.now(); 
     }
 
-    inputTextRef.current = val; // 타이머가 볼 수 있게 Ref에 값 저장
-    setWpm(calculateWpmNow(val.length)); // 타건 즉시 속도 반영
+    inputTextRef.current = val;
+    setWpm(calculateWpmNow(val.length));
 
     if (mode === '낱말 연습') {
       if (val.length === 0) return;
       const char = val.slice(-1);
       if (char !== charList[0]) setMistakes(prev => prev + 1);
-      
-      inputTextRef.current = ''; // 낱말은 즉시 넘어가므로 Ref 비움
+      inputTextRef.current = '';
       moveToNextQuestion(1);
       return;
     }
