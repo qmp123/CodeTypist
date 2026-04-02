@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import ResultModal from '../components/ResultModal';
 import '../styles/typing-page.css';
 
-// 🚀 언어별 짧은 글 예제 데이터 (각 23개)
+// 🚀 언어별 예제 데이터 (각 23개)
 const codeExamples = {
   python: [
     'numbers = [1, 2, 3] numbers.append(4)', 'import sys print(sys.argv)', 'import pandas as pd df = pd.read_csv("data.csv")',
@@ -44,6 +44,7 @@ function TypingPage({ lang, mode, onBack, theme }) {
   const [timer, setTimer] = useState(mode === '코드 게임' ? 60 : 0);
   const [wpm, setWpm] = useState(0);
   const [mistakes, setMistakes] = useState(0);
+  const [correctCount, setCorrectCount] = useState(0); 
   const [totalTyped, setTotalTyped] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState('');
@@ -58,32 +59,36 @@ function TypingPage({ lang, mode, onBack, theme }) {
   const [charList, setCharList] = useState([]);
   const codingChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{};:'\",.<>/?\\|`~ ";
 
-  const accuracy = totalTyped > 0 ? Math.round(((totalTyped - mistakes) / totalTyped) * 100) : 100;
+  // 🚀 실시간 정확도 계산 (1타 단위로 부드럽게 반영)
+  const accuracy = useMemo(() => {
+    let liveMistakesInLine = 0;
+    if (mode !== '낱말 연습' && inputText.length > 0) {
+      for (let i = 0; i < inputText.length; i++) {
+        if (inputText[i] !== currentQuestion[i]) liveMistakesInLine++;
+      }
+    }
+    const currentTotal = totalTyped + (mode === '낱말 연습' ? 0 : inputText.length);
+    const currentMistakes = mistakes + liveMistakesInLine;
+    return currentTotal === 0 ? 100 : Math.round(((currentTotal - currentMistakes) / currentTotal) * 100);
+  }, [totalTyped, mistakes, inputText, currentQuestion, mode]);
 
   const initWordBelt = useCallback(() => {
-    const chars = codingChars;
-    const newList = Array.from({ length: 20 }, () => chars[Math.floor(Math.random() * chars.length)]);
+    const newList = Array.from({ length: 20 }, () => codingChars[Math.floor(Math.random() * codingChars.length)]);
     setCharList(newList);
   }, [codingChars]);
 
-  // 🚀 [수정] 언어(lang)에 따라 예제 목록을 다르게 가져옵니다.
   const resetGame = useCallback(() => {
     const currentLang = lang?.toLowerCase() || 'python';
     const currentExamples = codeExamples[currentLang] || codeExamples.python;
-
     let selected = mode === '짧은 글 연습' ? [...currentExamples].sort(() => Math.random() - 0.5).slice(0, 5) : [];
     
     setSessionQuestions(selected);
     if (mode === '낱말 연습') initWordBelt();
     else if (selected.length > 0) setCurrentQuestion(selected[0]);
     
-    setCurrentIndex(0); setInputText(''); setScore(0); setWpm(0); setTotalTyped(0); setMistakes(0);
+    setCurrentIndex(0); setInputText(''); setScore(0); setWpm(0); setTotalTyped(0); setMistakes(0); setCorrectCount(0);
     setTimer(mode === '코드 게임' ? 60 : 0); setShowResult(false);
-    
-    startTimeRef.current = null; 
-    isStartedRef.current = false;
-    inputTextRef.current = '';
-    totalTypedRef.current = 0;
+    startTimeRef.current = null; isStartedRef.current = false; inputTextRef.current = ''; totalTypedRef.current = 0;
   }, [mode, lang, initWordBelt]);
 
   useEffect(() => { resetGame(); }, [resetGame]);
@@ -98,39 +103,33 @@ function TypingPage({ lang, mode, onBack, theme }) {
     if (showResult) return;
     const interval = setInterval(() => {
       if (isStartedRef.current && startTimeRef.current) {
-        if (mode === '코드 게임') {
-          setTimer((prev) => (prev <= 0 ? 0 : prev - 1));
-        } else {
-          const elapsedSeconds = Math.floor((Date.now() - startTimeRef.current) / 1000);
-          setTimer(elapsedSeconds);
-        }
+        setTimer(mode === '코드 게임' ? (prev => (prev <= 0 ? 0 : prev - 1)) : (Math.floor((Date.now() - startTimeRef.current) / 1000)));
         setWpm(calculateWpmNow(inputTextRef.current.length)); 
       }
     }, 1000);
     return () => clearInterval(interval);
   }, [mode, showResult, calculateWpmNow]); 
 
-  const moveToNextQuestion = (scoreChange) => {
+  const moveToNextQuestion = (scoreChange, currentMistakesInLine) => {
     const nextIndex = currentIndex + 1;
     const addedTyped = (mode === '낱말 연습' ? 1 : currentQuestion.length);
     
     totalTypedRef.current += addedTyped;
     setTotalTyped(totalTypedRef.current);
+    setMistakes(prev => prev + currentMistakesInLine); 
     setScore(prev => prev + scoreChange);
     
     if (mode === '낱말 연습') {
       if (nextIndex < 100) {
         setCharList(prev => [...prev.slice(1), codingChars[Math.floor(Math.random() * codingChars.length)]]);
         setCurrentIndex(nextIndex);
-        setInputText('');
-        inputTextRef.current = '';
+        setInputText(''); inputTextRef.current = '';
       } else setShowResult(true);
     } else {
       if (nextIndex < sessionQuestions.length) {
         setCurrentQuestion(sessionQuestions[nextIndex]);
         setCurrentIndex(nextIndex);
-        setInputText('');
-        inputTextRef.current = '';
+        setInputText(''); inputTextRef.current = '';
       } else setShowResult(true);
     }
   };
@@ -140,96 +139,199 @@ function TypingPage({ lang, mode, onBack, theme }) {
     const val = e.target.value;
 
     if (!isStartedRef.current && val.length > 0) { 
-      isStartedRef.current = true; 
-      startTimeRef.current = Date.now(); 
+      isStartedRef.current = true; startTimeRef.current = Date.now(); 
     }
-
-    inputTextRef.current = val;
-    setWpm(calculateWpmNow(val.length));
 
     if (mode === '낱말 연습') {
       if (val.length === 0) return;
       const char = val.slice(-1);
-      if (char !== charList[0]) setMistakes(prev => prev + 1);
+      const isCorrect = char === charList[0];
+      if (isCorrect) setCorrectCount(prev => prev + 1);
+      
+      e.target.value = ''; 
       inputTextRef.current = '';
-      moveToNextQuestion(1);
+      setInputText('');
+      moveToNextQuestion(isCorrect ? 1 : 0, isCorrect ? 0 : 1);
       return;
     }
 
-    if (val.length === 0 && inputText.length === 0) return;
+    inputTextRef.current = val;
     setInputText(val);
+    setWpm(calculateWpmNow(val.length));
 
     if (val.length === currentQuestion.length) {
       let errs = 0;
       for (let i = 0; i < val.length; i++) { if (val[i] !== currentQuestion[i]) errs++; }
-      setMistakes(prev => prev + errs);
-      moveToNextQuestion(10 - errs);
+      setCorrectCount(prev => prev + (val.length - errs));
+      moveToNextQuestion(10 - errs, errs);
     }
   };
 
   return (
-    <div className="typing-container" style={{ minHeight: '600px', height: 'auto', backgroundColor: 'var(--bg-card)', color: 'var(--text-main)', borderRadius: '20px', padding: '20px 40px', boxShadow: 'var(--shadow)' }}>
-      <header className="game-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 0 10px 0', borderBottom: '1px solid var(--border-color)', marginBottom: '20px' }}>
-        <button className="back-btn" onClick={onBack} style={{ backgroundColor: 'var(--bg-sub)', color: 'var(--text-main)', border: '1px solid var(--border-color)' }}>← Back</button>
+    <div 
+      className="typing-container" 
+      style={{ 
+        minHeight: '600px', 
+        height: 'auto', 
+        backgroundColor: 'var(--bg-card)', 
+        color: 'var(--text-main)', 
+        borderRadius: '20px', 
+        padding: '20px 40px', 
+        boxShadow: 'var(--shadow)' 
+      }}
+    >
+      <header 
+        className="game-header" 
+        style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          padding: '20px 0 10px 0', 
+          borderBottom: '1px solid var(--border-color)', 
+          marginBottom: '20px' 
+        }}
+      >
+        <button 
+          className="back-btn" 
+          onClick={onBack} 
+          style={{ 
+            backgroundColor: 'var(--bg-sub)', 
+            color: 'var(--text-main)', 
+            border: '1px solid var(--border-color)' 
+          }}
+        >
+          ← Back
+        </button>
         <div className="game-info" style={{ textAlign: 'right' }}>
           <h2 style={{ margin: 0, fontSize: '1.6rem', color: 'var(--point-color)' }}>{mode}</h2>
           {mode !== '낱말 연습' && (
-            <p style={{ margin: '5px 0 0 0', color: 'var(--text-sub)' }}>Language: <strong>{lang}</strong></p>
+            <p style={{ margin: '5px 0 0 0', color: 'var(--text-sub)' }}>
+              Language: <strong>{lang}</strong>
+            </p>
           )}
         </div>
       </header>
 
       <main className="typing-area" style={{ marginTop: '0' }}>
-        <div className="status-bar" style={{ marginBottom: '15px', padding: '15px', backgroundColor: 'var(--bg-sub)', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+        <div 
+          className="status-bar" 
+          style={{ 
+            marginBottom: '15px', 
+            padding: '15px', 
+            backgroundColor: 'var(--bg-sub)', 
+            borderRadius: '12px', 
+            border: '1px solid var(--border-color)' 
+          }}
+        >
+          {/* 🚀 진행도 라벨 수정 & x/100 복구 완료 */}
           <div className="status-item" style={{ color: 'var(--text-sub)' }}>
-            {mode === '낱말 연습' ? '정확도' : (mode === '짧은 글 연습' ? '정확도' : 'SCORE')}
+            {mode === '낱말 연습' ? '진행도' : (mode === '짧은 글 연습' ? '정확도' : 'SCORE')}
             <span className="status-value" style={{ color: 'var(--text-main)' }}>
               {mode === '낱말 연습' ? `${currentIndex}/100` : (mode === '짧은 글 연습' ? `${accuracy}%` : score)}
             </span>
           </div>
-          <div className="status-item" style={{ color: 'var(--text-sub)' }}>소요 시간 <span className="status-value" style={{ color: 'var(--text-main)' }}>{timer}s</span></div>
-          <div className="status-item" style={{ color: 'var(--text-sub)' }}>속도 <span className="status-value" style={{ color: 'var(--point-color)' }}>{wpm}</span></div>
+          <div className="status-item" style={{ color: 'var(--text-sub)' }}>
+            소요 시간 <span className="status-value" style={{ color: 'var(--text-main)' }}>{timer}s</span>
+          </div>
+          <div className="status-item" style={{ color: 'var(--text-sub)' }}>
+            속도 <span className="status-value" style={{ color: 'var(--point-color)' }}>{wpm}</span>
+          </div>
         </div>
 
         {mode === '낱말 연습' ? (
-          <div className="word-practice-wrapper" style={{ minHeight: '320px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          <div 
+            className="word-practice-wrapper" 
+            style={{ 
+              minHeight: '320px', 
+              display: 'flex', 
+              flexDirection: 'column', 
+              justifyContent: 'center', 
+              alignItems: 'center' 
+            }}
+          >
             <div className="accuracy-gauge-container" style={{ marginBottom: '50px', width: '80%' }}>
               <span className="gauge-label" style={{ color: 'var(--text-main)' }}>정확도 {accuracy}%</span>
               <div className="gauge-track" style={{ backgroundColor: 'var(--border-color)' }}>
                 <div className="gauge-fill" style={{ width: `${accuracy}%`, backgroundColor: 'var(--point-color)' }}></div>
               </div>
             </div>
-          
-            <div className="char-belt-container" style={{
-              height: '140px', width: '100%', position: 'relative', display: 'flex', alignItems: 'center', overflow: 'hidden',
-              backgroundColor: 'var(--bg-sub)', borderRadius: '15px', border: '1px solid var(--border-color)'
-            }}>
-              <div className="char-belt" style={{ display: 'flex', paddingLeft: 'calc(50% - 45px)', transition: 'transform 0.2s ease-out' }}>
+            <div 
+              className="char-belt-container" 
+              style={{ 
+                height: '140px', 
+                width: '100%', 
+                position: 'relative', 
+                display: 'flex', 
+                alignItems: 'center', 
+                overflow: 'hidden', 
+                backgroundColor: 'var(--bg-sub)', 
+                borderRadius: '15px', 
+                border: '1px solid var(--border-color)' 
+              }}
+            >
+              <div 
+                className="char-belt" 
+                style={{ 
+                  display: 'flex', 
+                  paddingLeft: 'calc(50% - 45px)', 
+                  transition: 'transform 0.2s ease-out' 
+                }}
+              >
                 {charList.map((c, i) => (
-                  <div key={i} className={`belt-item ${i === 0 ? 'active' : ''}`}
-                    style={{
-                      width: '90px', minWidth: '90px', height: '110px', display: 'flex', justifyContent: 'center', alignItems: 'center',
-                      fontSize: '3.2rem', fontWeight: 'bold',
+                  <div 
+                    key={i} 
+                    className={`belt-item ${i === 0 ? 'active' : ''}`} 
+                    style={{ 
+                      width: '90px', 
+                      minWidth: '90px', 
+                      height: '110px', 
+                      display: 'flex', 
+                      justifyContent: 'center', 
+                      alignItems: 'center', 
+                      fontSize: '3.2rem', 
+                      fontWeight: 'bold', 
                       color: i === 0 ? 'var(--text-main)' : 'var(--text-sub)', 
-                      textShadow: i === 0 ? (theme === 'dark' ? '0 0 25px rgba(255, 255, 255, 0.7)' : 'none') : 'none',
-                      transition: 'all 0.2s'
-                    }}>
+                      textShadow: i === 0 ? (theme === 'dark' ? '0 0 25px rgba(255, 255, 255, 0.7)' : 'none') : 'none', 
+                      transition: 'all 0.2s' 
+                    }}
+                  >
                     {c === " " ? "␣" : c}
                   </div>
                 ))}
               </div>
-              <div className="active-frame" style={{
-                position: 'absolute', left: '50%', transform: 'translateX(-50%)', height: '110px', width: '90px',
-                border: '3px solid var(--point-color)', borderRadius: '15px', pointerEvents: 'none',
-                boxShadow: '0 0 25px rgba(124, 77, 255, 0.2)', backgroundColor: 'transparent'
-              }}></div>
+              <div 
+                className="active-frame" 
+                style={{ 
+                  position: 'absolute', 
+                  left: '50%', 
+                  transform: 'translateX(-50%)', 
+                  height: '110px', 
+                  width: '90px', 
+                  border: '3px solid var(--point-color)', 
+                  borderRadius: '15px', 
+                  pointerEvents: 'none', 
+                  boxShadow: '0 0 25px rgba(124, 77, 255, 0.2)', 
+                  backgroundColor: 'transparent' 
+                }}
+              ></div>
             </div>
           </div>
         ) : (
-          <div className="code-display-box" style={{ 
-            minHeight: '350px', padding: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap',
-            backgroundColor: 'var(--bg-sub)', borderRadius: '15px', border: '1px solid var(--border-color)', color: 'var(--text-main)' 
-          }}>
+          <div 
+            className="code-display-box" 
+            style={{ 
+              minHeight: '350px', 
+              padding: '40px', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              flexWrap: 'wrap', 
+              backgroundColor: 'var(--bg-sub)', 
+              borderRadius: '15px', 
+              border: '1px solid var(--border-color)', 
+              color: 'var(--text-main)' 
+            }}
+          >
             {currentQuestion.split('').map((char, index) => {
               let colorClass = inputText[index] == null ? '' : (inputText[index] === char ? 'correct' : 'wrong');
               return <span key={index} className={`char ${colorClass}`}>{char}</span>;
@@ -238,18 +340,40 @@ function TypingPage({ lang, mode, onBack, theme }) {
         )}
 
         <div className="input-centering-wrapper" style={{ marginTop: '40px' }}>
-          <input type="text" className={mode === '낱말 연습' ? "belt-input-field" : "input-field"}
-            value={inputText} onChange={handleInput} autoFocus spellCheck="false"
+          <input 
+            type="text" 
+            className={mode === '낱말 연습' ? "belt-input-field" : "input-field"}
+            value={inputText} 
+            onChange={handleInput} 
+            autoFocus 
+            spellCheck="false"
             placeholder="코드를 입력하세요."
-            style={{
-              padding: '18px', fontSize: '1.3rem', textAlign: 'center',            
-              backgroundColor: 'var(--bg-sub)', border: '2px solid var(--border-color)', 
-              borderRadius: '10px', color: 'var(--text-main)', width: '100%'
+            style={{ 
+              padding: '18px', 
+              fontSize: '1.3rem', 
+              textAlign: 'center', 
+              backgroundColor: 'var(--bg-sub)', 
+              border: '2px solid var(--border-color)', 
+              borderRadius: '10px', 
+              color: 'var(--text-main)', 
+              width: '100%' 
             }}
           />
         </div>
       </main>
-      {showResult && <ResultModal mode={mode} score={score} wpm={wpm} accuracy={accuracy} time={timer} onRestart={resetGame} onHome={onBack} theme={theme} />}
+      {showResult && (
+        <ResultModal 
+          mode={mode} 
+          score={score} 
+          wpm={wpm} 
+          correct={correctCount} 
+          accuracy={accuracy} 
+          time={timer} 
+          onRestart={resetGame} 
+          onHome={onBack} 
+          theme={theme} 
+        />
+      )}
     </div>
   );
 }

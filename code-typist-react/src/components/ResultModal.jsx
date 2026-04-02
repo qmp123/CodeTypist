@@ -1,9 +1,9 @@
 import React from 'react';
 import "../styles/result-modal.css";
 
-export default function ResultModal({ mode, score, wpm, accuracy, time, onRestart, onHome }) {
+export default function ResultModal({ mode, score, wpm, correct, accuracy, time, onRestart, onHome }) {
   const isBasicPractice = mode === '낱말 연습' || mode === '짧은 글 연습';
-  const isShortSentence = mode === '짧은 글 연습'; // 🚀 짧은 글 연습 판별
+  const isShortSentence = mode === '짧은 글 연습';
 
   return (
     <div className="result-overlay">
@@ -19,11 +19,11 @@ export default function ResultModal({ mode, score, wpm, accuracy, time, onRestar
         )}
 
         <div className="stat-grid">
-          {/* 🚀 짧은 글 연습이 아닐 때만 '정답' 표시 */}
+          {/* 🚀 정답 갯수 표시 구역 */}
           {!isShortSentence && (
             <div className="stat-item">
               <h4>정답</h4>
-              <p>{wpm || 0}</p>
+              <p>{correct || 0}</p>
             </div>
           )}
 
@@ -37,7 +37,6 @@ export default function ResultModal({ mode, score, wpm, accuracy, time, onRestar
             <p>{time || 0}s</p>
           </div>
 
-          {/* 🚀 짧은 글 연습일 때는 정답 칸이 비므로 속도를 full-width로 길게 표시 */}
           <div className={`stat-item ${isShortSentence ? 'full-width' : ''}`}>
             <h4>속도</h4>
             <p style={{ color: '#03dac6', fontWeight: '900' }}>
