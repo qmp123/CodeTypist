@@ -1,11 +1,7 @@
 import { useState } from 'react';
 import '../styles/login-page.css';
-
-/* LoginPage 컴포넌트
-  - 'theme' 변수를 사용해 아이콘 활성화 상태를 표시하도록 수정 (Lint 에러 해결)
-  - 표정 없는 기본 해(☀️)와 달(🌙) 아이콘으로 교체 (UI 감성 수정)
-  - 민재 님의 원본 레이아웃 및 4단계 유효성 검사 100% 보존
-*/
+// 🚀 [수정] PNG 이미지 임포트 추가 (경로 확인 필수)
+import VividSunImage from './VividSunImage.png';
 
 function LoginPage({ onLogin, theme, onThemeToggle }) {
   const [username, setUsername] = useState('');
@@ -15,41 +11,35 @@ function LoginPage({ onLogin, theme, onThemeToggle }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // 🚀 1. 빈 값 검사 (원본 로직)
     if (!username.trim() || !userId.trim() || !userPassword.trim()) {
       alert('모든 필드를 입력해주세요.');
       return;
     }
 
-    // 🚀 2. Username 유효성 검사 (원본 로직)
     const usernameRegex = /^[a-zA-Z0-9가-힣]+$/;
     if (!usernameRegex.test(username)) {
       alert('사용자 이름(Username)은 한글, 영문, 숫자만 사용 가능합니다.');
       return;
     }
 
-    // 🚀 3. 아이디 유효성 검사 (원본 로직)
     const idRegex = /^[a-zA-Z0-9]+$/;
     if (!idRegex.test(userId)) {
       alert('아이디는 영문과 숫자만 사용 가능합니다.');
       return;
     }
 
-    // 🚀 4. 비밀번호 유효성 검사 (원본 로직)
     const passwordRegex = /^[a-zA-Z0-9!@#$%^&*()_+=-]+$/;
     if (!passwordRegex.test(userPassword)) {
       alert('비밀번호는 영문, 숫자, 특수문자만 사용 가능하며 공백은 허용되지 않습니다.');
       return;
     }
 
-    // 모든 검사 통과 시 로그인 처리
     onLogin({ userId, username, userPassword });
   };
 
   return (
     <div className="login-container" style={{ display: 'flex', width: '1000px', height: '600px', padding: '0', overflow: 'hidden' }}>
       
-      {/* 1. 왼쪽 소개 패널 (브랜드 컬러 유지) */}
       <div className="intro-panel" style={{ flex: 1, background: '#4c00e6', color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '40px' }}>
         <div style={{ fontSize: '3rem', marginBottom: '20px' }}>⌨️</div>
         <h1 style={{ fontSize: '2.5rem', marginBottom: '15px' }}>Code Typist</h1>
@@ -60,19 +50,24 @@ function LoginPage({ onLogin, theme, onThemeToggle }) {
         </p>
       </div>
 
-      {/* 2. 오른쪽 폼 패널 */}
       <div className="form-panel" style={{ flex: 1, backgroundColor: 'var(--bg-card)', padding: '60px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
         
-        {/* 🌞 해/달 토글 버튼 (표정 없는 아이콘으로 교체) */}
+        {/* 🌞 로그인 페이지 테마 토글 (설정창과 완벽하게 80px로 통일) */}
         <div style={{ position: 'absolute', top: '25px', right: '25px' }}>
           <div className={`theme-toggle-switch ${theme}`} onClick={onThemeToggle}>
-            <div className="toggle-icons">
-              <span>🌙</span>
-              <span>☀️</span>
+            <div className="toggle-icons" style={{ width: '100%', display: 'flex', justifyContent: 'space-between', padding: '0 8px', boxSizing: 'border-box', alignItems: 'center' }}>
+              {/* 🚀 배경 해: 이제 정상적으로 PNG 이미지를 불러옵니다. */}
+              <img src={VividSunImage} alt="sun" style={{ width: '20px', height: '20px', opacity: 0.4, background: 'transparent', display: 'block' }} />
+              <span style={{ fontSize: '16px', opacity: 0.4 }}>🌙</span>
             </div>
             
             <div className="toggle-thumb">
-              {theme === 'dark' ? '🌙' : '☀️'}
+              {/* 🚀 썸 내부: 설정창과 동일하게 24px 크기의 PNG 해 이미지 적용 */}
+              {theme === 'light' ? (
+                <img src={VividSunImage} alt="sun" style={{ width: '24px', height: '24px', background: 'transparent', display: 'block' }} />
+              ) : (
+                <span style={{ fontSize: '18px' }}>🌙</span>
+              )}
             </div>
           </div>
         </div>
@@ -99,7 +94,7 @@ function LoginPage({ onLogin, theme, onThemeToggle }) {
               className="login-input"
               placeholder="Enter ID"
               value={userId}
-              onChange={(e) => setUserId(e.target.value)} // 이전 단계에서 수정한 버그 유지
+              onChange={(e) => setUserId(e.target.value)}
               style={{ width: '100%', padding: '15px', borderRadius: '10px', border: '1px solid var(--border-color)', background: 'var(--bg-sub)', color: 'var(--text-main)' }}
             />
           </div>

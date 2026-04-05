@@ -1,30 +1,63 @@
 .theme-toggle-switch {
-  width: 64px; height: 32px; border-radius: 20px;
-  position: relative; cursor: pointer;
-  display: flex; align-items: center; padding: 4px;
+  width: 80px;  /* 64px -> 80px */
+  height: 40px; /* 32px -> 40px */
+  border-radius: 25px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 4px;
   transition: background-color 0.3s ease;
   border: 1px solid var(--border-color);
+  box-sizing: border-box;
 }
-.theme-toggle-switch.dark { background-color: #1a1a1a; }
-.theme-toggle-switch.light { background-color: #ffffff; }
 
+/* 다크 모드일 때 배경 */
+.theme-toggle-switch.dark {
+  background-color: #1a1a1a;
+}
+
+/* 라이트 모드일 때 배경 */
+.theme-toggle-switch.light {
+  background-color: #ffffff;
+}
+
+/* 움직이는 원 (Thumb) */
 .toggle-thumb {
-  width: 24px; height: 24px; border-radius: 50%;
-  position: absolute; display: flex; justify-content: center; align-items: center;
-  font-size: 14px; z-index: 2;
-  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), background-color 0.3s ease;
+  width: 32px;  /* 24px -> 32px */
+  height: 32px; /* 24px -> 32px */
+  border-radius: 50%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 2;
 }
-/* 🌙 다크: 하얀 원이 왼쪽 */
-.theme-toggle-switch.dark .toggle-thumb {
-  transform: translateX(0);
-  background-color: #ffffff; color: #1a1a1a;
-}
-/* ☀️ 라이트: 검은 원이 오른쪽 */
+
+/* ☀️ 라이트: 왼쪽(0) */
 .theme-toggle-switch.light .toggle-thumb {
-  transform: translateX(32px);
-  background-color: #1a1a1a; color: #ffffff;
+  transform: translateX(0);
+  background-color: #ffffff;
 }
+
+/* 🌙 다크: 오른쪽(40px) 이동 */
+.theme-toggle-switch.dark .toggle-thumb {
+  transform: translateX(40px);
+  background-color: #000000;
+}
+
 .toggle-icons {
-  width: 100%; display: flex; justify-content: space-between;
-  padding: 0 4px; font-size: 12px; opacity: 0.5;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 8px;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+/* 이미지 정렬 초기화 */
+.toggle-icons img, .toggle-thumb img {
+  display: block;
+  background: transparent;
 }
