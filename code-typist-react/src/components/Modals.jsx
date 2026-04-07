@@ -68,9 +68,9 @@ export function SettingsModal({ onClose, theme, onThemeToggle }) {
             <span>기본 글꼴</span>
             <select className="setting-select" value={font} onChange={(e) => setFont(e.target.value)}
                     style={{ background: 'var(--bg-sub)', color: 'var(--text-main)', border: '1px solid var(--border-color)', padding: '5px', borderRadius: '5px' }}>
-              <option value="'Segoe UI', sans-serif">기본체 (Segoe UI)</option>
-              <option value="'Noto Sans KR', sans-serif">본고딕 (Noto Sans)</option>
-              <option value="'D2Coding', monospace">코딩체 (D2Coding)</option>
+              <option value="'Segoe UI', sans-serif">기본체</option>
+              <option value="'Noto Sans KR', sans-serif">본고딕</option>
+              <option value="'D2Coding', monospace">코딩체</option>
             </select>
           </div>
 
