@@ -2,8 +2,12 @@ import React from 'react';
 import "../styles/result-modal.css";
 
 export default function ResultModal({ mode, score, wpm, correct, accuracy, time, onRestart, onHome }) {
+  // 🚀 각 모드별 표시 여부를 결정하는 변수들
+  const isWordPractice = mode === '낱말 연습'; // 낱말 연습 여부
   const isBasicPractice = mode === '낱말 연습' || mode === '짧은 글 연습';
   const isShortSentence = mode === '짧은 글 연습';
+  // 긴 글 연습(긴 코드 연습) 여부 확인
+  const isLongText = mode === '긴 글 연습' || mode === '긴 코드 연습'; 
 
   return (
     <div className="result-overlay">
@@ -11,6 +15,7 @@ export default function ResultModal({ mode, score, wpm, correct, accuracy, time,
         <div className="modal-divider" />
         <h2 className="result-title">Mission Complete</h2>
         
+        {/* 점수 상자는 낱말/짧은 글이 아닐 때(긴 글 연습 등)만 표시 */}
         {!isBasicPractice && (
           <div className="score-box">
             <span className="score-label">TOTAL SCORE</span>
@@ -19,8 +24,8 @@ export default function ResultModal({ mode, score, wpm, correct, accuracy, time,
         )}
 
         <div className="stat-grid">
-          {/* 🚀 정답 갯수 표시 구역 */}
-          {!isShortSentence && (
+          {/* 🚀 [수정] '정답' 갯수는 오직 '낱말 연습'에서만 표시하도록 변경 */}
+          {isWordPractice && (
             <div className="stat-item">
               <h4>정답</h4>
               <p>{correct || 0}</p>
@@ -37,7 +42,8 @@ export default function ResultModal({ mode, score, wpm, correct, accuracy, time,
             <p>{time || 0}s</p>
           </div>
 
-          <div className={`stat-item ${isShortSentence ? 'full-width' : ''}`}>
+          {/* 짧은 글이나 긴 글 연습일 때는 속도 칸을 넓게 쓰도록 설정 */}
+          <div className={`stat-item ${isShortSentence || isLongText ? 'full-width' : ''}`}>
             <h4>속도</h4>
             <p style={{ color: '#03dac6', fontWeight: '900' }}>
               {wpm || 0} <span style={{ fontSize: '0.9rem', fontWeight: 'normal' }}>타/분</span>
