@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import VividSunImage from '../pages/VividSunImage.png';
 
-/* 🏆 랭킹 팝업 (민재 님 원본 인라인 스타일 100% 보존) */
+/* 🏆 랭킹 팝업 (원본 스타일 보존) */
 export function RankingModal({ onClose }) {
   const rankings = [
     { rank: 1, name: 'Faker', score: 2500 },
@@ -30,7 +31,7 @@ export function RankingModal({ onClose }) {
   );
 }
 
-/* ⚙️ 설정 팝업 (로그인 화면의 토글 구조와 100% 동일하게 수정) */
+/* ⚙️ 설정 팝업 (테마 토글 크기 확대 버전) */
 export function SettingsModal({ onClose, theme, onThemeToggle }) {
   const [font, setFont] = useState(() => localStorage.getItem('app-font-family') || "'Segoe UI', sans-serif");
   const [fontSize, setFontSize] = useState(() => localStorage.getItem('app-font-size') || "20px");
@@ -55,15 +56,20 @@ export function SettingsModal({ onClose, theme, onThemeToggle }) {
         <div className="setting-box" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
           <div className="setting-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-color)', paddingBottom: '15px' }}>
-            <span>화면 테마</span>
-            {/* 🚀 로그인 화면과 똑같은 구조 (배경 아이콘 2개 + 움직이는 점 1개) */}
-            <div className="theme-toggle-switch" onClick={() => onThemeToggle(theme === 'dark' ? 'light' : 'dark')} style={{ cursor: 'pointer' }}>
-              <div className="toggle-dot"></div>
-              <div className="theme-icon" style={{ opacity: theme === 'light' ? 1 : 0.3 }}>☀️</div>
-              <div className="theme-icon" style={{ opacity: theme === 'dark' ? 1 : 0.3 }}>🌙</div>
-            </div>
-          </div>
-
+  <span>화면 테마</span>
+  <div className={`theme-toggle-switch ${theme}`} onClick={onThemeToggle} style={{ cursor: 'pointer' }}>
+    <div className="toggle-icons" style={{ width: '100%', display: 'flex', justifyContent: 'space-between', padding: '0 8px', boxSizing: 'border-box', alignItems: 'center' }}>
+      <img src={VividSunImage} alt="sun" style={{ width: '20px', height: '20px', opacity: 0.4 }} />
+      <span style={{ fontSize: '16px', opacity: 0.4 }}>🌙</span>
+    </div>
+    <div className="toggle-thumb">
+      {theme === 'light' ? 
+        <img src={VividSunImage} alt="sun" style={{ width: '24px', height: '24px' }} /> 
+        : <span style={{ fontSize: '18px' }}>🌙</span>
+      }
+    </div>
+  </div>
+</div>
           <div className="setting-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span>기본 글꼴</span>
             <select className="setting-select" value={font} onChange={(e) => setFont(e.target.value)}
