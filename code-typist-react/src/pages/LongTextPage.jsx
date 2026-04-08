@@ -12,10 +12,10 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
   const [stats, setStats] = useState({ speed: 0, accuracy: 100, time: 0 });
   const [showResult, setShowResult] = useState(false);
   
-  // 🚀 [수정] 타이머 독립을 위한 Ref 설정
-  const startTimeRef = useRef(null); // 처음 타자 칠 때 시작 시간 기록
-  const isStartedRef = useRef(false); // 게임 시작 여부
-  const userInputRef = useRef(["", "", "", "", ""]); // 타이머가 실시간으로 훔쳐볼 입력값
+  // 🚀 타이머 Ref 로직 유지
+  const startTimeRef = useRef(null); 
+  const isStartedRef = useRef(false); 
+  const userInputRef = useRef(["", "", "", "", ""]); 
   const inputRefs = useRef([]);
 
   useEffect(() => {
@@ -31,7 +31,6 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
     if (inputRefs.current[0]) inputRefs.current[0].focus();
   }, [currentPage, sentences]);
 
-  // 🚀 [수정] 통계 계산 로직: State 의존성을 줄이고 Ref를 활용
   const updateRealTimeStats = useCallback(() => {
     if (sentences.length === 0 || !startTimeRef.current) return;
 
@@ -39,7 +38,6 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
     let currentCorrect = 0;
     let currentTyped = 0;
 
-    // userInput(State) 대신 userInputRef(Ref)를 사용하여 타이머 리셋 방지
     userInputRef.current.forEach((input, idx) => {
       const target = sentences[currentPage * 5 + idx] || "";
       currentTyped += input.length;
@@ -59,7 +57,6 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
     });
   }, [completedStats, currentPage, sentences]);
 
-  // 🚀 [핵심 수정] 실시간 타이머 useEffect: 의존성에서 userInput 제거
   useEffect(() => {
     if (showResult) return;
 
@@ -70,27 +67,22 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
     }, 1000);
 
     return () => clearInterval(timerInterval);
-  }, [showResult, updateRealTimeStats]); // userInput이 빠져서 이제 타자를 쳐도 멈추지 않습니다.
+  }, [showResult, updateRealTimeStats]);
 
   const handleInputChange = (index, value) => {
     const targetLine = sentences[currentPage * 5 + index] || "";
     if (value.length > targetLine.length) return;
 
-    // 1. 첫 타건 시 타이머 시작
     if (!isStartedRef.current) {
       isStartedRef.current = true;
       startTimeRef.current = Date.now();
     }
 
-    // 2. State 업데이트 (UI 표시용)
     const newInputs = [...userInput];
     newInputs[index] = value;
     setUserInput(newInputs);
-
-    // 3. Ref 업데이트 (타이머가 계산용으로 즉시 참조)
     userInputRef.current = newInputs;
     
-    // 포커스 이동 로직
     if (value.length === targetLine.length && value.length > 0 && index < 4) {
       inputRefs.current[index + 1]?.focus();
     }
@@ -122,14 +114,22 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
       setCurrentPage(prev => prev + 1);
       const resetInputs = ["", "", "", "", ""];
       setUserInput(resetInputs);
-      userInputRef.current = resetInputs; // Ref도 같이 초기화
+      userInputRef.current = resetInputs; 
     }
   };
 
+  // 🚀 핵심 수정: 스페이스바("\u00A0") 변환으로 위치 밀림 방지
   const RenderColoredText = (input, target) => {
-    return input.split("").map((char, i) => (
-      <span key={i} style={{ color: char === target[i] ? "#4caf50" : "#f44336" }}>{char}</span>
-    ));
+    return input.split("").map((char, i) => {
+      const isCorrect = char === target[i];
+      // 일반 공백을 고정폭 공백으로 변환하여 정렬 유지
+      const displayText = char === " " ? "\u00A0" : char;
+      return (
+        <span key={i} style={{ color: isCorrect ? "#4caf50" : "#f44336" }}>
+          {displayText}
+        </span>
+      );
+    });
   };
 
   return (

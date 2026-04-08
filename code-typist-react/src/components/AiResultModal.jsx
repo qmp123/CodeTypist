@@ -10,13 +10,9 @@ function AiResultModal({ data, onRetry, onExit }) {
         <div className="modal-divider-line" />
         <h2 className="modal-title-completed">MISSION COMPLETED</h2>
 
-        {/* 🚀 중복되었던 토탈 점수 박스를 하나만 남기고 정리했습니다. */}
-        <div className="ai-score-glow-box">
-          <span className="ai-score-label">TOTAL SCORE</span>
-          <h1 className="ai-score-number">{data.score || 0}</h1>
-        </div>
+        {/* 🚀 [삭제] TOTAL SCORE 점수 박스 영역을 제거했습니다. */}
 
-        {/* 🚀 상세 정보 그리드: 정답 항목을 제거하고 4가지 정보만 표시합니다. */}
+        {/* 🚀 상세 정보 그리드: 정답 없이 4가지 정보만 표시합니다. */}
         <div className="ai-result-grid">
           <div className="ai-grid-item">
             <span className="grid-label">정확도</span>
