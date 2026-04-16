@@ -4,11 +4,11 @@ import VividSunImage from '../pages/VividSunImage.png';
 /* 🏆 랭킹 팝업 (원본 스타일 보존) */
 export function RankingModal({ onClose }) {
   const rankings = [
-    { rank: 1, name: 'Faker', score: 2500 },
-    { rank: 2, name: 'Oner', score: 2350 },
-    { rank: 3, name: 'Keria', score: 2100 },
-    { rank: 4, name: 'Doran', score: 1950 },
-    { rank: 5, name: 'Guest', score: 1200 },
+    { rank: 1, name: 'Faker', score: 125 },
+    { rank: 2, name: 'Oner', score: 115 },
+    { rank: 3, name: 'Keria', score: 110 },
+    { rank: 4, name: 'Doran', score: 95 },
+    { rank: 5, name: 'Guest', score: 70 },
   ];
 
   return (
