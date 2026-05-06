@@ -105,7 +105,7 @@ function MiniGamePage({ lang, onBack }) {
   if (gameState === 'READY') {
     return (
       <div className="mini-game-full-container">
-        <header className="game-header-wide">
+        <header className="game-header-wide ready-header">
           <button className="back-btn-ai-left" onClick={onBack}>← Back</button>
           <h1 className="game-title-right">난이도 선택</h1>
         </header>
@@ -123,7 +123,7 @@ function MiniGamePage({ lang, onBack }) {
   return (
     <div className="mini-game-full-container">
       <header className="game-header-wide">
-        <button className="back-btn-ai-left" onClick={() => setGameState('READY')}>← Back to Levels</button>
+        <button className="back-btn-ai-left" onClick={() => setGameState('READY')}>← Back</button>
         <div className="header-right-column">
           <h1 className="game-title-right">빈칸채우기</h1>
           <span className="info-tag-under-title">{lang} | Level {difficulty}</span>

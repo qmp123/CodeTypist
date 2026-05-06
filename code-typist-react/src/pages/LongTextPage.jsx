@@ -4,58 +4,59 @@ import practiceData from '../data/long-practice.json';
 import '../styles/long-text-page.css';
 
 function LongTextPage({ lang, textId, onBack, onTryAgain }) {
+  // 🚀 상태 관리 (원본 보존)
   const [sentences, setSentences] = useState([]);
   const [title, setTitle] = useState('');
-  const [currentPage, setCurrentPage] = useState(0);
-  const [userInput, setUserInput] = useState(["", "", "", "", ""]); 
-  const [completedStats, setCompletedStats] = useState({ correct: 0, typed: 0 });
+  const [userInput, setUserInput] = useState([]); 
   const [stats, setStats] = useState({ speed: 0, accuracy: 100, time: 0 });
   const [showResult, setShowResult] = useState(false);
   
-  // 🚀 타이머 Ref 로직 유지
+  // 🚀 Ref 로직 (원본 보존)
   const startTimeRef = useRef(null); 
   const isStartedRef = useRef(false); 
-  const userInputRef = useRef(["", "", "", "", ""]); 
   const inputRefs = useRef([]);
+  const scrollContainerRef = useRef(null);
 
+  // 데이터 로드 및 초기화
   useEffect(() => {
     const selectedLang = lang ? lang.toLowerCase() : 'python';
     const data = practiceData[selectedLang]?.long?.[textId];
     if (data && data.pages) {
-      setSentences(data.pages.flat());
+      const allSentences = data.pages.flat();
+      setSentences(allSentences);
       setTitle(data.title || `긴글 연습 (${lang})`);
+      setUserInput(new Array(allSentences.length).fill(""));
     }
   }, [lang, textId]);
 
+  // 첫 번째 라인 자동 포커스
   useEffect(() => {
     if (inputRefs.current[0]) inputRefs.current[0].focus();
-  }, [currentPage, sentences]);
+  }, [sentences]);
 
+  // 실시간 통계 계산 (원본 로직 완벽 유지)
   const updateRealTimeStats = useCallback(() => {
     if (sentences.length === 0 || !startTimeRef.current) return;
 
     const elapsedMinutes = (Date.now() - startTimeRef.current) / 60000;
-    let currentCorrect = 0;
-    let currentTyped = 0;
+    let totalCorrect = 0;
+    let totalTyped = 0;
 
-    userInputRef.current.forEach((input, idx) => {
-      const target = sentences[currentPage * 5 + idx] || "";
-      currentTyped += input.length;
+    userInput.forEach((input, idx) => {
+      const target = sentences[idx] || "";
+      totalTyped += input.length;
       const minLen = Math.min(input.length, target.length);
       for (let i = 0; i < minLen; i++) {
-        if (input[i] === target[i]) currentCorrect++;
+        if (input[i] === target[i]) totalCorrect++;
       }
     });
-
-    const totalCorrect = completedStats.correct + currentCorrect;
-    const totalTyped = completedStats.typed + currentTyped;
 
     setStats({
       speed: Math.round(totalCorrect / elapsedMinutes) || 0,
       accuracy: totalTyped > 0 ? Math.round((totalCorrect / totalTyped) * 100) : 100,
       time: Math.floor(elapsedMinutes * 60)
     });
-  }, [completedStats, currentPage, sentences]);
+  }, [userInput, sentences]);
 
   useEffect(() => {
     if (showResult) return;
@@ -69,8 +70,9 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
     return () => clearInterval(timerInterval);
   }, [showResult, updateRealTimeStats]);
 
+  // 입력 핸들러 및 자동 스크롤 로직
   const handleInputChange = (index, value) => {
-    const targetLine = sentences[currentPage * 5 + index] || "";
+    const targetLine = sentences[index] || "";
     if (value.length > targetLine.length) return;
 
     if (!isStartedRef.current) {
@@ -81,48 +83,36 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
     const newInputs = [...userInput];
     newInputs[index] = value;
     setUserInput(newInputs);
-    userInputRef.current = newInputs;
     
-    if (value.length === targetLine.length && value.length > 0 && index < 4) {
-      inputRefs.current[index + 1]?.focus();
+    // 다음 줄 이동 및 스크롤 제어
+    if (value.length === targetLine.length && value.length > 0) {
+      if (index < sentences.length - 1) {
+        const nextInput = inputRefs.current[index + 1];
+        nextInput?.focus();
+        nextInput?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        setShowResult(true);
+      }
     }
   };
 
   const handleKeyDown = (e, index) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      if (index < 4) inputRefs.current[index + 1]?.focus();
-      else handleNextPage(); 
+      if (index < sentences.length - 1) {
+        const nextInput = inputRefs.current[index + 1];
+        nextInput?.focus();
+        nextInput?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        setShowResult(true);
+      }
     }
   };
 
-  const handleNextPage = () => {
-    let pageCorrect = 0;
-    let pageTyped = 0;
-    userInput.forEach((input, idx) => {
-      const target = sentences[currentPage * 5 + idx] || "";
-      pageTyped += input.length;
-      const minLen = Math.min(input.length, target.length);
-      for (let i = 0; i < minLen; i++) if (input[i] === target[i]) pageCorrect++;
-    });
-
-    setCompletedStats(prev => ({ correct: prev.correct + pageCorrect, typed: prev.typed + pageTyped }));
-    
-    if ((currentPage + 1) * 5 >= sentences.length) {
-      setShowResult(true);
-    } else {
-      setCurrentPage(prev => prev + 1);
-      const resetInputs = ["", "", "", "", ""];
-      setUserInput(resetInputs);
-      userInputRef.current = resetInputs; 
-    }
-  };
-
-  // 🚀 핵심 수정: 스페이스바("\u00A0") 변환으로 위치 밀림 방지
   const RenderColoredText = (input, target) => {
+    if (!input) return null;
     return input.split("").map((char, i) => {
       const isCorrect = char === target[i];
-      // 일반 공백을 고정폭 공백으로 변환하여 정렬 유지
       const displayText = char === " " ? "\u00A0" : char;
       return (
         <span key={i} style={{ color: isCorrect ? "#4caf50" : "#f44336" }}>
@@ -138,18 +128,18 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
         <button className="back-button" onClick={onBack}>← Back</button>
         <div className="header-text">
           <h1 className="practice-title">{title}</h1>
-          <span className="page-indicator">Page: {currentPage + 1} / {Math.ceil(sentences.length / 5)}</span>
+          {/* 🚀 라인 수(Total Lines) 표시 삭제 완료 */}
         </div>
       </header>
 
       <section className="dashboard-stats">      
-        <div className="stat-box">정확도 <span className="stat-val highlight-mint">{stats.accuracy}%</span></div>
-        <div className="stat-box">소요 시간 <span className="stat-val highlight-blue">{stats.time}s</span></div>
-        <div className="stat-box">속도 <span className="stat-val highlight-blue">{stats.speed}</span></div>
+        <div className="stat-box">정확도 <span className="stat-val unified-stat">{stats.accuracy}%</span></div>
+        <div className="stat-box">소요 시간 <span className="stat-val unified-stat">{stats.time}s</span></div>
+        <div className="stat-box">속도 <span className="stat-val unified-stat">{stats.speed}</span></div>
       </section>
 
-      <main className="code-practice-area">
-        {sentences.slice(currentPage * 5, (currentPage + 1) * 5).map((line, idx) => (
+      <main className="code-practice-area" ref={scrollContainerRef}>
+        {sentences.map((line, idx) => (
           <div key={idx} className="code-line-block">
             <p className="example-text">{line}</p>
             <div className="input-container">
@@ -157,7 +147,7 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
               <input 
                 ref={(el) => (inputRefs.current[idx] = el)}
                 className="typing-input-field"
-                value={userInput[idx]}
+                value={userInput[idx] || ""}
                 onChange={(e) => handleInputChange(idx, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(e, idx)}
                 spellCheck="false"
@@ -168,11 +158,7 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
         ))}
       </main>
 
-      <footer className="practice-footer">
-        <button className="nav-action-btn" onClick={handleNextPage}>
-          {(currentPage + 1) * 5 >= sentences.length ? "RESULT VIEW" : "Next Page"}
-        </button>
-      </footer>
+      <footer className="practice-footer" style={{ display: 'none' }}></footer>
 
       {showResult && (
         <ResultModal 

@@ -3,8 +3,8 @@ import "../styles/result-modal.css";
 
 export default function ResultModal({ mode, score, wpm, correct, accuracy, time, onRestart, onHome }) {
   // 🚀 각 모드별 표시 여부를 결정하는 변수들
-  const isWordPractice = mode === '낱말 연습'; // 낱말 연습 여부
-  const isBasicPractice = mode === '낱말 연습' || mode === '짧은 글 연습';
+  const isWordPractice = mode === '문자 연습'; // 낱말 연습 여부
+  const isBasicPractice = mode === '문자 연습' || mode === '짧은 글 연습';
   const isShortSentence = mode === '짧은 글 연습';
   // 긴 글 연습(긴 코드 연습) 여부 확인
   const isLongText = mode === '긴 글 연습' || mode === '긴 코드 연습'; 
@@ -24,7 +24,7 @@ export default function ResultModal({ mode, score, wpm, correct, accuracy, time,
         )}
 
         <div className="stat-grid">
-          {/* 🚀 [수정] '정답' 갯수는 오직 '낱말 연습'에서만 표시하도록 변경 */}
+          {/* 🚀 [수정] '정답' 갯수는 오직 '문자 연습'에서만 표시하도록 변경 */}
           {isWordPractice && (
             <div className="stat-item">
               <h4>정답</h4>

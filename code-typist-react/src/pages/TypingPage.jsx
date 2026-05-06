@@ -62,12 +62,12 @@ function TypingPage({ lang, mode, onBack, theme }) {
   // 🚀 실시간 정확도 계산 (1타 단위로 부드럽게 반영)
   const accuracy = useMemo(() => {
     let liveMistakesInLine = 0;
-    if (mode !== '낱말 연습' && inputText.length > 0) {
+    if (mode !== '문자 연습' && inputText.length > 0) {
       for (let i = 0; i < inputText.length; i++) {
         if (inputText[i] !== currentQuestion[i]) liveMistakesInLine++;
       }
     }
-    const currentTotal = totalTyped + (mode === '낱말 연습' ? 0 : inputText.length);
+    const currentTotal = totalTyped + (mode === '문자 연습' ? 0 : inputText.length);
     const currentMistakes = mistakes + liveMistakesInLine;
     return currentTotal === 0 ? 100 : Math.round(((currentTotal - currentMistakes) / currentTotal) * 100);
   }, [totalTyped, mistakes, inputText, currentQuestion, mode]);
@@ -83,7 +83,7 @@ function TypingPage({ lang, mode, onBack, theme }) {
     let selected = mode === '짧은 글 연습' ? [...currentExamples].sort(() => Math.random() - 0.5).slice(0, 5) : [];
     
     setSessionQuestions(selected);
-    if (mode === '낱말 연습') initWordBelt();
+    if (mode === '문자 연습') initWordBelt();
     else if (selected.length > 0) setCurrentQuestion(selected[0]);
     
     setCurrentIndex(0); setInputText(''); setScore(0); setWpm(0); setTotalTyped(0); setMistakes(0); setCorrectCount(0);
@@ -112,14 +112,14 @@ function TypingPage({ lang, mode, onBack, theme }) {
 
   const moveToNextQuestion = (scoreChange, currentMistakesInLine) => {
     const nextIndex = currentIndex + 1;
-    const addedTyped = (mode === '낱말 연습' ? 1 : currentQuestion.length);
+    const addedTyped = (mode === '문자 연습' ? 1 : currentQuestion.length);
     
     totalTypedRef.current += addedTyped;
     setTotalTyped(totalTypedRef.current);
     setMistakes(prev => prev + currentMistakesInLine); 
     setScore(prev => prev + scoreChange);
     
-    if (mode === '낱말 연습') {
+    if (mode === '문자 연습') {
       if (nextIndex < 100) {
         setCharList(prev => [...prev.slice(1), codingChars[Math.floor(Math.random() * codingChars.length)]]);
         setCurrentIndex(nextIndex);
@@ -142,7 +142,7 @@ function TypingPage({ lang, mode, onBack, theme }) {
       isStartedRef.current = true; startTimeRef.current = Date.now(); 
     }
 
-    if (mode === '낱말 연습') {
+    if (mode === '문자 연습') {
       if (val.length === 0) return;
       const char = val.slice(-1);
       const isCorrect = char === charList[0];
@@ -203,9 +203,9 @@ function TypingPage({ lang, mode, onBack, theme }) {
           ← Back
         </button>
         <div className="game-info" style={{ textAlign: 'right' }}>
-          <h2 style={{ margin: 0, fontSize: '1.6rem', color: 'var(--point-color)' }}>{mode}</h2>
-          {mode !== '낱말 연습' && (
-            <p style={{ margin: '5px 0 0 0', color: 'var(--text-sub)' }}>
+          <h2 style={{ margin: 0, fontSize: '1.6rem', color: 'var(--text-main)' }}>{mode}</h2>
+          {mode !== '문자 연습' && (
+            <p style={{ margin: '0px 0 0 0', color: 'var(--text-main)' }}>
               Language: <strong>{lang}</strong>
             </p>
           )}
@@ -225,20 +225,20 @@ function TypingPage({ lang, mode, onBack, theme }) {
         >
           {/* 🚀 진행도 라벨 수정 & x/100 복구 완료 */}
           <div className="status-item" style={{ color: 'var(--text-sub)' }}>
-            {mode === '낱말 연습' ? '진행도' : (mode === '짧은 글 연습' ? '정확도' : 'SCORE')}
+            {mode === '문자 연습' ? '진행도' : (mode === '짧은 글 연습' ? '정확도' : 'SCORE')}
             <span className="status-value" style={{ color: 'var(--text-main)' }}>
-              {mode === '낱말 연습' ? `${currentIndex}/100` : (mode === '짧은 글 연습' ? `${accuracy}%` : score)}
+              {mode === '문자  연습' ? `${currentIndex}/100` : (mode === '짧은 글 연습' ? `${accuracy}%` : score)}
             </span>
           </div>
           <div className="status-item" style={{ color: 'var(--text-sub)' }}>
             소요 시간 <span className="status-value" style={{ color: 'var(--text-main)' }}>{timer}s</span>
           </div>
           <div className="status-item" style={{ color: 'var(--text-sub)' }}>
-            속도 <span className="status-value" style={{ color: 'var(--point-color)' }}>{wpm}</span>
+            속도 <span className="status-value" style={{ color: 'var(--text-main)' }}>{wpm}</span>
           </div>
         </div>
 
-        {mode === '낱말 연습' ? (
+        {mode === '문자 연습' ? (
           <div 
             className="word-practice-wrapper" 
             style={{ 
@@ -342,7 +342,7 @@ function TypingPage({ lang, mode, onBack, theme }) {
         <div className="input-centering-wrapper" style={{ marginTop: '40px' }}>
           <input 
             type="text" 
-            className={mode === '낱말 연습' ? "belt-input-field" : "input-field"}
+            className={mode === '문자 연습' ? "belt-input-field" : "input-field"}
             value={inputText} 
             onChange={handleInput} 
             autoFocus 

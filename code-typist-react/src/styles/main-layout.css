@@ -1,13 +1,47 @@
-/* main-layout.css - 민재 님의 원본 구조 100% 복원 버전 */
+/* --- 0. 테마 변수 (라이트/다크 완벽 분리) --- */
+:root {
+  /* 🌙 다크 모드 (기본) */
+  --point-color: #6200ea;
+  --point-hover: #7f39fb;
+  --point-focus: #bb86fc; 
+  --bg-main: #121212;
+  --bg-card: #1e1e1e;
+  --bg-input: #2c2c2c;      
+  --border-color: #333333;
+  --text-main: #ffffff;     /* 다크모드 메인 글씨: 완전 흰색 */
+  --text-sub: #cccccc;      /* 다크모드 서브 글씨: 밝은 회색 (이제 잘 보입니다!) */
+  --shadow-color: rgba(0, 0, 0, 0.4); 
+}
+
+/* ☀️ 라이트 모드 */
+body.light, [data-theme="light"] {
+  --point-color: #6200ea;
+  --point-hover: #4b00b3;
+  --point-focus: #6200ea;
+  --bg-main: #f4f5f7;       
+  --bg-card: #ffffff;       
+  --bg-input: #f1f3f5;      
+  --border-color: #e9ecef;
+  --text-main: #111111;     /* 라이트모드 메인 글씨: 짙은 검정 */
+  --text-sub: #444444;      /* 라이트모드 서브 글씨: 진한 회색 */
+  --shadow-color: rgba(0, 0, 0, 0.04); 
+}
+
+/* --- 전체 배경 및 폰트 --- */
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
 
 .main-container {
-  width: 1050px;
-  margin: 40px auto; /* 중앙 정렬 복구 */
-  padding: 0;
+  width: 1150px;
+  margin: 50px auto;
   display: flex;
   flex-direction: column;
-  gap: 20px; 
-  color: var(--text-main);
+  gap: 25px;
 }
 
 /* --- 1. 상단 헤더 --- */
@@ -19,123 +53,182 @@
 
 .user-info-box {
   background-color: var(--bg-card);
-  padding: 10px 20px;
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
+  padding: 18px 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px var(--shadow-color);
   display: flex;
   align-items: center;
-  gap: 15px;
-}
-
-.user-icon { font-size: calc(var(--global-font-size) * 1.4) !important; }
-.user-name { 
-  font-weight: bold; 
-  font-size: calc(var(--global-font-size) * 0.9) !important; 
-  color: var(--point-color); 
-}
-.user-status-text { 
-  font-size: calc(var(--global-font-size) * 0.6) !important; 
-  color: var(--text-sub); 
-}
-
-.header-buttons { display: flex; gap: 10px; }
-.nav-btn {
-  background-color: var(--bg-sub);
-  color: var(--text-main);
+  gap: 18px;
   border: 1px solid var(--border-color);
-  padding: 10px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: calc(var(--global-font-size) * 0.7) !important;
-  transition: all 0.2s;
-}
-.nav-btn.logout-highlight { border-color: #ff5252; color: #ff5252; }
-
-/* --- 2. 언어 선택 탭 --- */
-.lang-tabs { display: flex; gap: 10px; width: 100%; }
-.tab-btn {
-  background-color: var(--bg-card);
-  color: var(--text-sub);
-  border: 1px solid var(--border-color);
-  padding: 12px 0;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: calc(var(--global-font-size) * 0.8) !important;
-  flex: 1; 
-  text-align: center;
   transition: all 0.3s;
 }
+
+.user-name { 
+  font-weight: bold; 
+  color: var(--text-main); 
+  font-size: 20px; 
+}
+
+.user-status-text { 
+  font-size: 15px; 
+  color: var(--text-sub); 
+  font-weight: 600; 
+}
+
+.header-buttons { display: flex; gap: 12px; }
+
+.nav-btn {
+  background-color: var(--bg-input); 
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  padding: 14px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 600; 
+  transition: all 0.3s;
+}
+
+.nav-btn:hover {
+  border-color: var(--point-focus); 
+}
+
+.nav-btn.logout-highlight { 
+  border-color: #ff5252; 
+  color: #ff5252; 
+}
+
+/* --- 2. 언어 선택 탭 --- */
+.lang-tabs { 
+  display: flex; 
+  gap: 15px; 
+  width: 100%; 
+  background-color: var(--bg-card);
+  padding: 20px 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px var(--shadow-color);
+  box-sizing: border-box;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s;
+}
+
+.tab-btn {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-sub); 
+  padding: 15px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600; /* 글씨 진하게 */
+  transition: all 0.3s;
+  flex: 1;
+}
+
 .tab-btn.active {
   background-color: var(--point-color);
-  color: white;
   border-color: var(--point-color);
+  color: white;
+  font-weight: bold;
 }
 
 /* --- 3. 콘텐츠 바디 --- */
 .content-body {
   display: flex;
   width: 100%;
-  min-height: 450px; 
-  height: auto; 
+  min-height: 550px; 
   background-color: var(--bg-card);
-  border-radius: 16px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px var(--shadow-color);
   border: 1px solid var(--border-color);
-  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: all 0.3s;
 }
 
+/* --- 4. 왼쪽 사이드바 --- */
 .left-sidebar {
-  width: 260px;
-  background-color: var(--bg-sub);
+  width: 300px;
+  background-color: var(--bg-card);
   display: flex;
   flex-direction: column;
   border-right: 1px solid var(--border-color);
-  flex-shrink: 0;
-  border-radius: 16px 0 0 16px;
+  transition: all 0.3s;
 }
 
 .mode-btn {
-  padding: 20px 25px;
+  padding: 25px 30px;
   background: transparent;
   border: none;
   border-bottom: 1px solid var(--border-color);
-  color: var(--text-sub);
-  font-size: calc(var(--global-font-size) * 0.8) !important;
+  color: var(--text-sub); 
+  font-size: 18px;
+  font-weight: 600; /* 글씨 진하게 */
   cursor: pointer;
+  text-align: left;
+  transition: all 0.3s;
 }
 
 .mode-btn.active {
-  background-color: var(--bg-card);
-  color: var(--point-color);
+  background-color: var(--bg-input);
+  color: var(--point-focus);
   font-weight: bold;
-  border-left: 4px solid var(--point-color);
 }
 
+/* --- 5. 우측 설명 패널 --- */
 .right-description-panel {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 40px;
-  background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-sub) 100%);
-  border-radius: 0 16px 16px 0;
+  padding: 50px;
+  background-color: var(--bg-card);
+  transition: all 0.3s;
 }
 
-.description-title { font-size: calc(var(--global-font-size) * 1.6) !important; color: var(--text-main); margin-bottom: 15px; }
-.language-tag { background-color: var(--bg-sub); padding: 6px 18px; border-radius: 20px; font-size: calc(var(--global-font-size) * 0.7) !important; color: var(--point-color); border: 1px solid var(--point-color); }
-.description-text { font-size: calc(var(--global-font-size) * 0.8) !important; color: var(--text-sub); line-height: 1.6; max-width: 80%; margin-top: 25px; white-space: pre-line; }
+.description-title { 
+  font-size: 32px; 
+  margin-bottom: 30px; 
+  color: var(--text-main);
+  font-weight: bold; 
+}
 
+.language-tag { 
+  background-color: var(--bg-input);
+  padding: 8px 24px; 
+  border-radius: 8px; 
+  color: var(--point-focus); 
+  border: 1px solid var(--border-color); 
+  font-size: 18px; 
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.description-text { 
+  font-size: 18px; 
+  line-height: 1.8;
+  color: var(--text-sub); 
+  font-weight: 500; 
+  max-width: 80%; 
+  margin-top: 35px; 
+  text-align: center;
+  white-space: pre-line;
+}
+
+/* --- 6. 시작 버튼 --- */
 .start-btn {
-  margin-top: 30px;
+  margin-top: 40px;
+  padding: 20px 80px; 
   background-color: var(--point-color);
   color: white;
   border: none;
-  padding: 14px 60px;
-  font-size: var(--global-font-size) !important;
+  border-radius: 8px;
+  font-size: 22px; 
   font-weight: bold;
-  border-radius: 40px;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(124, 77, 255, 0.4);
+  transition: background-color 0.3s;
+}
+
+.start-btn:hover {
+  background-color: var(--point-hover);
 }

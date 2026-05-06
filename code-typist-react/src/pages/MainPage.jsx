@@ -11,7 +11,7 @@ import '../styles/main-layout.css';
 
 function MainPage({ onGameStart, userId, onLogout, autoOpenModal, onModalOpened, theme, onThemeToggle }) {
   const [selectedLang, setSelectedLang] = useState('Python');
-  const [selectedMode, setSelectedMode] = useState('낱말 연습');
+  const [selectedMode, setSelectedMode] = useState('문자 연습');
   
   const [showRanking, setShowRanking] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -31,13 +31,13 @@ function MainPage({ onGameStart, userId, onLogout, autoOpenModal, onModalOpened,
   }, [autoOpenModal, onModalOpened]);
 
   const descriptions = {
-    '낱말 연습': '프로그래밍 필수 용어를 익히는 기본 단계입니다.\n정확한 타자 실력을 길러보세요.',
+    '문자 연습': '프로그래밍 필수 용어를 익히는 기본 단계입니다.\n정확한 타자 실력을 길러보세요.',
     '짧은 글 연습': '자주 쓰이는 함수와 구문을 연습합니다.\n코딩 속도를 한 단계 높여보세요.',
     '긴 글 연습': '실제 프로젝트 코드를 따라 치며 흐름을 익힙니다.\n집중력이 필요한 모드입니다.',
     '미니 게임': '제한 시간 내에 미션을 수행하는 서바이벌 모드입니다.\n당신의 한계에 도전하세요!',
   };
 
-  const modeList = ['낱말 연습', '짧은 글 연습', '긴 글 연습', '미니 게임'];
+  const modeList = ['문자 연습', '짧은 글 연습', '긴 글 연습', '미니 게임'];
 
   const handleStartClick = () => {
     if (selectedMode === '긴 글 연습') {

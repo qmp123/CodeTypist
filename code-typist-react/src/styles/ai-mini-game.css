@@ -1,16 +1,17 @@
 /* --- 데스크톱 와이드 전체 컨테이너 --- */
 .ai-mini-game-container {
-  background-color: var(--bg-main); /* 🚀 #1a1a1a -> 변수 */
-  color: var(--text-main);          /* 🚀 #fff -> 변수 */
-  /* 🚀 윗부분 잘림 방지를 위해 상단 패딩을 80px로 대폭 늘렸습니다 */
-  padding: 80px 50px 40px 50px; 
-  min-height: 100vh; /* 화면 전체 높이 사용 */
-  width: 100%; /* 가로 전체 사용 */
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  /* 🚀 상단 40px, 좌우 20px로 패딩을 줄여 시선을 중앙으로 집중시킵니다 */
+  padding: 40px 20px 30px 20px; 
+  min-height: 100vh;
+  /* 🚀 가로 폭을 1100px로 제한하고 중앙 정렬하여 한눈에 보이게 합니다 */
+  width: 95%;
+  max-width: 1100px;
   box-sizing: border-box;
   display: flex; 
   flex-direction: column; 
-  gap: 25px;
-  /* 기존 margin과 border는 '한 페이지처럼' 보이기 위해 제거하거나 조정하는 것을 권장합니다 */
+  gap: 15px;
   margin: 0 auto; 
 }
 
@@ -24,16 +25,16 @@
 
 .back-btn-ai-left {
   background: transparent; 
-  color: #03dac6; 
-  border: 1px solid #03dac6;
-  padding: 10px 20px; 
+  color: var(--text-main); 
+  border: 1px solid var(--text-main);
+  padding: 8px 18px; 
   border-radius: 8px; 
   cursor: pointer;
 }
 
 .game-title-right {
-  font-size: 2.2rem; 
-  color: #03dac6; 
+  font-size: 1.8rem; 
+  color: var(--text-main);
   letter-spacing: 2px; 
   margin: 0;
   text-align: right; 
@@ -41,64 +42,83 @@
 
 /* 🚀 옵션 바 정렬 */
 .option-bar-container {
-  background: var(--bg-card); /* 🚀 #252525 -> 변수 */
-  padding: 15px 30px; 
+  background: var(--bg-card);
+  padding: 10px 25px; 
   border-radius: 12px;
   display: flex; 
   justify-content: flex-start; 
   align-items: center;
-  border: 1px solid var(--border-color); /* 테두리 보존 */
+  border: 1px solid var(--border-color);
 }
 
 .option-controls { display: flex; gap: 15px; align-items: center; }
 
 .game-select {
-  background: var(--bg-sub);  /* 🚀 #111 -> 변수 */
-  color: var(--text-main);    /* 🚀 #fff -> 변수 */
-  border: 1px solid var(--border-color); /* 🚀 #444 -> 변수 */
-  padding: 10px 15px; 
+  background: var(--bg-sub);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  padding: 8px 12px; 
   border-radius: 8px; 
   font-size: 1rem; 
   cursor: pointer;
 }
 
 .code-gen-btn {
-  background: #03dac6; 
+  background:#8B5CF6; 
   color: #000; 
   font-weight: bold; 
   border: none;
-  padding: 12px 25px; 
+  padding: 10px 22px; 
   border-radius: 8px; 
   cursor: pointer;
 }
 
+.code-gen-btn:hover {
+  opacity: 0.85;
+  /* 살짝 떠오르는 효과로 입체감을 줍니다 */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.code-gen-btn:active {
+  transform: translateY(0);
+}
+
 /* 🚀 메인 게임 콘텐츠 (좌우 배치) */
-.game-main-content { display: flex; gap: 20px; height: 500px; }
+.game-main-content { 
+  display: flex; 
+  gap: 15px; 
+  height: 400px; 
+}
+
 .code-display-area, .typing-input-area { 
   flex: 1; 
-  background: var(--bg-sub); /* 🚀 #111 -> 변수 */
-  border: 1px solid var(--border-color); /* 🚀 #333 -> 변수 */
+  background: var(--bg-sub);
+  border: 1px solid var(--border-color);
   border-radius: 12px; 
   display: flex; 
   flex-direction: column; 
   overflow: hidden; 
 }
+
 .area-label { 
-  background: var(--bg-card); /* 🚀 #222 -> 변수 */
-  padding: 12px 20px; 
+  background: var(--bg-card);
+  padding: 10px 20px; 
   font-size: 0.85rem; 
-  color: var(--text-sub);    /* 🚀 #888 -> 변수 */
+  color: var(--text-sub);
   border-bottom: 1px solid var(--border-color); 
   text-transform: uppercase; 
 }
+
 .code-text-box, .user-input-field { 
-  padding: 25px; 
+  padding: 15px; 
   height: 100%; 
   overflow-y: auto; 
   font-family: 'Fira Code', monospace; 
-  font-size: 1.15rem; 
-  line-height: 1.8; 
+  font-size: 1.1rem; 
+  line-height: 1.6; 
 }
+
 .user-input-field { 
   width: 100%; 
   background: transparent; 
@@ -112,25 +132,25 @@
 .status-bar { 
   display: flex; 
   justify-content: space-around; 
-  background: var(--bg-card); /* 🚀 #252525 -> 변수 */
-  padding: 25px; 
+  background: var(--bg-card);
+  padding: 15px; 
   border-radius: 12px; 
   border: 1px solid var(--border-color);
 }
-.mint-text { color: #03dac6; font-weight: bold; font-size: 1.3rem; }
+.mint-text { color: #03dac6; font-weight: bold; font-size: 1.2rem; }
 
-/* --- 🚀 결과창 모달: image_79e61e.png 스타일로 완벽 교체 --- */
+/* --- 🚀 결과창 모달 --- */
 .modal-overlay {
   position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
   background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(8px); /* 사진 속 은은한 블러 */
+  backdrop-filter: blur(8px);
   display: flex; justify-content: center; align-items: center; z-index: 9999;
 }
 
 .modal-container-result {
   background: var(--bg-card);
-  padding: 40px 50px; 
-  border-radius: 30px; /* 더 둥글게 */
+  padding: 30px 40px; 
+  border-radius: 30px;
   min-width: 520px; 
   border: 1px solid var(--border-color);
   text-align: center;
@@ -138,7 +158,6 @@
   animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* 상단 구분선 */
 .modal-divider-line {
   width: 100%; height: 1px;
   background-color: var(--border-color);
@@ -148,57 +167,70 @@
 .modal-title-completed {
   font-size: 1.8rem;
   color: var(--text-sub);
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   font-weight: 500;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
 
-/* 🚀 점수판: 네온 민트 글로우 */
 .ai-score-glow-box {
   background: rgba(3, 218, 198, 0.05);
-  padding: 30px; border-radius: 20px;
-  margin-bottom: 30px;
+  padding: 20px; 
+  border-radius: 20px;
+  margin-bottom: 25px;
   border: 1px solid rgba(3, 218, 198, 0.2);
 }
-.ai-score-label { font-size: 0.9rem; color: var(--text-sub); letter-spacing: 2px; }
+
+.ai-score-label { 
+  font-size: 0.9rem; 
+  color: var(--text-sub); 
+  letter-spacing: 2px; 
+  display: block; 
+  margin-bottom: 5px; 
+}
+
 .ai-score-number { 
-  font-size: 5.5rem; font-weight: 900; color: #03dac6; 
+  font-size: 4.8rem; 
+  font-weight: 900; 
+  color: #03dac6; 
   text-shadow: 0 0 35px rgba(3, 218, 198, 0.5); 
   margin: 0;
 }
 
-/* 🚀 2x2 그리드 레이아웃 */
 .ai-result-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 15px; margin-bottom: 35px;
+  display: grid; 
+  grid-template-columns: 1fr 1fr;
+  gap: 15px; 
+  margin-bottom: 30px;
 }
+
 .ai-grid-item {
   background: var(--bg-sub);
-  padding: 15px 20px; border-radius: 12px;
+  padding: 15px 20px; 
+  border-radius: 12px;
   border: 1px solid var(--border-color);
-  display: flex; justify-content: space-between; align-items: center;
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
 }
+
 .grid-label { font-size: 0.95rem; color: var(--text-sub); }
 .grid-value { font-size: 1.2rem; font-weight: 800; color: var(--text-main); }
 
-/* 🚀 알약형 버튼 & 호버 효과 */
 .modal-action-buttons { display: flex; gap: 20px; }
 .modal-btn-result {
-  flex: 1; padding: 16px; border-radius: 50px; /* 완벽한 알약 모양 */
+  flex: 1; padding: 15px; border-radius: 50px; 
   font-size: 1.1rem; font-weight: bold; border: none;
   cursor: pointer; transition: all 0.25s ease;
   background: var(--bg-sub); color: var(--text-main);
 }
 
-/* 다시 도전하기 호버: 민트색 */
 .retry-pill:hover {
   background: #03dac6; color: #000;
   box-shadow: 0 10px 25px rgba(3, 218, 198, 0.4);
   transform: translateY(-4px);
 }
 
-/* 나가기 호버: 밝은 회색 */
 .exit-pill:hover {
   background: #e0e0e0; color: #000;
   transform: translateY(-4px);
