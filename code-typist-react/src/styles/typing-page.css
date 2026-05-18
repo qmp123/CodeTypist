@@ -69,7 +69,7 @@
   color: var(--text-sub); /* 🚀 부가 설명 텍스트 색상 */
 }
 .status-value {
-  color: var(--point-color); /* 🚀 민재 님의 시그니처 보라색 적용 */
+  color: var(--text-main); /* 🚀 민재 님의 시그니처 보라색 적용 */
   font-size: 2.2rem;
   margin-left: 10px;
   font-family: 'Consolas', monospace;
@@ -118,14 +118,14 @@
 .belt-item {
   font-size: 4.5rem;
   font-weight: 900;
-  color: var(--text-sub); /* 🚀 투명도 대신 테마 글자색 사용 */
+  color: var(--text-main); /* 🚀 투명도 대신 테마 글자색 사용 */
   font-family: 'Consolas', monospace;
   min-width: 70px;
   text-align: center;
 }
 .belt-item.active {
   color: var(--text-main);
-  text-shadow: 0 0 20px var(--point-color); /* 🚀 흰색 그림자 대신 포인트 컬러 효과 */
+  text-shadow: 0 0 20px var(--text-main); /* 🚀 흰색 그림자 대신 포인트 컬러 효과 */
   transform: scale(1.15);
 }
 .active-frame {
@@ -133,7 +133,7 @@
   left: 80px; /* 정렬 보정 */
   width: 110px;
   height: 130px;
-  border: 4px solid var(--point-color); /* 🚀 보라색 프레임 */
+  border: 4px solid var(--text-main); /* 🚀 보라색 프레임 */
   border-radius: 10px;
   background-color: transparent;
   pointer-events: none;

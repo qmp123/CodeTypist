@@ -107,6 +107,16 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
         setShowResult(true);
       }
     }
+    
+    // 🚀 [추가] 백스페이스 입력 시 이전 줄로 포커스 및 스크롤 이동
+    if (e.key === 'Backspace') {
+      if ((userInput[index] === "" || !userInput[index]) && index > 0) {
+        e.preventDefault();
+        const prevInput = inputRefs.current[index - 1];
+        prevInput?.focus();
+        prevInput?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
   };
 
   const RenderColoredText = (input, target) => {
@@ -128,7 +138,6 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
         <button className="back-button" onClick={onBack}>← Back</button>
         <div className="header-text">
           <h1 className="practice-title">{title}</h1>
-          {/* 🚀 라인 수(Total Lines) 표시 삭제 완료 */}
         </div>
       </header>
 

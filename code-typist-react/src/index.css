@@ -7,7 +7,9 @@
   --bg-sub: #252525;          /* 사이드바, 탭, 입력창 배경 */
   --text-main: #ffffff;       /* 주 글자색 */
   --text-sub: #999999;        /* 부가 설명 글자색 */
-  --point-color: #7c4dff;     /* 민재 님의 시그니처 보라색 */
+  
+  /* 🚀 [교정] 보라색을 제거하고 다크 모드의 포인트 컬러를 '흰색'으로 매핑 */
+  --point-color: #ffffff;     
   --border-color: #333333;    /* 경계선 */
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 
@@ -23,7 +25,9 @@
   --bg-sub: #f8f9fa;          /* 요소 구분용 내부 배경 */
   --text-main: #1a1a1b;       /* 짙은 다크 그레이 (가독성 향상) */
   --text-sub: #64748b;        /* 부드러운 설명 글씨 */
-  --point-color: #6200ee;     /* 라이트 모드 전용 보라색 */
+  
+  /* 🚀 [교정] 보라색을 제거하고 라이트 모드의 포인트 컬러를 '짙은 검은색'으로 매핑 */
+  --point-color: #1a1a1b;     
   --border-color: #e2e8f0;    /* 연한 경계선 */
   --shadow: 0 10px 25px rgba(0, 0, 0, 0.05); /* 은은한 입체감 */
 }
@@ -86,3 +90,15 @@ body, button, input, select, .game-info, .status-item {
 [data-theme='light'] .toggle-dot { transform: translateX(2px); }
 [data-theme='dark'] .toggle-dot { transform: translateX(38px); }
 .theme-icon { flex: 1; text-align: center; z-index: 2; font-size: 14px; }
+
+
+/* =========================================================
+ * 5. 🚀 [추가 안전장치] 포인트 컬러 변수 변경에 따른 글자색 반전 보정
+ * =========================================================
+ * 포인트 컬러가 완전히 흰색/검은색으로 반전됨에 따라, 배경이 채워지는 
+ * 대시보드 활성화 탭과 Start 버튼 내부 글씨가 묻히지 않도록 글자색을 자동 반전시킵니다.
+ */
+.start-btn, 
+.tab-btn.active {
+  color: var(--bg-card) !important;
+}

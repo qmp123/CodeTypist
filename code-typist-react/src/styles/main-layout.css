@@ -1,23 +1,25 @@
-/* --- 0. 테마 변수 (라이트/다크 완벽 분리) --- */
+/* --- 0. 테마 변수 (라이트/다크 완벽 분리 및 보라색 제거) --- */
 :root {
   /* 🌙 다크 모드 (기본) */
-  --point-color: #6200ea;
-  --point-hover: #7f39fb;
-  --point-focus: #bb86fc; 
+  /* 🚀 [교정] 보라색 계열 변수들을 다크모드 메인색(흰색 계열)으로 전면 교체 */
+  --point-color: #ffffff;
+  --point-hover: #eeeeee;
+  --point-focus: #ffffff; 
   --bg-main: #121212;
   --bg-card: #1e1e1e;
   --bg-input: #2c2c2c;      
   --border-color: #333333;
   --text-main: #ffffff;     /* 다크모드 메인 글씨: 완전 흰색 */
-  --text-sub: #cccccc;      /* 다크모드 서브 글씨: 밝은 회색 (이제 잘 보입니다!) */
+  --text-sub: #cccccc;      /* 다크모드 서브 글씨: 밝은 회색 */
   --shadow-color: rgba(0, 0, 0, 0.4); 
 }
 
 /* ☀️ 라이트 모드 */
 body.light, [data-theme="light"] {
-  --point-color: #6200ea;
-  --point-hover: #4b00b3;
-  --point-focus: #6200ea;
+  /* 🚀 [교정] 보라색 계열 변수들을 라이트모드 메인색(검은색 계열)으로 전면 교체 */
+  --point-color: #111111;
+  --point-hover: #222222;
+  --point-focus: #111111;
   --bg-main: #f4f5f7;       
   --bg-card: #ffffff;       
   --bg-input: #f1f3f5;      
@@ -120,7 +122,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
   font-size: 18px;
-  font-weight: 600; /* 글씨 진하게 */
+  font-weight: 600; 
   transition: all 0.3s;
   flex: 1;
 }
@@ -128,7 +130,8 @@ body {
 .tab-btn.active {
   background-color: var(--point-color);
   border-color: var(--point-color);
-  color: white;
+  /* 🚀 [교정] 배경색이 흰색/검은색으로 반전되므로, 글자색은 카드 배경색(var(--bg-card))을 따라가도록 수정하여 가독성 확보 */
+  color: var(--bg-card);
   font-weight: bold;
 }
 
@@ -162,7 +165,7 @@ body {
   border-bottom: 1px solid var(--border-color);
   color: var(--text-sub); 
   font-size: 18px;
-  font-weight: 600; /* 글씨 진하게 */
+  font-weight: 600; 
   cursor: pointer;
   text-align: left;
   transition: all 0.3s;
@@ -170,7 +173,7 @@ body {
 
 .mode-btn.active {
   background-color: var(--bg-input);
-  color: var(--point-focus);
+  color: var(--text-main); /* 🚀 활성화된 사이드바 메뉴 글씨도 테마 메인 컬러로 연동 */
   font-weight: bold;
 }
 
@@ -197,7 +200,7 @@ body {
   background-color: var(--bg-input);
   padding: 8px 24px; 
   border-radius: 8px; 
-  color: var(--point-focus); 
+  color: var(--text-main); /* 🚀 태그 내부 글씨색 테마 메인 컬러 연동 */
   border: 1px solid var(--border-color); 
   font-size: 18px; 
   font-weight: 600;
@@ -220,7 +223,8 @@ body {
   margin-top: 40px;
   padding: 20px 80px; 
   background-color: var(--point-color);
-  color: white;
+  /* 🚀 [교정] 버튼 배경 반전에 맞춰 글자색도 카드 배경색(var(--bg-card))으로 자동 반전되도록 수정 */
+  color: var(--bg-card);
   border: none;
   border-radius: 8px;
   font-size: 22px; 

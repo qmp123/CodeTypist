@@ -213,7 +213,7 @@ function TypingPage({ lang, mode, onBack, theme }) {
       </header>
 
       <main className="typing-area" style={{ marginTop: '0' }}>
-        <div 
+        <div
           className="status-bar" 
           style={{ 
             marginBottom: '15px', 
@@ -227,7 +227,8 @@ function TypingPage({ lang, mode, onBack, theme }) {
           <div className="status-item" style={{ color: 'var(--text-sub)' }}>
             {mode === '문자 연습' ? '진행도' : (mode === '짧은 글 연습' ? '정확도' : 'SCORE')}
             <span className="status-value" style={{ color: 'var(--text-main)' }}>
-              {mode === '문자  연습' ? `${currentIndex}/100` : (mode === '짧은 글 연습' ? `${accuracy}%` : score)}
+              {/* 🚀 [교정] '문자  연습'의 비정상 공백을 '문자 연습'으로 완벽 일치시켜 진행도(x/100) 정상 출력 보장 */}
+              {mode === '문자 연습' ? `${currentIndex}/100` : (mode === '짧은 글 연습' ? `${accuracy}%` : score)}
             </span>
           </div>
           <div className="status-item" style={{ color: 'var(--text-sub)' }}>
@@ -249,12 +250,7 @@ function TypingPage({ lang, mode, onBack, theme }) {
               alignItems: 'center' 
             }}
           >
-            <div className="accuracy-gauge-container" style={{ marginBottom: '50px', width: '80%' }}>
-              <span className="gauge-label" style={{ color: 'var(--text-main)' }}>정확도 {accuracy}%</span>
-              <div className="gauge-track" style={{ backgroundColor: 'var(--border-color)' }}>
-                <div className="gauge-fill" style={{ width: `${accuracy}%`, backgroundColor: 'var(--point-color)' }}></div>
-              </div>
-            </div>
+            {/* 🚀 [제거] 요구사항에 따라 정확도 100% 보라색 게이지 컨테이너 제거 완료 */}
             <div 
               className="char-belt-container" 
               style={{ 
@@ -307,7 +303,7 @@ function TypingPage({ lang, mode, onBack, theme }) {
                   transform: 'translateX(-50%)', 
                   height: '110px', 
                   width: '90px', 
-                  border: '3px solid var(--point-color)', 
+                  border: '3px solid var(--text-main)', 
                   borderRadius: '15px', 
                   pointerEvents: 'none', 
                   boxShadow: '0 0 25px rgba(124, 77, 255, 0.2)', 
@@ -347,7 +343,7 @@ function TypingPage({ lang, mode, onBack, theme }) {
             onChange={handleInput} 
             autoFocus 
             spellCheck="false"
-            placeholder="코드를 입력하세요."
+            placeholder="입력하세요."
             style={{ 
               padding: '18px', 
               fontSize: '1.3rem', 
