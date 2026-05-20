@@ -96,8 +96,12 @@ body {
 }
 
 .nav-btn.logout-highlight { 
-  border-color: #ff5252; 
   color: #ff5252; 
+  border-color: var(--border-color); 
+}
+
+.nav-btn.logout-highlight:hover {
+  border-color: #ff5252;
 }
 
 /* --- 2. 언어 선택 탭 --- */
