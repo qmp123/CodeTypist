@@ -53,10 +53,13 @@ function MiniGamePage({ lang, onBack }) {
     setStats({ correct: 0, wrong: 0 });
   };
 
-  useEffect(() => {
+useEffect(() => {
     if (gameState === 'PLAYING' && timeLeft > 0) {
       timerRef.current = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
-    } else if (timeLeft === 0) endGame();
+    } else if (gameState === 'PLAYING' && timeLeft === 0) { 
+      // 👆 여기에 gameState === 'PLAYING' 조건이 빠져있어서 무한루프가 돌았던 겁니다!
+      endGame();
+    }
     return () => clearInterval(timerRef.current);
   }, [gameState, timeLeft]);
 
@@ -134,7 +137,7 @@ function MiniGamePage({ lang, onBack }) {
         <div className="status-bar-mini">
           <div className="status-item-mini">점수 <span className="mint-text">{currentScore}</span></div>
           <div className="status-item-mini">소요 시간 <span className="mint-text">{timeLeft}s</span></div>
-          <div className="status-item-mini">정확도 <span className="mint-text">{currentIdx + 1} / 10</span></div>
+          <div className="status-item-mini">진행도 <span className="mint-text">{currentIdx + 1} / 10</span></div>
         </div>
 
         <div className="code-display-box-mini">

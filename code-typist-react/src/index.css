@@ -92,13 +92,3 @@ body, button, input, select, .game-info, .status-item {
 .theme-icon { flex: 1; text-align: center; z-index: 2; font-size: 14px; }
 
 
-/* =========================================================
- * 5. 🚀 [추가 안전장치] 포인트 컬러 변수 변경에 따른 글자색 반전 보정
- * =========================================================
- * 포인트 컬러가 완전히 흰색/검은색으로 반전됨에 따라, 배경이 채워지는 
- * 대시보드 활성화 탭과 Start 버튼 내부 글씨가 묻히지 않도록 글자색을 자동 반전시킵니다.
- */
-.start-btn, 
-.tab-btn.active {
-  color: var(--bg-card) !important;
-}

@@ -160,7 +160,7 @@ function AiMiniGame({ onBack }) {
           </select>
           
           <button onClick={generateCode} disabled={loading} className="code-gen-btn">
-            {loading ? "⌛ 생성 중..." : "🚀 코드 생성하기"}
+            {loading ? "생성 중..." : "코드 생성하기"}
           </button>
         </div>
       </section>
@@ -191,7 +191,7 @@ function AiMiniGame({ onBack }) {
           정확도: <span className={accuracy < 80 ? "warning-text" : "mint-text"}>{accuracy}%</span>
         </div>
         <div className="status-item">
-          속도: <span className="mint-text">{speed} 타/분</span>
+          속도: <span className="mint-text">{speed} </span>
         </div>
         <div className="status-item">
           시간: <span className="mint-text">{timer}s</span>

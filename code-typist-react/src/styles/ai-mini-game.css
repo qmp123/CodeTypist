@@ -2,10 +2,8 @@
 .ai-mini-game-container {
   background-color: var(--bg-main);
   color: var(--text-main);
-  /* 🚀 상단 40px, 좌우 20px로 패딩을 줄여 시선을 중앙으로 집중시킵니다 */
   padding: 40px 20px 30px 20px; 
   min-height: 100vh;
-  /* 🚀 가로 폭을 1100px로 제한하고 중앙 정렬하여 한눈에 보이게 합니다 */
   width: 95%;
   max-width: 1100px;
   box-sizing: border-box;
@@ -63,19 +61,20 @@
   cursor: pointer;
 }
 
+/* 🚀 '코드 생성하기' 버튼 (메인 페이지 Start 버튼과 완벽하게 동일한 공식 적용) */
 .code-gen-btn {
-  background:#8B5CF6; 
-  color: #000; 
-  font-weight: bold; 
-  border: none;
+  background: var(--bg-sub) !important; 
+  color: var(--text-main) !important; 
+  border: 1px solid var(--border-color) !important;
+  font-weight: bold !important; 
   padding: 10px 22px; 
   border-radius: 8px; 
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .code-gen-btn:hover {
-  opacity: 0.85;
-  /* 살짝 떠오르는 효과로 입체감을 줍니다 */
+  background: var(--border-color) !important;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
@@ -128,7 +127,7 @@
   outline: none; 
 }
 
-/* 🚀 상태바 */
+/* 🚀 상태바 (전체 글씨는 얇게 원상복구) */
 .status-bar { 
   display: flex; 
   justify-content: space-around; 
@@ -137,7 +136,13 @@
   border-radius: 12px; 
   border: 1px solid var(--border-color);
 }
-.mint-text { color: #03dac6; font-weight: bold; font-size: 1.2rem; }
+
+/* 🚀 숫자 폰트만 크고 굵게, 테마 색상 연동 유지 */
+.mint-text { 
+  color: var(--text-main) !important; 
+  font-weight: 900 !important; 
+  font-size: 1.4rem !important; 
+}
 
 /* --- 🚀 결과창 모달 --- */
 .modal-overlay {

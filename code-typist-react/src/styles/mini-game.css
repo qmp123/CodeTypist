@@ -11,9 +11,23 @@
   width: 100%;
   box-sizing: border-box;
 
-  /* 🚀 [추가] 미니게임 영역도 브라우저 기본 스크롤바가 다크모드로 출력되게 설정 */
-  color-scheme: dark; 
+  /* 🚀 긴 글 연습과 동일한 기준 적용: 기본은 라이트(light) 스크롤바 */
+  color-scheme: light; 
 }
+
+/* 🚀 다크 모드일 때만 스크롤바를 다크(dark)용으로 똑똑하게 변경 (이게 긴 글 연습의 비법입니다) */
+[data-theme='dark'] .mini-game-full-container,
+body.dark .mini-game-full-container {
+  color-scheme: dark;
+}
+
+/* 🚀 핵심: '난이도 선택 박스'가 자식으로 있을 때만 전체를 중앙으로 내림 */
+.mini-game-full-container:has(.difficulty-selection-box) {
+  justify-content: center;
+  padding-top: 0; 
+} 
+
+  /* 🚀 스크롤바가 테마 변환을 따라가지 못하고 이상해지는 주범이었던 color-scheme: dark; 삭제 완료 *
 
 /* 🚀 핵심: '난이도 선택 박스'가 자식으로 있을 때만 전체를 중앙으로 내림 */
 .mini-game-full-container:has(.difficulty-selection-box) {
@@ -75,7 +89,15 @@
 .back-btn-ai-left { background: transparent; color: #03dac6; border: 1px solid #03dac6; padding: 10px 22px; border-radius: 8px; cursor: pointer; font-weight: bold; }
 .game-title-right { font-size: 2.5rem; color: #03dac6; margin: 0; letter-spacing: 2px; }
 .status-bar-mini { display: flex; justify-content: center; gap: 80px; background: var(--bg-card); padding: 25px; border-radius: 15px; margin-bottom: 20px; border: 1px solid var(--border-color); width: 100%; box-sizing: border-box; }
-.mint-text { color: #03dac6; margin-left: 15px; font-size: 1.8rem; }
+
+/* 🚀 점수, 시간, 진행도 숫자 색상 강제 변환 (!important 추가 및 두께 조절) */
+.mint-text { 
+  color: var(--text-main) !important; 
+  margin-left: 15px; 
+  font-size: 1.8rem; 
+  font-weight: bold; 
+}
+
 .code-text-pre { color: var(--text-main); font-family: 'Fira Code', monospace; font-size: 1.5rem; line-height: 2.3; margin: 0; text-align: left; }
 .blank-input-field { background: var(--bg-card); border: 1px solid #03dac6; color: var(--text-main); padding: 6px 18px; width: 170px; text-align: center; font-size: 1.4rem; border-radius: 8px; }
 

@@ -128,10 +128,9 @@ body {
 }
 
 .tab-btn.active {
-  background-color: var(--point-color);
-  border-color: var(--point-color);
-  /* 🚀 [교정] 배경색이 흰색/검은색으로 반전되므로, 글자색은 카드 배경색(var(--bg-card))을 따라가도록 수정하여 가독성 확보 */
-  color: var(--bg-card);
+  background-color: var(--bg-sub); 
+  color: var(--text-main); 
+  border: 1px solid var(--border-color); 
   font-weight: bold;
 }
 
@@ -222,17 +221,17 @@ body {
 .start-btn {
   margin-top: 40px;
   padding: 20px 80px; 
-  background-color: var(--point-color);
-  /* 🚀 [교정] 버튼 배경 반전에 맞춰 글자색도 카드 배경색(var(--bg-card))으로 자동 반전되도록 수정 */
-  color: var(--bg-card);
-  border: none;
+  background-color: var(--bg-sub); 
+  color: var(--text-main); 
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 22px; 
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
 }
 
 .start-btn:hover {
-  background-color: var(--point-hover);
+  background-color: var(--border-color);
+  opacity: 0.9;
 }
