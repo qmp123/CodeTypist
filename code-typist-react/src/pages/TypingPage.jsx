@@ -77,9 +77,14 @@ function TypingPage({ lang, mode, onBack, theme }) {
     setCharList(newList);
   }, [codingChars]);
 
-  const resetGame = useCallback(() => {
-    const currentLang = lang?.toLowerCase() || 'python';
-    const currentExamples = codeExamples[currentLang] || codeExamples.python;
+ const resetGame = useCallback(() => {
+    // 🚀 수정: 무조건 python으로 고정하는 기본값(|| 'python') 제거
+    // 부모로부터 제대로 전달받은 lang 프롭스만 신뢰합니다.
+    const currentLang = (lang || '').toLowerCase(); 
+    
+    // 🚀 수정: 전달받은 언어 데이터가 없으면 빈 배열로 둬서 에러 방지 (파이썬으로 강제 변경 금지!)
+    const currentExamples = codeExamples[currentLang] || []; 
+
     let selected = mode === '짧은 글 연습' ? [...currentExamples].sort(() => Math.random() - 0.5).slice(0, 5) : [];
     
     setSessionQuestions(selected);

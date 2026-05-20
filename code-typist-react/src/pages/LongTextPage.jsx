@@ -19,8 +19,13 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
 
   // 데이터 로드 및 초기화
   useEffect(() => {
-    const selectedLang = lang ? lang.toLowerCase() : 'python';
+    // 🚀 수정: 무조건 python으로 고정하는 기본값 제거 (|| 'python' 대신 '')
+    // lang 프롭스가 제대로 넘어오지 않았을 때 강제로 파이썬으로 세팅되는 현상 방지
+    const selectedLang = (lang || '').toLowerCase();
+    
+    // 선택된 언어 데이터가 없으면 빈 객체를 반환하여 에러를 막습니다.
     const data = practiceData[selectedLang]?.long?.[textId];
+    
     if (data && data.pages) {
       const allSentences = data.pages.flat();
       setSentences(allSentences);

@@ -9,8 +9,10 @@ import '../styles/main-layout.css';
   - theme, onThemeToggle을 받아 설정창과 랭킹창에 전달
 */
 
-function MainPage({ onGameStart, userId, onLogout, autoOpenModal, onModalOpened, theme, onThemeToggle }) {
-  const [selectedLang, setSelectedLang] = useState('Python');
+// 🚀 [추가] 부모(App.jsx)로부터 이전에 선택했던 언어(initialLang)를 받아옵니다.
+function MainPage({ onGameStart, userId, onLogout, autoOpenModal, onModalOpened, theme, onThemeToggle, initialLang }) {
+  // 🚀 [수정] 무조건 'Python'이 아니라, 이전에 선택했던 언어가 있으면 그걸 쓰고 없으면 'Python'을 씁니다.
+  const [selectedLang, setSelectedLang] = useState(initialLang || 'Python');
   const [selectedMode, setSelectedMode] = useState('문자 연습');
   
   const [showRanking, setShowRanking] = useState(false);

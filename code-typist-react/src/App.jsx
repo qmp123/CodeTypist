@@ -17,12 +17,10 @@ function App() {
   // 🚀 [원본 유지] Try Again 클릭 시 모달 자동 오픈 상태
   const [autoOpenModal, setAutoOpenModal] = useState(false);
 
-  // 🚀 [추가] 테마 상태 관리 (민재 님의 선택을 기억하기 위해 localStorage 사용)
+  // 🚀 [원본 유지] 테마 상태 관리
   const [theme, setTheme] = useState(localStorage.getItem('app-theme') || 'dark');
 
   useEffect(() => {
-    // 🚀 [핵심] HTML 루트 요소에 data-theme를 주입합니다. 
-    // 이제 index.css에 정의한 --bg-card 같은 변수들이 이 설정에 따라 일제히 변합니다.
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('app-theme', theme);
 
@@ -57,7 +55,7 @@ function App() {
     setAutoOpenModal(false);
   }, []);
 
-  // 🚀 [추가] 테마 전환 함수
+  // 🚀 [원본 유지] 테마 전환 함수
   const toggleTheme = () => {
     setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
   };
@@ -81,6 +79,7 @@ function App() {
           onModalOpened={handleModalOpened}
           theme={theme}             /* 🚀 테마 데이터 전달 */
           onThemeToggle={toggleTheme} /* 🚀 테마 변경 함수 전달 */
+          initialLang={gameConfig.lang} /* 🚀 [교정] 이전에 선택해서 플레이하던 언어 데이터를 메인페이지로 그대로 전달 */
         />
       )}
 
