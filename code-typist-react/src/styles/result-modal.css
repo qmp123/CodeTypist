@@ -123,19 +123,12 @@
 }
 
 /* 🚀 3. [다시 도전하기] 마우스 올렸을 때 (민트색 강조) */
-.restart-btn:hover {
-  background-color: #03dac6; /* 🚀 사진 속 포인트 민트색 */
-  color: #000 !important; /* 글자는 검정으로 선명하게 */
-  box-shadow: 0 10px 25px rgba(3, 218, 198, 0.4); /* 🚀 민트 광채 효과 */
-  transform: translateY(-4px); /* 살짝 동동 떠오르는 느낌 */
-}
-
-/* 🚀 4. [나가기/홈] 마우스 올렸을 때 (밝은 회색) */
+.restart-btn:hover,
 .home-btn:hover {
-  background-color: #e0e0e0; /* 🚀 라이트 모드에서 살짝 더 밝아짐 */
-  color: #000 !important;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  transform: translateY(-4px);
+  background-color: var(--border-color) !important; /* 테마의 은은한 테두리 색으로 통일 */
+  color: var(--text-main) !important; /* 글자는 테마 기본 글자색 유지 */
+  box-shadow: none !important; /* 🚀 골칫거리였던 형광/광채 효과 완벽 제거 */
+  transform: translateY(-2px); /* 기존 -4px이 너무 붕 뜨는 느낌이라 -2px로 살짝만 줄였습니다 */
 }
 
 /* 🚀 5. 클릭했을 때 (실제로 눌리는 피드백) */

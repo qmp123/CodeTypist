@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import MiniGameResultModal from '../components/MiniGameResultModal';
 import '../styles/mini-game.css'; 
 
-// 🚀 데이터는 10개 이상만 있으면 되며, 로직에서 10개로 제한합니다.
 const miniGameData = {
   1: [
     { id: 1, text: "#include <stdio.h>\n\nint main() {\n  int n;\n  __(\"%d\", &n);\n  printf(\"%d\", n);\n  return 0;\n}", answers: ["scanf"] },
@@ -37,6 +36,9 @@ function MiniGamePage({ lang, onBack }) {
   const [userInputs, setUserInputs] = useState([]);
   const [stats, setStats] = useState({ correct: 0, wrong: 0 });
   
+  // 🚀 [추가] 타이머 시작 제어용 상태
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  
   const timerRef = useRef(null);
   const inputRefs = useRef([]); 
 
@@ -51,17 +53,20 @@ function MiniGamePage({ lang, onBack }) {
     setGameState('PLAYING');
     setTimeLeft(60);
     setStats({ correct: 0, wrong: 0 });
+    
+    // 🚀 [추가] 게임 시작 시 타이머 정지 상태로 초기화
+    setIsTimerRunning(false);
   };
 
-useEffect(() => {
-    if (gameState === 'PLAYING' && timeLeft > 0) {
+  useEffect(() => {
+    // 🚀 [수정] isTimerRunning이 true일 때만 시간이 줄어들도록 조건 추가
+    if (gameState === 'PLAYING' && isTimerRunning && timeLeft > 0) {
       timerRef.current = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
-    } else if (gameState === 'PLAYING' && timeLeft === 0) { 
-      // 👆 여기에 gameState === 'PLAYING' 조건이 빠져있어서 무한루프가 돌았던 겁니다!
+    } else if (gameState === 'PLAYING' && timeLeft === 0) {
       endGame();
     }
     return () => clearInterval(timerRef.current);
-  }, [gameState, timeLeft]);
+  }, [gameState, isTimerRunning, timeLeft]);
 
   useEffect(() => {
     if (gameState === 'PLAYING' && inputRefs.current[0]) {
@@ -102,6 +107,7 @@ useEffect(() => {
 
   const endGame = () => {
     clearInterval(timerRef.current);
+    setIsTimerRunning(false); // 🚀 [추가] 게임 종료 시 타이머 정지
     setGameState('RESULT');
   };
 
@@ -126,6 +132,7 @@ useEffect(() => {
   return (
     <div className="mini-game-full-container">
       <header className="game-header-wide">
+        {/* 🚨 [수정 완료] 직전 답변에서 제가 냈던 오타(setBackState)를 원래 코드(setGameState)로 복구했습니다. */}
         <button className="back-btn-ai-left" onClick={() => setGameState('READY')}>← Back</button>
         <div className="header-right-column">
           <h1 className="game-title-right">빈칸채우기</h1>
@@ -151,6 +158,9 @@ useEffect(() => {
                     ref={(el) => (inputRefs.current[i] = el)} 
                     value={userInputs[i] || ''}
                     onChange={(e) => {
+                      // 🚀 [추가] 첫 입력이 감지되면 타이머 작동 시작
+                      if (!isTimerRunning) setIsTimerRunning(true);
+                      
                       const n = [...userInputs];
                       n[i] = e.target.value;
                       setUserInputs(n);
@@ -182,7 +192,6 @@ useEffect(() => {
           progress={timeLeft > 0 ? 10 : currentIdx} 
           onRetry={() => setGameState('READY')} 
           onRestart={() => setGameState('READY')}
-          // 🚀 사진의 "미니게임 선택" 창(부모 컴포넌트)으로 돌아가도록 onBack 연결
           onHome={onBack} 
           onClose={onBack} 
         />

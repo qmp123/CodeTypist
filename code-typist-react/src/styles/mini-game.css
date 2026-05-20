@@ -133,4 +133,9 @@ body.dark .mini-game-full-container {
   cursor: pointer; transition: 0.3s; 
   border: none;
 }
-.modal-btn-result:hover { background: #03dac6; box-shadow: 0 0 20px rgba(3, 218, 198, 0.6); transform: translateY(-3px); color: #000; }
+.modal-btn-result:hover {
+  background: var(--border-color) !important; /* 테마에 맞는 차분한 배경색으로 통일 */
+  color: var(--text-main) !important; /* 글자색도 원래 테마색 유지 */
+  box-shadow: none !important; /* 🚀 빛나는 형광 효과 완벽 제거 */
+  transform: translateY(-2px); /* 살짝 위로 뜨는 클릭감만 유지 (이것도 싫으시면 삭제) */
+}
