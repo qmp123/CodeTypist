@@ -100,8 +100,13 @@ function TypingPage({ lang, mode, onBack, theme }) {
 
   const calculateWpmNow = useCallback((currentLen) => {
     if (!startTimeRef.current) return 0;
-    const elapsed = Math.max((Date.now() - startTimeRef.current) / 60000, 0.00001);
-    return Math.round(((totalTypedRef.current + currentLen) / 5) / elapsed);
+    
+    const elapsedMs = Date.now() - startTimeRef.current;
+    
+    // 🚀 수정: 2초(2/60) 딜레이를 1초(1/60)로 줄여서 훨씬 빠릿빠릿하게 반응하도록 변경!
+    const elapsedMinutes = Math.max(elapsedMs / 60000, 1 / 60);
+    
+    return Math.round((totalTypedRef.current + currentLen) / elapsedMinutes);
   }, []);
 
   useEffect(() => {
