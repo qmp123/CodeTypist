@@ -3,43 +3,64 @@ import ResultModal from '../components/ResultModal';
 import practiceData from '../data/long-practice.json';
 import '../styles/long-text-page.css';
 
+const API_BASE_URL = "http://localhost:5000";
+
 function LongTextPage({ lang, textId, onBack, onTryAgain }) {
-  // 🚀 상태 관리 (원본 보존)
   const [sentences, setSentences] = useState([]);
   const [title, setTitle] = useState('');
-  const [userInput, setUserInput] = useState([]); 
+  const [userInput, setUserInput] = useState([]);
   const [stats, setStats] = useState({ speed: 0, accuracy: 100, time: 0 });
   const [showResult, setShowResult] = useState(false);
-  
-  // 🚀 Ref 로직 (원본 보존)
-  const startTimeRef = useRef(null); 
-  const isStartedRef = useRef(false); 
+
+  const startTimeRef = useRef(null);
+  const isStartedRef = useRef(false);
   const inputRefs = useRef([]);
   const scrollContainerRef = useRef(null);
 
-  // 데이터 로드 및 초기화
   useEffect(() => {
-    // 🚀 수정: 무조건 python으로 고정하는 기본값 제거 (|| 'python' 대신 '')
-    // lang 프롭스가 제대로 넘어오지 않았을 때 강제로 파이썬으로 세팅되는 현상 방지
-    const selectedLang = (lang || '').toLowerCase();
-    
-    // 선택된 언어 데이터가 없으면 빈 객체를 반환하여 에러를 막습니다.
-    const data = practiceData[selectedLang]?.long?.[textId];
-    
-    if (data && data.pages) {
-      const allSentences = data.pages.flat();
-      setSentences(allSentences);
-      setTitle(data.title || `긴글 연습 (${lang})`);
-      setUserInput(new Array(allSentences.length).fill(""));
-    }
+    const selectedLang = (lang || 'python').toLowerCase();
+    const selectedTextId = textId || 1;
+
+    const loadLongTextData = async () => {
+      try {
+        const url = `${API_BASE_URL}/api/practice/long?language=${selectedLang}&set_id=${selectedTextId}&page=1`;
+
+        const res = await fetch(url);
+        const result = await res.json();
+
+        console.log("긴글 백엔드 데이터:", result);
+
+        if (result.success && result.data && Array.isArray(result.data.lines)) {
+          const lines = result.data.lines;
+
+          setSentences(lines);
+          setTitle(result.data.title || `긴글 연습 (${lang})`);
+          setUserInput(new Array(lines.length).fill(""));
+          return;
+        }
+
+        throw new Error("백엔드 데이터 형식이 맞지 않습니다.");
+      } catch (err) {
+        console.error("긴글 API 오류, 기존 JSON 사용:", err);
+
+        const data = practiceData[selectedLang]?.long?.[selectedTextId];
+
+        if (data && data.pages) {
+          const allSentences = data.pages.flat();
+          setSentences(allSentences);
+          setTitle(data.title || `긴글 연습 (${lang})`);
+          setUserInput(new Array(allSentences.length).fill(""));
+        }
+      }
+    };
+
+    loadLongTextData();
   }, [lang, textId]);
 
-  // 첫 번째 라인 자동 포커스
   useEffect(() => {
     if (inputRefs.current[0]) inputRefs.current[0].focus();
   }, [sentences]);
 
-  // 실시간 통계 계산 (원본 로직 완벽 유지)
   const updateRealTimeStats = useCallback(() => {
     if (sentences.length === 0 || !startTimeRef.current) return;
 
@@ -50,6 +71,7 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
     userInput.forEach((input, idx) => {
       const target = sentences[idx] || "";
       totalTyped += input.length;
+
       const minLen = Math.min(input.length, target.length);
       for (let i = 0; i < minLen; i++) {
         if (input[i] === target[i]) totalCorrect++;
@@ -75,7 +97,6 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
     return () => clearInterval(timerInterval);
   }, [showResult, updateRealTimeStats]);
 
-  // 입력 핸들러 및 자동 스크롤 로직
   const handleInputChange = (index, value) => {
     const targetLine = sentences[index] || "";
     if (value.length > targetLine.length) return;
@@ -88,9 +109,8 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
     const newInputs = [...userInput];
     newInputs[index] = value;
     setUserInput(newInputs);
-    
-    // 다음 줄 이동 및 스크롤 제어
-    if (value.length === targetLine.length && value.length > 0) {
+
+    if (value.length === targetLine.length) {
       if (index < sentences.length - 1) {
         const nextInput = inputRefs.current[index + 1];
         nextInput?.focus();
@@ -104,6 +124,7 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
   const handleKeyDown = (e, index) => {
     if (e.key === 'Enter') {
       e.preventDefault();
+
       if (index < sentences.length - 1) {
         const nextInput = inputRefs.current[index + 1];
         nextInput?.focus();
@@ -112,11 +133,11 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
         setShowResult(true);
       }
     }
-    
-    // 🚀 [추가] 백스페이스 입력 시 이전 줄로 포커스 및 스크롤 이동
+
     if (e.key === 'Backspace') {
       if ((userInput[index] === "" || !userInput[index]) && index > 0) {
         e.preventDefault();
+
         const prevInput = inputRefs.current[index - 1];
         prevInput?.focus();
         prevInput?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -126,9 +147,11 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
 
   const RenderColoredText = (input, target) => {
     if (!input) return null;
+
     return input.split("").map((char, i) => {
       const isCorrect = char === target[i];
       const displayText = char === " " ? "\u00A0" : char;
+
       return (
         <span key={i} style={{ color: isCorrect ? "#4caf50" : "#f44336" }}>
           {displayText}
@@ -146,7 +169,7 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
         </div>
       </header>
 
-      <section className="dashboard-stats">      
+      <section className="dashboard-stats">
         <div className="stat-box">정확도 <span className="stat-val unified-stat">{stats.accuracy}%</span></div>
         <div className="stat-box">소요 시간 <span className="stat-val unified-stat">{stats.time}s</span></div>
         <div className="stat-box">속도 <span className="stat-val unified-stat">{stats.speed}</span></div>
@@ -156,9 +179,13 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
         {sentences.map((line, idx) => (
           <div key={idx} className="code-line-block">
             <p className="example-text">{line}</p>
+
             <div className="input-container">
-              <div className="colored-display">{RenderColoredText(userInput[idx], line)}</div>
-              <input 
+              <div className="colored-display">
+                {RenderColoredText(userInput[idx], line)}
+              </div>
+
+              <input
                 ref={(el) => (inputRefs.current[idx] = el)}
                 className="typing-input-field"
                 value={userInput[idx] || ""}
@@ -172,11 +199,9 @@ function LongTextPage({ lang, textId, onBack, onTryAgain }) {
         ))}
       </main>
 
-      <footer className="practice-footer" style={{ display: 'none' }}></footer>
-
       {showResult && (
-        <ResultModal 
-          mode="긴 글 연습" 
+        <ResultModal
+          mode="긴 글 연습"
           score={Math.round((stats.speed * stats.accuracy) / 100)}
           wpm={stats.speed}
           accuracy={stats.accuracy}

@@ -14,19 +14,36 @@ function App() {
   const [view, setView] = useState('MAIN');
   const [gameConfig, setGameConfig] = useState({ lang: 'Python', mode: '', textId: null });
 
-  // 🚀 [원본 유지] Try Again 클릭 시 모달 자동 오픈 상태
   const [autoOpenModal, setAutoOpenModal] = useState(false);
-
-  // 🚀 [원본 유지] 테마 상태 관리
   const [theme, setTheme] = useState(localStorage.getItem('app-theme') || 'dark');
+
+  // 백엔드 연결 테스트
+  useEffect(() => {
+  console.log("프론트 테스트 시작");
+
+  fetch("http://192.168.55.32:5000/api/health")
+    .then((res) => {
+      console.log("응답 상태:", res.status);
+      console.log("응답 OK:", res.ok);
+      return res.json();
+    })
+    .then((data) => {
+      console.log("백엔드 연결 성공:", data);
+    })
+    .catch((err) => {
+      console.error("백엔드 연결 실패 전체 오류:", err);
+      console.error("오류 이름:", err.name);
+      console.error("오류 메시지:", err.message);
+    });
+}, []);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('app-theme', theme);
 
-    // [원본 유지] 폰트 및 사이즈 설정 로직
     const savedFont = localStorage.getItem('app-font-family');
     const savedSize = localStorage.getItem('app-font-size');
+
     if (savedFont) document.documentElement.style.setProperty('--global-font', savedFont);
     if (savedSize) document.documentElement.style.setProperty('--global-font-size', savedSize);
   }, [theme]);
@@ -44,23 +61,19 @@ function App() {
     else setView('TYPING');
   };
 
-  // 🚀 [원본 유지] 결과창에서 트라이 클릭 시 실행되는 함수
   const handleTryAgain = () => {
     setAutoOpenModal(true);
     setView('MAIN');
   };
 
-  // 🚀 [원본 유지] 무한 렌더링 방지를 위한 useCallback
   const handleModalOpened = useCallback(() => {
     setAutoOpenModal(false);
   }, []);
 
-  // 🚀 [원본 유지] 테마 전환 함수
   const toggleTheme = () => {
     setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
   };
 
-  // 로그인하지 않은 경우
   if (!isLoggedIn) {
     return <LoginPage onLogin={handleLogin} theme={theme} onThemeToggle={toggleTheme} />;
   }
@@ -77,16 +90,16 @@ function App() {
           }}
           autoOpenModal={autoOpenModal}
           onModalOpened={handleModalOpened}
-          theme={theme}             /* 🚀 테마 데이터 전달 */
-          onThemeToggle={toggleTheme} /* 🚀 테마 변경 함수 전달 */
-          initialLang={gameConfig.lang} /* 🚀 [교정] 이전에 선택해서 플레이하던 언어 데이터를 메인페이지로 그대로 전달 */
+          theme={theme}
+          onThemeToggle={toggleTheme}
+          initialLang={gameConfig.lang}
         />
       )}
 
       {view === 'MINI_SELECT' && (
-        <MiniGameSelectPage 
-          onSelect={(selectedView) => setView(selectedView)} 
-          onBack={() => setView('MAIN')} 
+        <MiniGameSelectPage
+          onSelect={(selectedView) => setView(selectedView)}
+          onBack={() => setView('MAIN')}
           theme={theme}
         />
       )}
@@ -102,25 +115,25 @@ function App() {
       )}
 
       {view === 'TYPING' && (
-        <TypingPage 
-          lang={gameConfig.lang} 
-          mode={gameConfig.mode} 
-          onBack={() => setView('MAIN')} 
+        <TypingPage
+          lang={gameConfig.lang}
+          mode={gameConfig.mode}
+          onBack={() => setView('MAIN')}
           theme={theme}
         />
       )}
 
       {view === 'MINI' && (
-        <MiniGamePage 
-          lang={gameConfig.lang} 
-          onBack={() => setView('MINI_SELECT')} 
+        <MiniGamePage
+          lang={gameConfig.lang}
+          onBack={() => setView('MINI_SELECT')}
           theme={theme}
         />
       )}
 
       {view === 'AI_MINI' && (
-        <AiMiniGame 
-          onBack={() => setView('MINI_SELECT')} 
+        <AiMiniGame
+          onBack={() => setView('MINI_SELECT')}
           theme={theme}
         />
       )}

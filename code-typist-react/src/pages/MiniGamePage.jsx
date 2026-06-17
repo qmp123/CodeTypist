@@ -1,70 +1,120 @@
 import { useState, useEffect, useRef } from 'react';
 import MiniGameResultModal from '../components/MiniGameResultModal';
-import '../styles/mini-game.css'; 
+import '../styles/mini-game.css';
 
-const miniGameData = {
-  1: [
-    { id: 1, text: "#include <stdio.h>\n\nint main() {\n  int n;\n  __(\"%d\", &n);\n  printf(\"%d\", n);\n  return 0;\n}", answers: ["scanf"] },
-    { id: 2, text: "int main() {\n  for (int i = __; i < __; i++) {\n    printf(\"%d\", i);\n  }\n  return 0;\n}", answers: ["0", "5"] },
-    { id: 3, text: "int main() {\n  int a = 10;\n  __(\"Value: %d\", a);\n  return 0;\n}", answers: ["printf"] },
-    { id: 4, text: "int main() {\n  int n = 5;\n  __(n > 0) {\n    printf(\"Positive\");\n  } __ {\n    printf(\"Negative\");\n  }\n  return 0;\n}", answers: ["if", "else"] },
-    { id: 5, text: "int main() {\n  int count = 0;\n  __(count < 3) {\n    printf(\"Hello\\n\");\n    count++;\n  }\n  return 0;\n}", answers: ["while"] },
-    { id: 6, text: "int add(int a, int b) {\n  __ a + b;\n}\n\nint main() {\n  int sum = add(3, 4);\n  return 0;\n}", answers: ["return"] },
-    { id: 7, text: "__ <stdio.h>\n\nint main() {\n  printf(\"Hello World\");\n  return 0;\n}", answers: ["#include"] },
-    { id: 8, text: "int main() {\n  __ a = 10;\n  __ b = 3.14;\n  return 0;\n}", answers: ["int", "double"] },
-    { id: 9, text: "int main() {\n  int n = 1;\n  __(n) {\n    __ 1:\n      printf(\"One\");\n      break;\n  }\n  return 0;\n}", answers: ["switch", "case"] },
-    { id: 10, text: "int main() {\n  for(int i=0; i<10; i++) {\n    if(i == 5) __;\n    printf(\"%d\", i);\n  }\n  return 0;\n}", answers: ["break"] },
-    { id: 11, text: "int main() {\n  int arr[3] = {1, 2, 3};\n  printf(\"%d\", __[0]);\n  return 0;\n}", answers: ["arr"] },
-    { id: 12, text: "int main() {\n  int a = 5;\n  int *p = __;\n  printf(\"%d\", *p);\n  return 0;\n}", answers: ["&a"] }
-  ],
-  2: [
-    { id: 1, text: "int main() {\n  int arr[5] = {1, 2, 3, 4, 5};\n  int sum = 0;\n  for(int i=0; i<5; i++) {\n    sum += __[i];\n  }\n  return 0;\n}", answers: ["arr"] }
-  ],
-  3: [
-    { id: 1, text: "void printMessage() {\n  printf(\"Message\");\n}\n\nint main() {\n  __();\n  return 0;\n}", answers: ["printMessage"] }
-  ],
-  4: [
-    { id: 1, text: "struct Point {\n  int x;\n  int y;\n};\n\nint main() {\n  struct Point p1;\n  p1.__ = 10;\n  return 0;\n}", answers: ["x"] }
-  ]
-};
+const API_BASE_URL = "http://localhost:5000";
 
 function MiniGamePage({ lang, onBack }) {
   const [difficulty, setDifficulty] = useState(null);
   const [gameState, setGameState] = useState('READY');
-  const [currentIdx, setCurrentIdx] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(60); 
+
+  const [sessionId, setSessionId] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalQuestions, setTotalQuestions] = useState(10);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
+
+  const [timeLeft, setTimeLeft] = useState(60);
   const [userInputs, setUserInputs] = useState([]);
-  const [stats, setStats] = useState({ correct: 0, wrong: 0 });
-  
-  // 🚀 [추가] 타이머 시작 제어용 상태
+  const [stats, setStats] = useState({ correct: 0, wrong: 0, unfilled: 0 });
+
   const [isTimerRunning, setIsTimerRunning] = useState(false);
-  
+  const [isLoading, setIsLoading] = useState(false);
+
   const timerRef = useRef(null);
-  const inputRefs = useRef([]); 
+  const inputRefs = useRef([]);
 
   const currentScore = stats.correct * 10;
+  const selectedLang = (lang || 'python').toLowerCase();
 
-  const startGame = (level) => {
-    setDifficulty(level);
-    setCurrentIdx(0);
-    const firstProblem = miniGameData[level][0];
-    setUserInputs(new Array(firstProblem.answers.length).fill(''));
-    inputRefs.current = []; 
-    setGameState('PLAYING');
-    setTimeLeft(60);
-    setStats({ correct: 0, wrong: 0 });
-    
-    // 🚀 [추가] 게임 시작 시 타이머 정지 상태로 초기화
-    setIsTimerRunning(false);
+  const getQuestionText = (question) => {
+    if (!question) return "";
+
+    if (Array.isArray(question.lines)) {
+      return question.lines.join("\n");
+    }
+
+    return (
+      question.text ||
+      question.code ||
+      question.question ||
+      question.content ||
+      ""
+    );
+  };
+
+  const countBlanks = (text) => {
+    return (text.match(/__\d+__/g) || text.match(/__/g) || []).length;
+  };
+
+  const getBlankCount = (question) => {
+    const questionText = getQuestionText(question);
+
+    return (
+      question?.blank_count ||
+      question?.answers_count ||
+      question?.blankCount ||
+      countBlanks(questionText)
+    );
+  };
+
+  const startGame = async (level) => {
+    try {
+      setIsLoading(true);
+
+      const res = await fetch(`${API_BASE_URL}/api/mini/start`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          language: selectedLang,
+          level,
+        }),
+      });
+
+      const result = await res.json();
+
+      console.log("미니게임 시작:", result);
+      console.log("미니게임 문제:", result?.data?.question);
+
+      if (!result.success || !result.data) {
+        throw new Error(result.error || "미니게임 시작 API 응답 형식이 맞지 않습니다.");
+      }
+
+      const data = result.data;
+      const question = data.question;
+      const blankCount = getBlankCount(question);
+
+      setDifficulty(level);
+      setSessionId(data.session_id);
+      setCurrentPage(data.page || 1);
+      setTotalQuestions(data.total_questions || 10);
+      setCurrentQuestion(question);
+
+      setUserInputs(new Array(blankCount).fill(""));
+      inputRefs.current = [];
+
+      setTimeLeft(data.time_limit_sec || 60);
+      setStats({ correct: 0, wrong: 0, unfilled: 0 });
+      setIsTimerRunning(false);
+      setGameState("PLAYING");
+    } catch (err) {
+      console.error("미니게임 시작 오류:", err);
+      alert("미니게임 시작에 실패했습니다. 백엔드 서버 또는 문제 데이터를 확인해주세요.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
-    // 🚀 [수정] isTimerRunning이 true일 때만 시간이 줄어들도록 조건 추가
     if (gameState === 'PLAYING' && isTimerRunning && timeLeft > 0) {
-      timerRef.current = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
+      timerRef.current = setInterval(() => {
+        setTimeLeft(prev => prev - 1);
+      }, 1000);
     } else if (gameState === 'PLAYING' && timeLeft === 0) {
       endGame();
     }
+
     return () => clearInterval(timerRef.current);
   }, [gameState, isTimerRunning, timeLeft]);
 
@@ -74,42 +124,92 @@ function MiniGamePage({ lang, onBack }) {
         inputRefs.current[0]?.focus();
       }, 10);
     }
-  }, [currentIdx, gameState]);
+  }, [currentPage, gameState]);
 
-  const checkAnswers = () => {
-    const currentProblem = miniGameData[difficulty][currentIdx];
-    let localCorrect = 0, localWrong = 0;
-
-    userInputs.forEach((input, i) => {
-      const trimmed = input.trim();
-      if (!trimmed || trimmed !== currentProblem.answers[i]) {
-        localWrong++;
-      } else {
-        localCorrect++;
+  const submitAnswer = async () => {
+    try {
+      if (!sessionId) {
+        alert("세션 ID가 없습니다. 게임을 다시 시작해주세요.");
+        return;
       }
-    });
 
-    setStats(prev => ({
-      correct: prev.correct + localCorrect,
-      wrong: prev.wrong + localWrong
-    }));
+      const submitInputs = userInputs.map((value, index) => ({
+        blank_no: index + 1,
+        value,
+      }));
 
-    if (currentIdx < 9) {
-      const nextIdx = currentIdx + 1;
-      setCurrentIdx(nextIdx);
-      const nextProblem = miniGameData[difficulty][nextIdx];
-      setUserInputs(new Array(nextProblem.answers.length).fill(''));
-      inputRefs.current = []; 
-    } else {
-      endGame();
+      console.log("제출할 입력값:", submitInputs);
+
+      const res = await fetch(`${API_BASE_URL}/api/mini/submit`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          session_id: sessionId,
+          page: currentPage,
+          inputs: submitInputs,
+        }),
+      });
+
+      const result = await res.json();
+
+      console.log("미니게임 제출:", result);
+      console.log("채점 결과:", result?.data?.last_result);
+      console.log("다음 문제:", result?.data?.question);
+
+      if (!result.success || !result.data) {
+        throw new Error(result.error || "미니게임 제출 API 응답 형식이 맞지 않습니다.");
+      }
+
+      const data = result.data;
+
+      if (data.last_result) {
+        setStats(prev => ({
+          correct: prev.correct + (data.last_result.correct_count || 0),
+          wrong: prev.wrong + (data.last_result.wrong_count || 0),
+          unfilled: prev.unfilled + (data.last_result.unfilled_count || 0),
+        }));
+      }
+
+      if (data.summary) {
+        setStats({
+          correct: data.summary.correct_total || 0,
+          wrong: data.summary.wrong_total || 0,
+          unfilled: data.summary.unfilled_total || 0,
+        });
+      }
+
+      if (data.finished) {
+        clearInterval(timerRef.current);
+        setIsTimerRunning(false);
+        setGameState("RESULT");
+        return;
+      }
+
+      if (data.question) {
+        const nextQuestion = data.question;
+        const blankCount = getBlankCount(nextQuestion);
+
+        setCurrentPage(data.page || currentPage + 1);
+        setCurrentQuestion(nextQuestion);
+        setUserInputs(new Array(blankCount).fill(""));
+        inputRefs.current = [];
+      }
+    } catch (err) {
+      console.error("미니게임 제출 오류:", err);
+      alert("정답 제출에 실패했습니다.");
     }
   };
 
   const endGame = () => {
     clearInterval(timerRef.current);
-    setIsTimerRunning(false); // 🚀 [추가] 게임 종료 시 타이머 정지
-    setGameState('RESULT');
+    setIsTimerRunning(false);
+    setGameState("RESULT");
   };
+
+  const questionText = getQuestionText(currentQuestion);
+  const questionParts = questionText.split(/__\d+__|__/g);
 
   if (gameState === 'READY') {
     return (
@@ -118,10 +218,18 @@ function MiniGamePage({ lang, onBack }) {
           <button className="back-btn-ai-left" onClick={onBack}>← Back</button>
           <h1 className="game-title-right">난이도 선택</h1>
         </header>
+
         <div className="difficulty-selection-box">
           <div className="difficulty-grid-layout">
-            {[1, 2, 3, 4].map(l => (
-              <button key={l} className="level-selection-btn" onClick={() => startGame(l)}>Level {l}</button>
+            {[1, 2, 3, 4].map(level => (
+              <button
+                key={level}
+                className="level-selection-btn"
+                onClick={() => startGame(level)}
+                disabled={isLoading}
+              >
+                {isLoading ? "불러오는 중..." : `Level ${level}`}
+              </button>
             ))}
           </div>
         </div>
@@ -132,68 +240,85 @@ function MiniGamePage({ lang, onBack }) {
   return (
     <div className="mini-game-full-container">
       <header className="game-header-wide">
-        {/* 🚨 [수정 완료] 직전 답변에서 제가 냈던 오타(setBackState)를 원래 코드(setGameState)로 복구했습니다. */}
         <button className="back-btn-ai-left" onClick={() => setGameState('READY')}>← Back</button>
+
         <div className="header-right-column">
           <h1 className="game-title-right">빈칸채우기</h1>
-          <span className="info-tag-under-title">{lang} | Level {difficulty}</span>
+          <span className="info-tag-under-title">{selectedLang} | Level {difficulty}</span>
         </div>
       </header>
 
       <main className="typing-area-mini">
         <div className="status-bar-mini">
-          <div className="status-item-mini">점수 <span className="mint-text">{currentScore}</span></div>
-          <div className="status-item-mini">소요 시간 <span className="mint-text">{timeLeft}s</span></div>
-          <div className="status-item-mini">진행도 <span className="mint-text">{currentIdx + 1} / 10</span></div>
+          <div className="status-item-mini">
+            점수 <span className="mint-text">{currentScore}</span>
+          </div>
+          <div className="status-item-mini">
+            남은 시간 <span className="mint-text">{timeLeft}s</span>
+          </div>
+          <div className="status-item-mini">
+            진행도 <span className="mint-text">{currentPage} / {totalQuestions}</span>
+          </div>
+          <div className="status-item-mini">
+            정답 <span className="mint-text">{stats.correct}</span>
+          </div>
+          <div className="status-item-mini">
+            오답 <span className="mint-text">{stats.wrong}</span>
+          </div>
         </div>
 
         <div className="code-display-box-mini">
           <pre className="code-text-pre">
-            {miniGameData[difficulty][currentIdx]?.text.split('__').map((part, i, arr) => (
-              <span key={`${miniGameData[difficulty][currentIdx].id}-${i}`}>
-                {part}
-                {i < arr.length - 1 && (
-                  <input 
-                    className="blank-input-field"
-                    ref={(el) => (inputRefs.current[i] = el)} 
-                    value={userInputs[i] || ''}
-                    onChange={(e) => {
-                      // 🚀 [추가] 첫 입력이 감지되면 타이머 작동 시작
-                      if (!isTimerRunning) setIsTimerRunning(true);
-                      
-                      const n = [...userInputs];
-                      n[i] = e.target.value;
-                      setUserInputs(n);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault(); 
-                        const currentProblem = miniGameData[difficulty][currentIdx];
-                        
-                        if (i < currentProblem.answers.length - 1) {
-                          inputRefs.current[i + 1]?.focus();
-                        } else {
-                          checkAnswers();
+            {questionText ? (
+              questionParts.map((part, i) => (
+                <span key={`${currentQuestion?.question_id || currentQuestion?.id || currentPage}-${i}`}>
+                  {part}
+
+                  {i < questionParts.length - 1 && (
+                    <input
+                      className="blank-input-field"
+                      ref={(el) => (inputRefs.current[i] = el)}
+                      value={userInputs[i] || ""}
+                      onChange={(e) => {
+                        if (!isTimerRunning) setIsTimerRunning(true);
+
+                        const nextInputs = [...userInputs];
+                        nextInputs[i] = e.target.value;
+                        setUserInputs(nextInputs);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+
+                          if (i < userInputs.length - 1) {
+                            inputRefs.current[i + 1]?.focus();
+                          } else {
+                            submitAnswer();
+                          }
                         }
-                      }
-                    }}
-                  />
-                )}
-              </span>
-            ))}
+                      }}
+                      spellCheck="false"
+                      autoComplete="off"
+                    />
+                  )}
+                </span>
+              ))
+            ) : (
+              <span>문제 데이터를 불러오지 못했습니다.</span>
+            )}
           </pre>
         </div>
       </main>
 
       {gameState === 'RESULT' && (
-        <MiniGameResultModal 
-          stats={stats} 
-          time={60 - timeLeft} 
-          progress={timeLeft > 0 ? 10 : currentIdx} 
-          onRetry={() => setGameState('READY')} 
+        <MiniGameResultModal
+          stats={stats}
+          time={60 - timeLeft}
+          progress={currentPage}
+          onRetry={() => setGameState('READY')}
           onRestart={() => setGameState('READY')}
-          onHome={onBack} 
-          onClose={onBack} 
+          onHome={onBack}
+          onClose={onBack}
         />
       )}
     </div>
