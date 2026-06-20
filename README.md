@@ -26,9 +26,7 @@ Language: JavaScript
 
 Frontend: React.js
 
-Backend: Node.js
-
-Framework: Express.js
+Backend: Node.js, Express.js
 
 Database: MySQL
 
