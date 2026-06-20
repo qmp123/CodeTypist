@@ -1,0 +1,49 @@
+⌨️ Coding Typing Practice (코딩타자연습)
+"개발자를 위한 실전형 코딩 문법/특수문자 타자 연습 웹 게임"
+
+이 프로젝트는 개발자가 필수적으로 사용하는 프로그래밍 언어의 문법, 특수문자, 그리고 코딩 키워드에 익숙해지도록 돕기 위해 제작된 웹 기반 타자 연습 게임입니다. 일반적인 한글 타자 연습을 넘어, 코딩 환경에서 자주 쓰이는 기호({, }, [], (), ;, ->, => 등)를 정확하고 빠르게 입력하는 능력을 기르는 데 목적이 있습니다.
+
+🚀 주요 기능 (Features)
+코딩 특화 연습 모드: 일반 문장이 아닌 실제 코드 스니펫과 프로그래밍 문법 위주의 연습 제공
+
+약점 분석 AI (Weakness Analysis):
+
+사용자의 타자 데이터를 50회 이상 수집
+
+Gemini API와 Few-shot Learning을 활용하여 자주 틀리는 기호나 문법 패턴을 분석
+
+개인별 맞춤형 피드백 제공
+
+실시간 랭킹 시스템: 사용자별 타자 속도와 정확도를 기록하여 경쟁 요소 부여
+
+사용자 관리: 회원가입/로그인 및 기록 저장 기능
+
+🛠 기술 스택 (Tech Stack)
+Frontend
+Framework: React.js
+
+Language: JavaScript
+
+Backend
+Runtime: Node.js
+
+Framework: Express.js
+
+Database: MySQL
+
+AI Integration
+Engine: Gemini API (Weakness Analysis)
+
+📂 프로젝트 구조 (Project Structure)
+Plaintext
+/
+├── client/        # React 기반 프론트엔드
+├── server/        # Node.js & Express 백엔드
+├── database/      # SQL 스키마 및 덤프 파일
+└── README.md
+💡 기대 효과
+개발 초보자가 코드 작성 시 특수문자 입력에서 겪는 어려움을 해소
+
+실제 코드 형태의 연습을 통해 프로그래밍 언어의 구조적 이해도 향상
+
+AI 분석을 통한 체계적인 타자 습관 교정
