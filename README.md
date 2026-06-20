@@ -9,7 +9,7 @@
 
 약점 분석 AI (Weakness Analysis):
 
-사용자의 타자 데이터를 50회 이상 수집
+사용자의 타자 데이터를 실시간 수집
 
 Gemini API와 Few-shot Learning을 활용하여 자주 틀리는 기호나 문법 패턴을 분석
 
